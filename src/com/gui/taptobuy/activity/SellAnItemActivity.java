@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 	private static final int SELECT_PICTURE = 1;
 	private String picPathByFileManager;
 	private String picPathByGallery;	
-	private TextView picPathInput;
+	private EditText picPathInput;
 
 	private int prodID = -1;
 	private double sellerRate = -1;
@@ -44,7 +45,7 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 	private EditText prodModel;
 	private EditText prodBrand;
 	private EditText prodDimen;
-	private TextView prodDescrip;
+	private EditText prodDescrip;
 	private EditText prodProduct;
 	private EditText prodBuyPriceIn;
 	private EditText prodStartingPrice;
@@ -80,7 +81,7 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 		shippingPrice = (EditText) findViewById(R.id.sell_inputShipping);	        
 		prodTime = (EditText) findViewById(R.id.sell_inputNumofDays);
 		forBidCheck = (CheckBox) findViewById(R.id.sell_ForBiddingCheck);
-		picPathInput = (TextView)findViewById(R.id.sell_PicturePath);
+		picPathInput = (EditText)findViewById(R.id.sell_PicturePath);
 
 		forBidCheck.setOnClickListener(this);
 
@@ -92,8 +93,13 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 		switch(v.getId()){
 
 		case R.id.sell_ForBiddingCheck:
-			if(!forBidCheck.isChecked())
-				prodBuyPriceIn.setClickable(false);			
+			if(forBidCheck.isChecked()){
+				prodBuyPriceIn.setText("");
+				prodBuyPriceIn.setEnabled(false);
+			}
+			else{
+				prodBuyPriceIn.setEnabled(true);
+			}
 			break;
 
 			//   select a file
@@ -130,8 +136,6 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 			if (requestCode == SELECT_PICTURE) {
 				Uri selectedImageUri = data.getData();
 
-				//OI FILE Manager
-				//picPathByFileManager = selectedImageUri.getPath();
 
 				//MEDIA GALLERY
 				picPathByGallery = getRealPathFromURI(selectedImageUri);
@@ -144,11 +148,8 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 				}
 				else{
 					Toast.makeText(SellAnItemActivity.this,"No image selected..", Toast.LENGTH_LONG).show();
-					//	System.out.println("selectedImagePath is null");
 				}
-				//				if(picPathByFileManager!=null)
-				//					picPathInput.setText(picPathByFileManager);	
-				//				else System.out.println("filemanagerstring is null");
+
 
 				Toast.makeText(SellAnItemActivity.this, picPathByGallery.toString(), Toast.LENGTH_LONG).show();
 
@@ -170,25 +171,6 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 			}
 		}
 	}
-//	public String getPath(Uri uri) {
-//		String selectedImagePath;
-//		//1:MEDIA GALLERY --- query from MediaStore.Images.Media.DATA
-//		String[] projection = { MediaStore.Images.Media.DATA };
-//		Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-//		if(cursor != null){
-//			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//			cursor.moveToFirst();
-//			selectedImagePath = cursor.getString(column_index);
-//		}else{
-//			selectedImagePath = null;
-//		}
-//
-//		if(selectedImagePath == null){
-//			//2:OI FILE Manager --- call method: uri.getPath()
-//			selectedImagePath = uri.getPath();
-//		}
-//		return selectedImagePath;
-//	}
 
 	private class UploadImageTask extends AsyncTask<String, Void, Boolean> {
 		private ProgressDialog dialog = null;
