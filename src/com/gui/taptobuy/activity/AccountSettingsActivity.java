@@ -429,16 +429,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 		ArrayAdapter<String> shippingAddressesAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, shippingAddressesIdentifiers);
 		shipAddrSpinner.setAdapter(shippingAddressesAdapter);
 		ArrayAdapter<String> creditCardsAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, creditCardsIdentifiers);
-		cardsSpinner.setAdapter(creditCardsAdapter);
-
-			
-			ArrayAdapter<String> shippingAddressesAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, shippingAddressesIdentifiers);
-			shipAddrSpinner.setAdapter(shippingAddressesAdapter);
-
-			ArrayAdapter<String> creditCardsAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, creditCardsIdentifiers);
-			cardsSpinner.setAdapter(creditCardsAdapter);
-
-		}			
+		cardsSpinner.setAdapter(creditCardsAdapter);			
 
 
 	}

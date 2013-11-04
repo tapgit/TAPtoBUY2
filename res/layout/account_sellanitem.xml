@@ -4,268 +4,221 @@
     android:layout_height="match_parent"
     android:background="@drawable/portrait_back" >
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="65"
-        android:fillViewport="true" >
+        <TextView
+            android:id="@+id/sell_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/sell_Product"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="Model:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="609dp"
-            android:orientation="vertical" >
+        <TextView
+            android:id="@+id/sell_Brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/sell_model"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="Brand:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/sell_model"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/sell_Product"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:text="Model:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/sell_Dimensions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/sell_Brand"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="5dp"
+            android:text="Dimensions:"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:id="@+id/sell_Brand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/sell_model"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:text="Brand:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/sell_Dimensions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/sell_Brand"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="12dp"
-                android:text="Dimensions:"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        
 
-            <EditText
-                android:id="@+id/sell_inputProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sell_Product"
-                android:layout_alignBottom="@+id/sell_Product"
-                android:layout_alignRight="@+id/sell_inputProdTitle"
-                android:layout_toRightOf="@+id/sell_Product"
-                android:ems="10" >
+        <EditText
+            android:id="@+id/sell_inputProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_Product"
+            android:layout_alignBottom="@+id/sell_Product"
+            android:layout_alignRight="@+id/sell_inputProdTitle"
+            android:layout_toRightOf="@+id/sell_Product"
+            android:ems="10" >
 
-                <requestFocus />
-            </EditText>
+            <requestFocus />
+        </EditText>
 
-            <EditText
-                android:id="@+id/sell_inputBrand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sell_Brand"
-                android:layout_alignBottom="@+id/sell_Brand"
-                android:layout_alignRight="@+id/sell_inputProduct"
-                android:layout_toRightOf="@+id/sell_model"
-                android:ems="10" />
+        <EditText
+            android:id="@+id/sell_inputBrand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_Brand"
+            android:layout_alignBottom="@+id/sell_Brand"
+            android:layout_alignRight="@+id/sell_inputProduct"
+            android:layout_toRightOf="@+id/sell_model"
+            android:ems="10" />
 
-            <EditText
-                android:id="@+id/sell_inputModel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sell_model"
-                android:layout_alignBottom="@+id/sell_model"
-                android:layout_alignLeft="@+id/sell_inputBrand"
-                android:layout_alignRight="@+id/sell_inputProduct"
-                android:ems="10" />
+        <EditText
+            android:id="@+id/sell_inputModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_model"
+            android:layout_alignBottom="@+id/sell_model"
+            android:layout_alignLeft="@+id/sell_inputBrand"
+            android:layout_alignRight="@+id/sell_inputProduct"
+            android:ems="10" />
 
-            <CheckBox
-                android:id="@+id/sell_ForBiddingCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/sell_buyNowPricetext"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="3dp"
-                android:text="For Bidding" />
+        <CheckBox
+            android:id="@+id/sell_ForBiddingCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_above="@+id/sell_buyNowPricetext"
+            android:layout_alignParentRight="true"
+            android:text="For Bidding" />
 
-            <TextView
-                android:id="@+id/sell_buyNowPricetext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sell_Description"
-                android:layout_below="@+id/sell_uploadPicB"
-                android:layout_marginTop="5dp"
-                android:text="Buy Now Price: $ "
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/sell_buyNowPricetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/sell_Description"
+            android:layout_below="@+id/sell_uploadPicB"
+            android:layout_marginTop="33dp"
+            android:text="Buy Now Price: $"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
-                android:id="@+id/sell_inputPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sell_buyNowPricetext"
-                android:layout_alignBottom="@+id/sell_buyNowPricetext"
-                android:layout_alignRight="@+id/sell_ForBiddingCheck"
-               
-                android:layout_toRightOf="@+id/sell_buyNowPricetext"
-                
-                android:ems="10"
-                android:inputType="numberDecimal" />
+        <EditText
+            android:id="@+id/sell_inputPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_buyNowPricetext"
+            android:layout_alignBottom="@+id/sell_buyNowPricetext"
+            android:layout_alignRight="@+id/sell_inputStartingPrice"
+            android:layout_toRightOf="@+id/sell_buyNowPricetext"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/sell_inputNumofDays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/sell_shippingInput"
-                android:layout_below="@+id/sell_ShippinText"
-                android:layout_toRightOf="@+id/sell_NumOfDays"
-                android:ems="10"
-                android:inputType="date" />
+        <EditText
+            android:id="@+id/sell_inputNumofDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/sell_shippingInput"
+            android:layout_below="@+id/sell_ShippinText"
+            android:layout_toRightOf="@+id/sell_NumOfDays"
+            android:ems="10"
+            android:inputType="date" />
 
-            <EditText
-                android:id="@+id/sell_inputShipping"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/sell_ForBiddingCheck"
-                android:layout_below="@+id/sell_buyNowPricetext"
-                android:layout_toLeftOf="@+id/sell_BuyNowPriceInput"
-                android:layout_toRightOf="@+id/sell_ShippinText"
-                android:ems="10"
-                android:inputType="numberDecimal" />
+        <EditText
+            android:id="@+id/sell_inputShipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/sell_inputStartingPrice"
+            android:layout_below="@+id/sell_buyNowPricetext"
+            android:layout_toRightOf="@+id/sell_ShippinText"
+            android:ems="10"
+            android:inputType="numberDecimal" />
 
-            <TextView
-                android:id="@+id/sell_ShippinText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sell_inputShipping"
-                android:layout_alignBottom="@+id/sell_inputShipping"
-                android:layout_alignLeft="@+id/sell_buyNowPricetext"
-                android:text="Shipping price: $"
-                android:textAppearance="?android:attr/textAppearance" />
+        <TextView
+            android:id="@+id/sell_ShippinText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_inputShipping"
+            android:layout_alignBottom="@+id/sell_inputShipping"
+            android:layout_alignLeft="@+id/sell_buyNowPricetext"
+            android:text="Shipping price: $"
+            android:textAppearance="?android:attr/textAppearance" />
 
-            <TextView
-                android:id="@+id/sell_NumOfDays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sell_inputNumofDays"
-                android:layout_alignBottom="@+id/sell_inputNumofDays"
-                android:layout_alignLeft="@+id/sell_ShippinText"
-                android:inputType="numberDecimal"
-                android:text="Numbers of days for sale:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/sell_NumOfDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_inputNumofDays"
+            android:layout_alignBottom="@+id/sell_inputNumofDays"
+            android:layout_alignLeft="@+id/sell_ShippinText"
+            android:inputType="numberDecimal"
+            android:text="Numbers of days for sale:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/sell_ProdTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sell_Product"
-                android:layout_marginTop="15dp"
-                android:text="Product Title:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/sell_ProdTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/sell_Product"
+            android:layout_marginTop="15dp"
+            android:text="Product Title:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
-                android:id="@+id/sell_inputProdTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/sell_ProdTitle"
-                android:ems="10" />
+        <EditText
+            android:id="@+id/sell_inputProdTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/sell_ProdTitle"
+            android:ems="10" />
 
-            <TextView
-                android:id="@+id/sell_Product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sell_model"
-                android:layout_below="@+id/sell_inputQty"
-                android:text="Product:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/sell_Product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/sell_model"
+            android:layout_below="@+id/sell_inputQty"
+            android:text="Product:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
-                android:id="@+id/sell_inputDimensions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/sell_ForBiddingCheck"
-                android:layout_below="@+id/sell_inputBrand"
-                android:layout_toRightOf="@+id/sell_Dimensions"
-                android:ems="10" />
+        <EditText
+            android:id="@+id/sell_inputDimensions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/sell_ForBiddingCheck"
+            android:layout_below="@+id/sell_inputBrand"
+            android:layout_toRightOf="@+id/sell_Dimensions"
+            android:ems="10" />
 
-            <EditText
-                android:id="@+id/sell_inputQty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/sell_ProdTitle"
-                android:layout_below="@+id/sell_ProdTitle"
-                android:layout_toRightOf="@+id/textView1"
-                android:ems="10"
-                android:inputType="number" />
+        <EditText
+            android:id="@+id/sell_inputQty"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignLeft="@+id/sell_inputModel"
+            android:layout_alignRight="@+id/sell_ProdTitle"
+            android:layout_below="@+id/sell_ProdTitle"
+            android:ems="10"
+            android:inputType="number" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sell_ProdTitle"
-                android:layout_alignTop="@+id/sell_inputQty"
-                android:layout_marginTop="8dp"
-                android:text="Quantity: "
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sell_inputQty"
+            android:layout_toLeftOf="@+id/sell_inputQty"
+            android:layout_marginTop="2dp"
+            android:text="Quantity:"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <Button
-                android:id="@+id/sell_sellItemB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/sell_inputNumofDays"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:text="Sell this Item!" />
+        <Button
+            android:id="@+id/sell_sellItemB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sell_inputNumofDays"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Sell this Item!" />
 
-            <Button
-                android:id="@+id/sell_uploadPicB"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_alignLeft="@+id/sell_Description"
-                android:layout_below="@+id/sell_inputDescription"
-                android:layout_marginTop="10dp"
-                android:text="Upload Pic" />
+        <Button
+            android:id="@+id/sell_uploadPicB"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/textView1"
+            android:layout_below="@+id/sell_inputDescription"
+            android:text="Upload Pic" />
 
-            <EditText
-                android:id="@+id/sell_PicturePath"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/sell_ForBiddingCheck"
-                android:layout_alignBottom="@+id/sell_ForBiddingCheck"
-                android:layout_toLeftOf="@+id/sell_ForBiddingCheck"
-                android:layout_toRightOf="@+id/sell_uploadPicB"
-                android:enabled="false"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/sell_Description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sell_Dimensions"
-                android:layout_below="@+id/sell_inputDimensions"
-                android:layout_marginTop="14dp"
-                android:text="Description:"
-                android:textAppearance="?android:attr/textAppearance"
-                android:textStyle="bold" />
-
-<<<<<<< HEAD
-            <EditText
-                android:id="@+id/sell_inputDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sell_Description"
-                android:layout_alignRight="@+id/sell_inputDimensions"
-                android:layout_below="@+id/sell_Description"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:inputType="textMultiLine" />
-        </RelativeLayout>
-=======
         <EditText
             android:id="@+id/sell_PicturePath"
             android:layout_width="wrap_content"
@@ -277,8 +230,27 @@
             android:singleLine="true"
             android:enabled="false"
             android:textAppearance="?android:attr/textAppearanceSmall" />
->>>>>>> refs/remotes/origin/master
 
-    </ScrollView>
+        <TextView
+            android:id="@+id/sell_Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/sell_Dimensions"
+            android:layout_below="@+id/sell_inputDimensions"
+            android:layout_marginTop="14dp"
+            android:text="Description:"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/sell_inputDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_Description"
+            android:layout_alignBottom="@+id/sell_Description"
+            android:layout_alignLeft="@+id/sell_PicturePath"
+            android:layout_alignRight="@+id/sell_inputDimensions"
+            android:ems="10"
+            android:inputType="textMultiLine" />
 
 </RelativeLayout>
