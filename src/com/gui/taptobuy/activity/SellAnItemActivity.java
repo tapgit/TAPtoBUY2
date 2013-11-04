@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 	private static final int SELECT_PICTURE = 1;
 	private String picPathByFileManager;
 	private String picPathByGallery;	
-	private TextView picPathInput;
+	private EditText picPathInput;
 
 	private int prodID = -1;
 	private double sellerRate = -1;
@@ -44,29 +45,27 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 	private EditText prodModel;
 	private EditText prodBrand;
 	private EditText prodDimen;
-	private TextView prodDescrip;
+	private EditText prodDescrip;
 	private EditText prodProduct;
 	private EditText prodBuyPriceIn;
 	private EditText prodStartingPrice;
 	private EditText shippingPrice;
 	private EditText prodTime;
 	private EditText prodQty;
-
+	private TextView prodPrice;
 
 	private CheckBox forBidCheck;
 	private Product newProd;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
-
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.account_sellanitem);	 
 
 		((Button) findViewById(R.id.sell_uploadPicB)).setOnClickListener(this);  
 		((Button) findViewById(R.id.sell_sellItemB)).setOnClickListener(this); 
-
 
 		prodTitle = (EditText) findViewById(R.id.sell_inputProdTitle);
 		prodQty = (EditText) findViewById(R.id.sell_inputQty);
@@ -80,20 +79,26 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 		shippingPrice = (EditText) findViewById(R.id.sell_inputShipping);	        
 		prodTime = (EditText) findViewById(R.id.sell_inputNumofDays);
 		forBidCheck = (CheckBox) findViewById(R.id.sell_ForBiddingCheck);
-		picPathInput = (TextView)findViewById(R.id.sell_PicturePath);
+		picPathInput = (EditText)findViewById(R.id.sell_PicturePath);
+		prodPrice= (TextView)findViewById(R.id.sell_buyNowPricetext);
 
 		forBidCheck.setOnClickListener(this);
-
 	}
-
 	@Override
-	public void onClick(View v) {	
-
+	public void onClick(View v)
+	{
 		switch(v.getId()){
 
 		case R.id.sell_ForBiddingCheck:
-			if(!forBidCheck.isChecked())
-				prodBuyPriceIn.setClickable(false);			
+			if(forBidCheck.isChecked()){
+				prodBuyPriceIn.setText("");
+				prodBuyPriceIn.setEnabled(false);	
+				prodPrice.setTextColor(Color.GRAY);
+			}
+			else if(forBidCheck.isChecked()){
+				prodBuyPriceIn.setEnabled(true);
+				prodPrice.setTextColor(Color.BLACK);
+			}
 			break;
 
 			//   select a file
@@ -122,7 +127,6 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 			Toast.makeText(this, "Your product has been place on sale", Toast.LENGTH_SHORT).show();
 			break;
 		}	
-
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,26 +174,7 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 			}
 		}
 	}
-//	public String getPath(Uri uri) {
-//		String selectedImagePath;
-//		//1:MEDIA GALLERY --- query from MediaStore.Images.Media.DATA
-//		String[] projection = { MediaStore.Images.Media.DATA };
-//		Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-//		if(cursor != null){
-//			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//			cursor.moveToFirst();
-//			selectedImagePath = cursor.getString(column_index);
-//		}else{
-//			selectedImagePath = null;
-//		}
-//
-//		if(selectedImagePath == null){
-//			//2:OI FILE Manager --- call method: uri.getPath()
-//			selectedImagePath = uri.getPath();
-//		}
-//		return selectedImagePath;
-//	}
-
+	
 	private class UploadImageTask extends AsyncTask<String, Void, Boolean> {
 		private ProgressDialog dialog = null;
 		protected void onPreExecute() {

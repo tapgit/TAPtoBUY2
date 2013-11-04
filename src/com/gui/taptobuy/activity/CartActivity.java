@@ -30,47 +30,85 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class CartActivity extends Activity implements OnClickListener{	
-	public static ArrayList<ProductForSale> cartResultItems;
+
 	private ListView itemsList;
 	private LayoutInflater layoutInflator;
 	private Button SelectAllB;
 	private Button buySelectedB;
 	private Button removeB;
+	
+	public static ArrayList<ProductForSale> cartResultItems;
+	public static ArrayList<Integer> checkoutListIDs;
+	public static ArrayList<CheckBox> checkboxList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {		
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.cart);
-
+		
 		cartResultItems = new ArrayList<ProductForSale>();
-
+		checkoutListIDs = new ArrayList<Integer>();
+		checkboxList = new ArrayList<CheckBox>();
+		
+	
 				this.layoutInflator = LayoutInflater.from(this);
 				itemsList = (ListView)findViewById(R.id.listView1);
 		
 				SelectAllB = (Button) findViewById(R.id.cartSellectAllB);
-				//SelectAllB.setOnClickListener(this);
+				SelectAllB.setOnClickListener(this);
 		
 				buySelectedB = (Button) findViewById(R.id.cartBuySelectedB);
 				buySelectedB.setOnClickListener(this);
 		
 				removeB = (Button) findViewById(R.id.cartRemoveSelectedB);
-				//removeB.setOnClickListener(this);
+				removeB.setOnClickListener(this);
 
 		new cartProductsTask().execute();//get products on cart
+		
+		
+		Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();	
 	}
 
 
 	@Override
-	public void onClick(View v) {		
-	
-		if(v.getId() ==  R.id.cartBuySelectedB)
-			startActivity(new Intent(this, OrderCheckoutActivity.class)); 
-			//como pasar la lista desde el server?????
+	public void onClick(View v) {	
+		
+		switch (v.getId())
+		{		
+			case R.id.cartSellectAllB:
+				Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
+				for(CheckBox check: checkboxList){
+					//Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
+					if(!check.isChecked()){
+					check.setChecked(true);					
+					}
+				}			
+				break;
+			
+			case R.id.cartBuySelectedB:
+				// pasar la lista de los items que estan en el cart para la lista del checkout
+				Intent intent = new Intent(this,OrderCheckoutActivity.class);
+				intent.putIntegerArrayListExtra("selectedItems", checkoutListIDs);
+				startActivity(intent);		
+			
+			break;
+			
+			case R.id.cartRemoveSelectedB:
+				Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
+				for(CheckBox check: checkboxList){
+				//	Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
+					if(check.isChecked()){
+					check.setChecked(false);					
+					}
+				}		
+			break;
+		}
 	}
 
 	private ArrayList<ProductForSale> getCartItems(){
@@ -135,7 +173,6 @@ public class CartActivity extends Activity implements OnClickListener{
 				cartResultItems.get(downloadadImagesIndex++).setImg(result);
 			}
 		}
+		
 	}
-
-
 }

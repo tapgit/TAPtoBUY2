@@ -242,7 +242,7 @@
             android:layout_below="@+id/sell_inputDescription"
             android:text="Upload Pic" />
 
-        <TextView
+        <EditText
             android:id="@+id/sell_PicturePath"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -251,6 +251,7 @@
             android:layout_toLeftOf="@+id/sell_ForBiddingCheck"
             android:layout_toRightOf="@+id/sell_uploadPicB"
             android:singleLine="true"
+            android:enabled="false"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView

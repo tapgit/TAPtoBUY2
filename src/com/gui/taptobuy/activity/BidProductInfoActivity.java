@@ -51,7 +51,7 @@ public class BidProductInfoActivity extends Activity implements OnClickListener{
 		prodTime.setText(showingProductInfo.getTimeRemaining());
 		prodBrand.setText("Brand: " + showingProductInfo.getBrand());
 		prodDimen.setText("Dimensions: " + showingProductInfo.getDimensions());
-		prodDescrip.setText("Description: " + showingProductInfo.getDescription());
+		prodDescrip.setText(showingProductInfo.getDescription());
 		prodSellerUserN.setText("Seller: " + showingProductInfo.getSellerUsername());
 		prodPrice.setText("Current bid price: $"+showingProductInfo.getCurrentBidPrice());
 		double shippingPrice = showingProductInfo.getShippingPrice();

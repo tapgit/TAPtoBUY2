@@ -220,6 +220,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 			break;
 
 		case R.id.accSet_RemoveB:
+			
 			Toast.makeText(this, "Card successfully Removed", Toast.LENGTH_SHORT).show();	
 			break;
 
@@ -394,8 +395,6 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 		}
 		protected void onPostExecute(User receivedUserdata) {
 
-			Toast.makeText(AccountSettingsActivity.this, receivedUserdata.getId() + "", Toast.LENGTH_LONG).show();
-
 			firstname.setText(receivedUserdata.getFirstname());
 			lastname.setText(receivedUserdata.getLastname());
 			password.setText(receivedUserdata.getPassword());
@@ -418,8 +417,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 				CreditCard tmpCrdCard = receivedUserdata.getCredit_cards()[i];
 				creditCardsIdentifiers[i] = "xxxx-xxxx-xxxx-" + tmpCrdCard.getNumber().substring(12);
 			}
-
-
+			
 			ArrayAdapter<String> shippingAddressesAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, shippingAddressesIdentifiers);
 			shipAddrSpinner.setAdapter(shippingAddressesAdapter);
 

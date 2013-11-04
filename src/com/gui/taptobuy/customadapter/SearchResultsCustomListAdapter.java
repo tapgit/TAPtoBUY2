@@ -42,9 +42,7 @@ import android.widget.Toast;
 
 public class SearchResultsCustomListAdapter extends BaseAdapter implements OnClickListener{
 
-	private SearchActivity activity;
-	//private IconTask imgFetcher;  -- clases que usa para loadear las imagenes
-	//private ImageView itemPic;
+	private SearchActivity activity;	
 	private LayoutInflater layoutInflater;
 	private ArrayList<Product> items;	
 

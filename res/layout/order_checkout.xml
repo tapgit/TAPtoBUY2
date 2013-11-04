@@ -5,9 +5,10 @@
     android:background="@drawable/portrait_back">
     
       <ScrollView
+        android:id="@+id/checkout_ItemsScroll"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="65"
+        android:layout_above="@+id/checkout_PlaceOrderB"        
         android:fillViewport="true" >
         
      <RelativeLayout
@@ -24,17 +25,7 @@
         android:text="Ship to:"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="8dp"        
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <Button
-        android:id="@+id/checkout_PlaceOrderB"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/checkout_CardsSpinner"        
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Place Order" />
+        android:textAppearance="?android:attr/textAppearanceMedium" /> 
 
     <ListView
         android:id="@+id/checkout_ItemsList"
@@ -81,9 +72,7 @@
     <Spinner
         android:id="@+id/checkout_SpinnerAdd"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
+        android:layout_height="wrap_content"    
         android:layout_below="@+id/spliterAddress" />
 
     <TextView
@@ -101,12 +90,9 @@
     <Spinner
         android:id="@+id/checkout_CardsSpinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/checkout_PaymentMethod"
-        android:layout_alignBottom="@+id/checkout_PaymentMethod"
-        android:layout_alignLeft="@+id/checkout_PlaceOrderB" />
+        android:layout_height="wrap_content"     
+        android:layout_below="@+id/checkout_PaymentMethod"        
+        android:layout_alignLeft="@+id/checkout_SpinnerAdd" />
 
     <TextView
         android:id="@+id/checkout_PaymentMethod"
@@ -119,6 +105,15 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
     
     		</RelativeLayout>
-
     	</ScrollView>
+    	
+      <Button
+        android:id="@+id/checkout_PlaceOrderB"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"                   
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Place Order" />
+      
 </RelativeLayout>
