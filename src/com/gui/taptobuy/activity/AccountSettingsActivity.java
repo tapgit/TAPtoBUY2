@@ -275,6 +275,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 
 		case R.id.accSet_SaveB:
 			new saveSettingsTask().execute(receivedUserdata);
+			AccountSettingsActivity.this.finish();
 			break;		
 		}
 	}
@@ -313,7 +314,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 				AccountSettingsActivity.this.finish();
 			}
 			else{
-				Toast.makeText(AccountSettingsActivity.this, "The shipping address could not be added", Toast.LENGTH_SHORT).show();
+				Toast.makeText(AccountSettingsActivity.this, "Error: Settings could not be saved", Toast.LENGTH_SHORT).show();
 			}
 		}			
 

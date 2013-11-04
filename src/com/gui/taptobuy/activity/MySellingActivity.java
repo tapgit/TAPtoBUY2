@@ -43,32 +43,32 @@ public class MySellingActivity extends Activity  {
 		itemsList = new ArrayList<Product>();
 		list = (ListView)findViewById(R.id.ViewList);	
 		this.layoutInflator = LayoutInflater.from(this);
-		list.setAdapter(new MySellingListCustomAdapter(this,this.layoutInflator, itemsList));
+		//list.setAdapter(new MySellingListCustomAdapter(this,this.layoutInflator, itemsList));
 		list.invalidateViews();
-		new searchProductsTask().execute("aaaaaaaaaaaaaaaaaaaaa");
+		new mySellingsProductsTask().execute();
 	}	
 	
-	private ArrayList<Product> getSearchItems(String searchString){
+	private ArrayList<Product> getMySellingsItems(){
 		HttpClient httpClient = new DefaultHttpClient();
-		String searchDir = Main.hostName +"/sellings/" + Main.userId;
-		HttpGet get = new HttpGet(searchDir);
+		String mySellingsDir = Main.hostName +"/sellings/" + Main.userId;
+		HttpGet get = new HttpGet(mySellingsDir);
 		get.setHeader("content-type", "application/json");
 		try
 		{
 			HttpResponse resp = httpClient.execute(get);
 			if(resp.getStatusLine().getStatusCode() == 200){
 				String jsonString = EntityUtils.toString(resp.getEntity());
-				JSONArray searchResultArray = (new JSONObject(jsonString)).getJSONArray("mySellingItems");
+				JSONArray mySellingsArray = (new JSONObject(jsonString)).getJSONArray("mySellingItems");
 				itemsList = new ArrayList<Product>();
 
-				JSONObject searchElement = null;
+				JSONObject mySellingsElement = null;
 				JSONObject jsonItem = null;
 				Product anItem = null;
 
-				for(int i=0; i<searchResultArray.length();i++){
-					searchElement = searchResultArray.getJSONObject(i);
-					jsonItem = searchElement.getJSONObject("item");
-					if(searchElement.getBoolean("forBid")){
+				for(int i=0; i<mySellingsArray.length();i++){
+					mySellingsElement = mySellingsArray.getJSONObject(i);
+					jsonItem = mySellingsElement.getJSONObject("item");
+					if(mySellingsElement.getBoolean("forBid")){
 						anItem = new ProductForAuction(jsonItem.getInt("id"), jsonItem.getString("title"), jsonItem.getString("timeRemaining"), 
 								jsonItem.getDouble("shippingPrice"), jsonItem.getString("imgLink"),  jsonItem.getString("sellerUsername"), 
 								jsonItem.getDouble("sellerRate"),  jsonItem.getDouble("startinBidPrice"),  jsonItem.getDouble("currentBidPrice"),  jsonItem.getInt("totalBids"));
@@ -84,28 +84,27 @@ public class MySellingActivity extends Activity  {
 
 			}
 			else{
-				Log.e("JSON","search json could not be downloaded.");
+				Log.e("JSON","My Sellings json could not be downloaded.");
 			}
 		}
 		catch(Exception ex)
 		{
-			Log.e("Search","Error!", ex);
+			Log.e("My Sellings","Error!", ex);
 		}
 		return itemsList;
 	}
 
-	private class searchProductsTask extends AsyncTask<String,Void,ArrayList<Product>> {
+	private class mySellingsProductsTask extends AsyncTask<Void,Void,ArrayList<Product>> {
 		public  int downloadadImagesIndex = 0;
-		protected ArrayList<Product> doInBackground(String... params) {
-			return getSearchItems(params[0]);//get search result
+		protected ArrayList<Product> doInBackground(Void... params) {
+			return getMySellingsItems();//get mySellings result
 		}
-		protected void onPostExecute(ArrayList<Product> searchResultItems ) {
+		protected void onPostExecute(ArrayList<Product> mySellingsItems ) {
 			//download images
-			for(Product itm: searchResultItems){
+			for(Product itm: mySellingsItems){
 				new DownloadImageTask().execute(itm.getImgLink());
 			}
-			Toast.makeText(MySellingActivity.this,searchResultItems.size() + "" , Toast.LENGTH_SHORT).show();
-			list.setAdapter(new MySellingListCustomAdapter(MySellingActivity.this, MySellingActivity.this.layoutInflator, searchResultItems));
+			list.setAdapter(new MySellingListCustomAdapter(MySellingActivity.this, MySellingActivity.this.layoutInflator, mySellingsItems));
 		}			
 		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -117,5 +116,8 @@ public class MySellingActivity extends Activity  {
 				itemsList.get(downloadadImagesIndex++).setImg(result);
 			}
 		}
+	}
+	public void mySellingsRefresh(){
+		new mySellingsProductsTask().execute();
 	}
 }

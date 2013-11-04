@@ -2,21 +2,33 @@ package com.gui.taptobuy.customadapter;
 
 import java.util.ArrayList;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.google.gson.Gson;
 import com.gui.taptobuy.Entities.Product;
 import com.gui.taptobuy.Entities.ProductForAuction;
 import com.gui.taptobuy.Entities.ProductForSale;
+import com.gui.taptobuy.Entities.User;
 
 import com.gui.taptobuy.activity.AccountSettingsActivity;
 import com.gui.taptobuy.activity.BidsActivity;
 import com.gui.taptobuy.activity.CartActivity;
 import com.gui.taptobuy.activity.MySellingActivity;
 import com.gui.taptobuy.activity.SearchActivity.MyViewItem;
+import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,6 +93,8 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 				
 				itemHolder.itemPic.setTag(itemHolder);
 				itemRow.setTag(itemHolder);
+				itemHolder.bidListB.setTag(itemHolder);
+				itemHolder.Quit.setTag(itemHolder);
 				
 				itemHolder.bidListB.setOnClickListener(this);
 				itemHolder.AcceptBid.setOnClickListener(this);
@@ -108,6 +122,7 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 				
 				itemHolder.itemPic.setTag(itemHolder);
 				itemRow.setTag(itemHolder);
+				itemHolder.Quit.setTag(itemHolder);
 				itemHolder.Quit.setOnClickListener(this);
 				double shippingPrice = item.getShippingPrice();
 				if(shippingPrice == 0){
@@ -117,6 +132,7 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 					itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Shipping: $" + shippingPrice + ")"); 
 				}        
 			}
+			
 			itemRow.setOnClickListener(this);  			
 			itemHolder.item = item;		
 			itemHolder.productName.setText(item.getTitle()); 		
@@ -130,6 +146,7 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 	@Override
 	public void onClick(View v) {
 		ListView bidList ;
+		MyViewItem itemHolder = (MyViewItem) v.getTag(); 
 		switch(v.getId()){		
 		case R.id.mySell_BidList:
 			
@@ -154,10 +171,48 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 			Toast.makeText(this.activity, "Your Auction has not ended yet", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.mySell_QuitB:
-			Toast.makeText(this.activity, "Your Item will be removed from sale", Toast.LENGTH_SHORT).show();
+			new quitFromSaleTask().execute(itemHolder.item.getId() + "");
+			activity.mySellingsRefresh();//refresh
+			break;
+		case R.id.mySell_QuitfromSellingB:
+			new quitFromSaleTask().execute(itemHolder.item.getId() + "");
+			activity.mySellingsRefresh(); //refresh
 			break;
 		}
 		
+	}
+	private boolean quitFromSellings(String productID){
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpDelete delete = new HttpDelete(Main.hostName + "/sellings/" + Main.userId + "/" + productID);
+		try
+		{
+			HttpResponse resp = httpClient.execute(delete);
+			if(resp.getStatusLine().getStatusCode() == 204){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		catch(Exception ex)
+		{
+			Log.e("Could not remove this item!","Error!", ex);
+			return false;
+		}
+	}
+	private class quitFromSaleTask extends AsyncTask<String,Void,Boolean> {
+		protected Boolean doInBackground(String... productId) {
+			return quitFromSellings(productId[0]);
+		}
+		protected void onPostExecute(Boolean result) {
+			if(result){
+				Toast.makeText(activity, "Item removed.", Toast.LENGTH_SHORT).show();
+			}
+			else{
+				Toast.makeText(activity, "Error: Item could not be removed.", Toast.LENGTH_SHORT).show();
+			}
+		}			
+
 	}
 
 }

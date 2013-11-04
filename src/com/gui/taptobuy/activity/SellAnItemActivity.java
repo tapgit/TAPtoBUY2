@@ -47,11 +47,11 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 	private EditText prodDimen;
 	private EditText prodDescrip;
 	private EditText prodProduct;
-	private EditText prodBuyPriceIn;
-	private EditText prodStartingPrice;
+	private EditText prodPrice;
 	private EditText shippingPrice;
 	private EditText prodTime;
 	private EditText prodQty;
+	private TextView priceTV;
 
 
 	private CheckBox forBidCheck;
@@ -76,13 +76,12 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 		prodBrand = (EditText) findViewById(R.id.sell_inputBrand);
 		prodDimen = (EditText) findViewById(R.id.sell_inputDimensions);
 		prodDescrip = (EditText) findViewById(R.id.sell_inputDescription);
-		prodBuyPriceIn = (EditText) findViewById(R.id.sell_inputBuyNowPrice);
-		prodStartingPrice = (EditText) findViewById(R.id.sell_inputStartingPrice);
+		prodPrice = (EditText) findViewById(R.id.sell_inputPrice);
 		shippingPrice = (EditText) findViewById(R.id.sell_inputShipping);	        
 		prodTime = (EditText) findViewById(R.id.sell_inputNumofDays);
 		forBidCheck = (CheckBox) findViewById(R.id.sell_ForBiddingCheck);
 		picPathInput = (EditText)findViewById(R.id.sell_PicturePath);
-
+		priceTV = (TextView)findViewById(R.id.sell_buyNowPricetext);
 		forBidCheck.setOnClickListener(this);
 
 	}
@@ -94,11 +93,14 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 
 		case R.id.sell_ForBiddingCheck:
 			if(forBidCheck.isChecked()){
-				prodBuyPriceIn.setText("");
-				prodBuyPriceIn.setEnabled(false);
+				priceTV.setText("Starting Price: ");
+				prodQty.setText("1");
+				prodQty.setEnabled(false);
 			}
 			else{
-				prodBuyPriceIn.setEnabled(true);
+				priceTV.setText("Instant Price: ");
+				prodQty.setText("");
+				prodQty.setEnabled(true);
 			}
 			break;
 
@@ -112,15 +114,14 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 
 		case R.id.sell_sellItemB:
 			if(forBidCheck.isChecked()){
-				newProd = new ProductForAuctionInfo(prodID, prodTitle.getText().toString(),prodTime.getText().toString(), Double.parseDouble(prodStartingPrice.getText().toString()), 
-						picPathInput.getText().toString(), sellerUsername, sellerRate,  Double.parseDouble(shippingPrice.getText().toString()), 
-						-1, -1, prodProduct.getText().toString(), prodModel.getText().toString(), prodBrand.getText().toString(), prodDimen.getText().toString(), prodDescrip.getText().toString());    				
-				//add to server
+				newProd = new ProductForAuctionInfo(-1, prodTitle.getText().toString(),prodTime.getText().toString(), Double.parseDouble(shippingPrice.getText().toString()), 
+						null, null, -1,  Double.parseDouble(prodPrice.getText().toString()), Double.parseDouble(prodPrice.getText().toString()),
+						0, prodProduct.getText().toString(), prodModel.getText().toString(), prodBrand.getText().toString(), 
+						prodDimen.getText().toString(), prodDescrip.getText().toString());    				
 			}
 			else{    	    				
-
-				newProd = new ProductForSaleInfo(prodID, prodTitle.getText().toString(),prodTime.getText().toString(), Double.parseDouble(shippingPrice.getText().toString()), 
-						picPathInput.getText().toString(), sellerUsername, sellerRate, Integer.parseInt(prodQty.getText().toString()), Double.parseDouble(prodBuyPriceIn.getText().toString()),
+				newProd = new ProductForSaleInfo(-1, prodTitle.getText().toString(),prodTime.getText().toString(), Double.parseDouble(shippingPrice.getText().toString()), 
+						null, null, -1, Integer.parseInt(prodQty.getText().toString()), Double.parseDouble(prodPrice.getText().toString()),
 						prodProduct.getText().toString(), prodModel.getText().toString(), prodBrand.getText().toString(), prodDimen.getText().toString(), prodDescrip.getText().toString());
 
 				//add to server
