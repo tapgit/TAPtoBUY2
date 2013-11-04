@@ -253,6 +253,7 @@
                 android:textAppearance="?android:attr/textAppearance"
                 android:textStyle="bold" />
 
+<<<<<<< HEAD
             <EditText
                 android:id="@+id/sell_inputDescription"
                 android:layout_width="wrap_content"
@@ -264,6 +265,19 @@
                 android:ems="10"
                 android:inputType="textMultiLine" />
         </RelativeLayout>
+=======
+        <EditText
+            android:id="@+id/sell_PicturePath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sell_ForBiddingCheck"
+            android:layout_alignBottom="@+id/sell_ForBiddingCheck"
+            android:layout_toLeftOf="@+id/sell_ForBiddingCheck"
+            android:layout_toRightOf="@+id/sell_uploadPicB"
+            android:singleLine="true"
+            android:enabled="false"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+>>>>>>> refs/remotes/origin/master
 
     </ScrollView>
 

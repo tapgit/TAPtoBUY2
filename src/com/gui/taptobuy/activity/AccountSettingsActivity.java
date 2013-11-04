@@ -260,6 +260,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 			break;
 
 		case R.id.accSet_RemoveB:
+
 			CreditCard[] oldsC = receivedUserdata.getCredit_cards();
 			if(oldsC.length!=0){
 				CreditCard[] news = new CreditCard[oldsC.length-1];
@@ -271,6 +272,10 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 				receivedUserdata.setCredit_cards(news);
 				refreshSpinnersData();
 			}	
+
+			
+			Toast.makeText(this, "Card successfully Removed", Toast.LENGTH_SHORT).show();	
+
 			break;
 
 		case R.id.accSet_SaveB:
@@ -381,6 +386,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 			return getMyAccountSettings();
 		}
 		protected void onPostExecute(User receivedUserdata) {
+
 			firstname.setText(receivedUserdata.getFirstname());
 			lastname.setText(receivedUserdata.getLastname());
 			password.setText(receivedUserdata.getPassword());
@@ -424,6 +430,16 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 		shipAddrSpinner.setAdapter(shippingAddressesAdapter);
 		ArrayAdapter<String> creditCardsAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, creditCardsIdentifiers);
 		cardsSpinner.setAdapter(creditCardsAdapter);
+
+			
+			ArrayAdapter<String> shippingAddressesAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, shippingAddressesIdentifiers);
+			shipAddrSpinner.setAdapter(shippingAddressesAdapter);
+
+			ArrayAdapter<String> creditCardsAdapter = new ArrayAdapter<String>(AccountSettingsActivity.this,android.R.layout.simple_list_item_single_choice, creditCardsIdentifiers);
+			cardsSpinner.setAdapter(creditCardsAdapter);
+
+		}			
+
 
 	}
 }

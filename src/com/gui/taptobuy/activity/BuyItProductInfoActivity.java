@@ -53,7 +53,7 @@ public class BuyItProductInfoActivity extends Activity implements OnClickListene
 		prodTime.setText(showingProductInfo.getTimeRemaining());
 		prodBrand.setText("Brand: " + showingProductInfo.getBrand());
 		prodDimen.setText("Dimensions: " + showingProductInfo.getDimensions());
-		prodDescrip.setText("Description: " + showingProductInfo.getDescription());
+		prodDescrip.setText(showingProductInfo.getDescription());
 		prodSellerUserN.setText("Seller: " + showingProductInfo.getSellerUsername());
 
 		double shippingPrice = showingProductInfo.getShippingPrice();

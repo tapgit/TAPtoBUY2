@@ -51,23 +51,25 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 	private EditText shippingPrice;
 	private EditText prodTime;
 	private EditText prodQty;
+<<<<<<< HEAD
 	private TextView priceTV;
 
+=======
+	private TextView prodPrice;
+>>>>>>> refs/remotes/origin/master
 
 	private CheckBox forBidCheck;
 	private Product newProd;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
-
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.account_sellanitem);	 
 
 		((Button) findViewById(R.id.sell_uploadPicB)).setOnClickListener(this);  
 		((Button) findViewById(R.id.sell_sellItemB)).setOnClickListener(this); 
-
 
 		prodTitle = (EditText) findViewById(R.id.sell_inputProdTitle);
 		prodQty = (EditText) findViewById(R.id.sell_inputQty);
@@ -81,18 +83,22 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 		prodTime = (EditText) findViewById(R.id.sell_inputNumofDays);
 		forBidCheck = (CheckBox) findViewById(R.id.sell_ForBiddingCheck);
 		picPathInput = (EditText)findViewById(R.id.sell_PicturePath);
+<<<<<<< HEAD
 		priceTV = (TextView)findViewById(R.id.sell_buyNowPricetext);
+=======
+		prodPrice= (TextView)findViewById(R.id.sell_buyNowPricetext);
+
+>>>>>>> refs/remotes/origin/master
 		forBidCheck.setOnClickListener(this);
-
 	}
-
 	@Override
-	public void onClick(View v) {	
-
+	public void onClick(View v)
+	{
 		switch(v.getId()){
 
 		case R.id.sell_ForBiddingCheck:
 			if(forBidCheck.isChecked()){
+<<<<<<< HEAD
 				priceTV.setText("Starting Price: ");
 				prodQty.setText("1");
 				prodQty.setEnabled(false);
@@ -101,6 +107,15 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 				priceTV.setText("Instant Price: ");
 				prodQty.setText("");
 				prodQty.setEnabled(true);
+=======
+				prodBuyPriceIn.setText("");
+				prodBuyPriceIn.setEnabled(false);	
+				prodPrice.setTextColor(Color.GRAY);
+			}
+			else if(forBidCheck.isChecked()){
+				prodBuyPriceIn.setEnabled(true);
+				prodPrice.setTextColor(Color.BLACK);
+>>>>>>> refs/remotes/origin/master
 			}
 			break;
 
@@ -129,7 +144,6 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 			Toast.makeText(this, "Your product has been place on sale", Toast.LENGTH_SHORT).show();
 			break;
 		}	
-
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -172,7 +186,11 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 			}
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> refs/remotes/origin/master
 	private class UploadImageTask extends AsyncTask<String, Void, Boolean> {
 		private ProgressDialog dialog = null;
 		protected void onPreExecute() {

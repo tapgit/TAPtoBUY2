@@ -2,23 +2,29 @@ package com.gui.taptobuy.customadapter;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gui.taptobuy.Entities.Product;
 import com.gui.taptobuy.Entities.ProductForSale;
 import com.gui.taptobuy.activity.BidProductInfoActivity;
 import com.gui.taptobuy.activity.BuyItProductInfoActivity;
 import com.gui.taptobuy.activity.CartActivity;
+import com.gui.taptobuy.activity.OrderCheckoutActivity;
 import com.gui.taptobuy.activity.SearchActivity.MyViewItem;
 import com.gui.taptobuy.phase1.R;
 
@@ -94,53 +100,71 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 	///////////////////////////////////////////////////////////////////////
 	@Override
 	public View getView(int position, View itemRow, ViewGroup parent) {
-		MyViewItem itemHolder;
-		ProductForSale item = items.get(position);
-
+		final MyViewItem itemHolder;
+		final ProductForSale item = items.get(position);
+		
 		itemRow = layoutInflater.inflate(R.layout.cart_productrow, parent, false);
 		itemHolder = new MyViewItem();
+		itemHolder.item = item;
+		
 		itemHolder.itemPic = (ImageView) itemRow.findViewById(R.id.cartProductPic);
 		itemHolder.productName = (TextView) itemRow.findViewById(R.id.cartProdName);
 		itemHolder.sellerUserName = (TextView) itemRow.findViewById(R.id.cartSellerUsername);
 		itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.cartPrice);
 		itemHolder.sellerRating = (RatingBar)itemRow.findViewById(R.id.cartSellerRating);
-		//itemHolder.check = (CheckBox) itemRow.findViewById(R.id.cartcheckBox);
+		itemHolder.check = (CheckBox) itemRow.findViewById(R.id.cartSelectedCheck);
 		itemHolder.cartBuy = (Button) itemRow.findViewById(R.id.cartBuyNowB);
-		itemHolder.cartRemove = (Button) itemRow.findViewById(R.id.cartBuyItRemoveB);
+		itemHolder.cartRemove = (Button) itemRow.findViewById(R.id.cartBuyItRemoveB);	
+		
 
 		itemHolder.sellerRating.setTag(itemHolder);
 		itemHolder.itemPic.setTag(itemHolder);
 		itemHolder.cartBuy.setTag(itemHolder);
-
+		itemHolder.check.setTag(itemHolder);
 		itemHolder.cartRemove.setTag(itemHolder);
-
-		// itemHolder.check.setTag(itemHolder);
+	//////////////////	
+		itemHolder.check.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+		{    
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				
+				  if(isChecked){
+	                	CartActivity.checkoutListIDs.add(itemHolder.item.getId());
+	                	//Toast.makeText(activity,CartActivity.checkoutListIDs.size()+"", Toast.LENGTH_SHORT).show();
+	                }                  
+	                else{
+	                	int checkedIndex = CartActivity.checkoutListIDs.indexOf(itemHolder.item.getId());
+	                	CartActivity.checkoutListIDs.remove(checkedIndex);
+	                	//Toast.makeText(activity,CartActivity.checkoutListIDs.size()+"", Toast.LENGTH_SHORT).show();
+	                }    
+			}
+        });
+	////////////////////////
+		
+		CartActivity.checkboxList.add(itemHolder.check);
+		
 		itemRow.setTag(itemHolder);
-
 		itemRow.setOnClickListener(this);
-
-		itemHolder.cartRemove.setTag(itemHolder);           
+		itemHolder.cartBuy.setOnClickListener(this);
+		itemHolder.cartRemove.setOnClickListener(this);
 		
-	//	itemHolder.check.setTag(itemHolder);
-		itemRow.setTag(itemHolder);      
-		
-		itemRow.setOnClickListener(this);  
-
-		itemHolder.item = item;
 		itemHolder.productName.setText(item.getTitle());
 		itemHolder.sellerUserName.setText(item.getSellerUsername());
+		
 		double shippingPrice = item.getShippingPrice();
-		if(shippingPrice == 0){
+		if(shippingPrice == 0)
+		{
 			itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Free Shipping)");
 		}
-		else{
+		else
+		{
 			itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Shipping: $" + shippingPrice + ")");
 		}
 
 		itemHolder.sellerRating.setRating((float)item.getSellerRate());
 		//itemHolder.timeRemaining.setText(item.getTimeRemaining());
-
-		itemHolder.itemPic.setImageBitmap(item.getImg());
+		itemHolder.itemPic.setImageBitmap(item.getImg());		
 
 		return itemRow;
 	}
@@ -149,14 +173,21 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 	public void onClick(View v)
 	{
 		MyViewItem itemHolder = (MyViewItem) v.getTag();
-		new productInfoTask().execute(itemHolder.item.getId() + ""); 
-		
-		//// anadir listener de los botones del cart para tener acceso a los checkbox
-		
-		
+	
+		if(v.getId() ==  R.id.cartBuyItRemoveB){
+			itemHolder.check.setChecked(false);// para que lo saque del array
+		}
+		else if(v.getId() == R.id.cartBuyNowB){
+			Intent intent = new Intent(activity,OrderCheckoutActivity.class);
+			intent.putExtra("productID", itemHolder.item.getId());
+			activity.startActivity(intent);
+		}
+		else			
+			new productInfoTask().execute(itemHolder.item.getId() + ""); 		
 	}
 
-	private Product getProductInfo(String productId){
+	private Product getProductInfo(String productId)
+	{
 		HttpClient httpClient = new DefaultHttpClient();
 		String productInfoDir = Main.hostName +"/productInfo/" + productId;
 		HttpGet get = new HttpGet(productInfoDir);
