@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.gui.taptobuy.Entities.Bid;
 import com.gui.taptobuy.Entities.Product;
 import com.gui.taptobuy.Entities.ProductForAuction;
 import com.gui.taptobuy.Entities.ProductForSale;
@@ -19,7 +24,9 @@ import com.gui.taptobuy.activity.AccountSettingsActivity;
 import com.gui.taptobuy.activity.BidsActivity;
 import com.gui.taptobuy.activity.CartActivity;
 import com.gui.taptobuy.activity.MySellingActivity;
+import com.gui.taptobuy.activity.SearchActivity;
 import com.gui.taptobuy.activity.SearchActivity.MyViewItem;
+import com.gui.taptobuy.datatask.ImageManager;
 import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
@@ -27,12 +34,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,8 +52,10 @@ import android.widget.Toast;
 
 public class MySellingListCustomAdapter extends BaseAdapter implements OnClickListener {
 	private MySellingActivity activity;
-	private LayoutInflater layoutInflater;
+	private static LayoutInflater layoutInflater;
 	private ArrayList<Product> items;	
+	private ArrayList<Bid> bidList;
+	private ListView bidListView ;
 	
 	public MySellingListCustomAdapter (MySellingActivity a, LayoutInflater l, ArrayList<Product> products)
     {
@@ -145,16 +156,14 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 
 	@Override
 	public void onClick(View v) {
-		ListView bidList ;
 		MyViewItem itemHolder = (MyViewItem) v.getTag(); 
 		switch(v.getId()){		
 		case R.id.mySell_BidList:
-			
 			final Dialog dialog = new Dialog(activity);
-
 			dialog.setContentView(R.layout.bidlist_dialog);
 			dialog.setTitle("Item's Bids");
-		//	bidList.setAdapter(MySellingBidListCustomAdapter(this.activity,this.layoutInflater), array de bids)
+			bidListView = (ListView) dialog.findViewById(R.id.bidlistView);
+		    new getBidListTask().execute("1");
 			Button okBTN = (Button) dialog.findViewById(R.id.bidOkButton);			
 			okBTN.setOnClickListener(new View.OnClickListener() {
 
@@ -164,7 +173,7 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 					dialog.dismiss();
 				}
 			});    
-			dialog.show();			
+			dialog.show();	
 			
 			break;
 		case R.id.mySell_AcceptBidB:
@@ -213,6 +222,48 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 			}
 		}			
 
+	}
+	
+	private ArrayList<Bid> getBidList(String productId){
+		HttpClient httpClient = new DefaultHttpClient();
+		String bidListDir = Main.hostName +"/bidlist/" + productId;
+		HttpGet get = new HttpGet(bidListDir);
+		get.setHeader("content-type", "application/json");
+		try
+		{
+			HttpResponse resp = httpClient.execute(get);
+			if(resp.getStatusLine().getStatusCode() == 200){
+				String jsonString = EntityUtils.toString(resp.getEntity());
+				JSONArray bidListArray = (new JSONObject(jsonString)).getJSONArray("bidlist");
+				bidList = new ArrayList<Bid>();
+
+				JSONObject bidListElement = null;
+
+				for(int i=0; i<bidListArray.length();i++){
+					bidListElement = bidListArray.getJSONObject(i);
+					bidList.add(new Bid(-1, bidListElement.getDouble("amount"), -1, bidListElement.getString("username")));
+				}
+
+			}
+			else{
+				Log.e("JSON","bidlist json could not be downloaded.");
+			}
+		}
+		catch(Exception ex)
+		{
+			Log.e("BidList","Error!", ex);
+		}
+		return bidList;
+	}
+
+	private class getBidListTask extends AsyncTask<String,Void,ArrayList<Bid>> {
+		protected ArrayList<Bid> doInBackground(String... productId) {
+			return getBidList(productId[0]);//get bidlist de bids puestos a este product
+		}
+		protected void onPostExecute(ArrayList<Bid> bidList ) {
+			//llenar con array de bid
+			bidListView.setAdapter(new MySellingBidListCustomAdapter(activity,layoutInflater, bidList));
+		}			
 	}
 
 }
