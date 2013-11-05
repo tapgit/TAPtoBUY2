@@ -29,6 +29,9 @@ public class BuyItProductInfoActivity extends Activity implements OnClickListene
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.productinfo_buynow);
+		
+		Intent intent = getIntent();
+		String previousActivity = intent.getStringExtra("previousActivity");
 
 		prodPic = (ImageView) findViewById(R.id.BuyInfoProdPic);
 		prodTitle = (TextView) findViewById(R.id.BuyInfoProdTitle);
@@ -40,11 +43,26 @@ public class BuyItProductInfoActivity extends Activity implements OnClickListene
 		prodSellerUserN = (TextView) findViewById(R.id.BuyInfoSellerUserName);
 		prodPriceAndShip = (TextView) findViewById(R.id.BuyInfoPrice);
 		sellerRating = (RatingBar)findViewById(R.id.BuyInfoSellerRate);
-
-		buyNow = (Button) findViewById(R.id.BuyInfoBuyNowb);
-		buyNow.setOnClickListener(this);
-		addtoCart = (Button) findViewById(R.id.BuyInfoAddToCartb);
-		addtoCart.setOnClickListener(this);
+		
+		// dependiendo de que activity la llamo, se activan o desactivan los botones de buy y addtoCArt
+		if(previousActivity.equals("OrderCheckout")){
+			buyNow = (Button) findViewById(R.id.BuyInfoBuyNowb);
+			buyNow.setVisibility(View.GONE);
+			addtoCart = (Button) findViewById(R.id.BuyInfoAddToCartb);
+			addtoCart.setVisibility(View.GONE);
+		}
+		else if (previousActivity.equals("Cart")){
+			buyNow = (Button) findViewById(R.id.BuyInfoBuyNowb);
+			buyNow.setOnClickListener(this);
+			addtoCart = (Button) findViewById(R.id.BuyInfoAddToCartb);
+			addtoCart.setVisibility(View.GONE);
+		}
+		else if(previousActivity.equals("Search")){
+			buyNow = (Button) findViewById(R.id.BuyInfoBuyNowb);
+			buyNow.setOnClickListener(this);
+			addtoCart = (Button) findViewById(R.id.BuyInfoAddToCartb);
+			addtoCart.setOnClickListener(this);
+		}	
 
 		sellerRating.setRating((float)showingProductInfo.getSellerRate());
 		prodPic.setImageBitmap(showingProductInfo.getImg());
@@ -63,14 +81,16 @@ public class BuyItProductInfoActivity extends Activity implements OnClickListene
 		else{
 			prodPriceAndShip.setText("$"+showingProductInfo.getInstantPrice() + " (Shipping: $" + showingProductInfo.getShippingPrice() + ")");
 		}
-
 	}
 
 	@Override
 	public void onClick(View v) {
 
 		if(v.getId() == R.id.BuyInfoBuyNowb){
-			startActivity(new Intent(this, OrderCheckoutActivity.class));
+			Intent intent = new Intent(this, OrderCheckoutActivity.class);
+			intent.putExtra("previousActivity", "BuyItProductInfo");
+			intent.putExtra("productID", showingProductInfo.getId());
+			startActivity(intent);
 		}
 		else if(v.getId()== R.id.BuyInfoAddToCartb){
 			//envia el producto para el servidor con Id del carrito producto y usuario

@@ -4,6 +4,7 @@ import com.gui.taptobuy.Entities.ProductForAuctionInfo;
 import com.gui.taptobuy.phase1.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +27,9 @@ public class BidProductInfoActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.productinfo_bid);
+		
+		Intent intent = getIntent();
+		String previousActivity = intent.getStringExtra("previousActivity");
 
 		prodPic = (ImageView) findViewById(R.id.BidInfoProdPic);
 		prodTitle = (TextView) findViewById(R.id.BidInfoProdTitle);
@@ -38,11 +42,19 @@ public class BidProductInfoActivity extends Activity implements OnClickListener{
 		prodPrice = (TextView) findViewById(R.id.BidsInfoCurrentBid);
 		prodShipPrice = (TextView) findViewById(R.id.BidInfoShippingPrice);
 		sellerRating = (RatingBar)findViewById(R.id.BidInfoSellerRate);
-
+		
+		if(previousActivity.equals("OrderCheckout")){
+			placeBid = (Button) findViewById(R.id.BidInfoPlaceBidb);
+			placeBid.setVisibility(View.GONE);
+			bidInput = (EditText) findViewById(R.id.BidInfoPlaceBidInput);
+			bidInput.setVisibility(View.GONE);
+		}
+		else{
 		placeBid = (Button) findViewById(R.id.BidInfoPlaceBidb);
 		bidInput = (EditText) findViewById(R.id.BidInfoPlaceBidInput);
 		placeBid.setOnClickListener(this);
 		bidInput.setOnClickListener(this);
+		}
 
 		sellerRating.setRating((float)showingProductInfo.getSellerRate());
 		prodPic.setImageBitmap(showingProductInfo.getImg());

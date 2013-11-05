@@ -3,13 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
     android:background="@drawable/portrait_back">
-    
-      <ScrollView
-        android:id="@+id/checkout_ItemsScroll"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/checkout_PlaceOrderB"        
-        android:fillViewport="true" >
+   
         
      <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -29,9 +23,8 @@
 
     <ListView
         android:id="@+id/checkout_ItemsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"       
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
         android:layout_alignLeft="@+id/checkout_TotalPayment"
         android:layout_below="@+id/checkout_ItemsInOrderText" >
 
@@ -80,32 +73,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textShipTo"
-        android:layout_below="@+id/checkout_SpinnerAdd"
-        android:layout_marginTop="3dp"
+        android:layout_below="@+id/checkout_SpinnerAdd"       
         android:layout_marginBottom="3dp"
         android:inputType="textMultiLine"
         android:text="Miradero de Humacao \n #77 Camino de Las Vistas \n 00791 Humacao PR\n 787-850-5557"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <Spinner
-        android:id="@+id/checkout_CardsSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"     
-        android:layout_below="@+id/checkout_PaymentMethod"        
-        android:layout_alignLeft="@+id/checkout_SpinnerAdd" />
 
     <TextView
         android:id="@+id/checkout_PaymentMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_TotalPayment"
-        android:layout_alignLeft="@+id/checkout_TotalPayment"
-        android:layout_marginBottom="14dp"
+        android:layout_alignLeft="@+id/checkout_TotalPayment"      
         android:text="Payment method: "
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/checkout_CardsSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkout_PaymentMethod" />
     
     		</RelativeLayout>
-    	</ScrollView>
+    	
     	
       <Button
         android:id="@+id/checkout_PlaceOrderB"

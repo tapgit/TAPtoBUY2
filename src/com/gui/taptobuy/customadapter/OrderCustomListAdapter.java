@@ -7,7 +7,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.gui.taptobuy.Entities.Product;
@@ -17,16 +16,14 @@ import com.gui.taptobuy.Entities.ProductForSale;
 import com.gui.taptobuy.Entities.ProductForSaleInfo;
 import com.gui.taptobuy.activity.BidProductInfoActivity;
 import com.gui.taptobuy.activity.BuyItProductInfoActivity;
-import com.gui.taptobuy.activity.SearchActivity;
 import com.gui.taptobuy.activity.SearchActivity.MyViewItem;
-
 import com.gui.taptobuy.datatask.ImageManager;
 import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,47 +31,41 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class SearchResultsCustomListAdapter extends BaseAdapter implements OnClickListener{
-
-	private SearchActivity activity;	
+public class OrderCustomListAdapter extends BaseAdapter implements OnClickListener {
+	
+	private Activity activity;
 	private LayoutInflater layoutInflater;
 	private ArrayList<Product> items;	
 
-	public SearchResultsCustomListAdapter (SearchActivity a, ImageView i, LayoutInflater l, ArrayList<Product> items)
+	public OrderCustomListAdapter (Activity a, LayoutInflater l, ArrayList<Product> items)
 	{
 		this.activity = a;
-		
 		this.layoutInflater = l;
 		this.items = items;
 	}
-	////////////////////////////////////////////////////////// 
+
 	@Override
 	public int getCount() {
+		// TODO Auto-generated method stub
 		return this.items.size();
 	}
 
 	@Override
-	public boolean areAllItemsEnabled () 
-	{
-		return true;
-	}
-
-	@Override
 	public Object getItem(int arg0) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public long getItemId(int pos) {
-		return pos;
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return position;
 	}
-	///////////////////////////////////////////////////////////////////////
+
 	@Override
 	public View getView(int position, View itemRow, ViewGroup parent) {
 		MyViewItem itemHolder;
@@ -142,12 +133,11 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 	}
 
 	@Override
-	public void onClick(View v) 
-	{
+	public void onClick(View v) {
 		MyViewItem itemHolder = (MyViewItem) v.getTag();    
 		new productInfoTask().execute(itemHolder.item.getId() + "");
 	}
-
+	
 	private Product getProductInfo(String productId){
 		HttpClient httpClient = new DefaultHttpClient();
 		String productInfoDir = Main.hostName +"/productInfo/" + productId;
@@ -206,13 +196,13 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 				if(downloadedProductInfo instanceof ProductForAuctionInfo){//for auction
 					BidProductInfoActivity.showingProductInfo = (ProductForAuctionInfo) downloadedProductInfo;
 					intent = new Intent(activity, BidProductInfoActivity.class);
-					intent.putExtra("previousActivity", "Search");
+					intent.putExtra("previousActivity", "OrderCheckout");
 					activity.startActivity(intent);			
 				}
 				else{//for sale
 					BuyItProductInfoActivity.showingProductInfo = (ProductForSaleInfo) downloadedProductInfo;					
 					intent = new Intent(activity, BuyItProductInfoActivity.class);
-					intent.putExtra("previousActivity", "Search");
+					intent.putExtra("previousActivity", "OrderCheckout");
 					activity.startActivity(intent);
 				}
 			}

@@ -59,7 +59,6 @@ public class SearchActivity extends Activity implements OnClickListener   {
 	private Button myTap;	
 	private Spinner sorter;
 	private EditText searchET;
-	//private boolean searchDone;
 	public static ArrayList<Product> searchResultItems;
 	private ListView itemsList;
 	private LayoutInflater layoutInflator;
@@ -108,8 +107,6 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		sorter = (Spinner) findViewById (R.id.SortSpinner);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_single_choice, sortingOptions);
 		sorter.setAdapter(adapter);
-
-
 
 		// setting action for when an sorting instance is selected
 		sorter.setOnItemSelectedListener(new OnItemSelectedListener(){	

@@ -80,13 +80,7 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 	@Override
 	public int getCount() {
 		return this.items.size();
-	}
-
-	@Override
-	public boolean areAllItemsEnabled ()
-	{
-		return true;
-	}
+	}	
 
 	@Override
 	public Object getItem(int arg0) {
@@ -131,12 +125,12 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 				
 				  if(isChecked){
 	                	CartActivity.checkoutListIDs.add(itemHolder.item.getId());
-	                	//Toast.makeText(activity,CartActivity.checkoutListIDs.size()+"", Toast.LENGTH_SHORT).show();
+	                	Toast.makeText(activity,CartActivity.checkoutListIDs.size()+"", Toast.LENGTH_SHORT).show();
 	                }                  
 	                else{
 	                	int checkedIndex = CartActivity.checkoutListIDs.indexOf(itemHolder.item.getId());
 	                	CartActivity.checkoutListIDs.remove(checkedIndex);
-	                	//Toast.makeText(activity,CartActivity.checkoutListIDs.size()+"", Toast.LENGTH_SHORT).show();
+	                	Toast.makeText(activity,CartActivity.checkoutListIDs.size()+"", Toast.LENGTH_SHORT).show();
 	                }    
 			}
         });
@@ -175,11 +169,15 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 		MyViewItem itemHolder = (MyViewItem) v.getTag();
 	
 		if(v.getId() ==  R.id.cartBuyItRemoveB){
+			
 			itemHolder.check.setChecked(false);// para que lo saque del array
 		}
 		else if(v.getId() == R.id.cartBuyNowB){
 			Intent intent = new Intent(activity,OrderCheckoutActivity.class);
-			intent.putExtra("productID", itemHolder.item.getId());
+			ArrayList<Integer> productID = new ArrayList<Integer>();
+			productID.add(itemHolder.item.getId());
+			intent.putIntegerArrayListExtra("productsID", productID);
+			intent.putExtra("previousActivity", "Cart");
 			activity.startActivity(intent);
 		}
 		else			
@@ -200,13 +198,13 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 				String jsonString = EntityUtils.toString(resp.getEntity());
 				JSONObject json = new JSONObject(jsonString);
 				JSONObject itemInfoJson = json.getJSONObject("productInfo");
-				if(json.getBoolean("forBid")){
-					theItem = new ProductForAuctionInfo(itemInfoJson.getInt("id"), itemInfoJson.getString("title"), itemInfoJson.getString("timeRemaining"),
-							itemInfoJson.getDouble("shippingPrice"), itemInfoJson.getString("imgLink"), itemInfoJson.getString("sellerUsername"),
-							itemInfoJson.getDouble("sellerRate"), itemInfoJson.getDouble("startinBidPrice"), itemInfoJson.getDouble("currentBidPrice"), itemInfoJson.getInt("totalBids"),
-							itemInfoJson.getString("product"),itemInfoJson.getString("model"),itemInfoJson.getString("brand"),itemInfoJson.getString("dimensions"),itemInfoJson.getString("description"));
-				}
-				else{
+				if(!json.getBoolean("forBid")){
+//					theItem = new ProductForAuctionInfo(itemInfoJson.getInt("id"), itemInfoJson.getString("title"), itemInfoJson.getString("timeRemaining"),
+//							itemInfoJson.getDouble("shippingPrice"), itemInfoJson.getString("imgLink"), itemInfoJson.getString("sellerUsername"),
+//							itemInfoJson.getDouble("sellerRate"), itemInfoJson.getDouble("startinBidPrice"), itemInfoJson.getDouble("currentBidPrice"), itemInfoJson.getInt("totalBids"),
+//							itemInfoJson.getString("product"),itemInfoJson.getString("model"),itemInfoJson.getString("brand"),itemInfoJson.getString("dimensions"),itemInfoJson.getString("description"));
+//				}
+//				else{
 					theItem = new ProductForSaleInfo(itemInfoJson.getInt("id"), itemInfoJson.getString("title"), itemInfoJson.getString("timeRemaining"),
 							itemInfoJson.getDouble("shippingPrice"), itemInfoJson.getString("imgLink"), itemInfoJson.getString("sellerUsername"),
 							itemInfoJson.getDouble("sellerRate"), itemInfoJson.getInt("remainingQuantity"), itemInfoJson.getDouble("instantPrice"),
@@ -241,13 +239,12 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 			}
 			protected void onPostExecute(Bitmap result) {
 				downloadedProductInfo.setImg(result);
-				if(downloadedProductInfo instanceof ProductForAuctionInfo){//for auction
-					BidProductInfoActivity.showingProductInfo = (ProductForAuctionInfo) downloadedProductInfo;
-					activity.startActivity(new Intent(activity, BidProductInfoActivity.class));
-				}
-				else{//for sale
+				if(downloadedProductInfo instanceof ProductForSale)
+				{				
 					BuyItProductInfoActivity.showingProductInfo = (ProductForSaleInfo) downloadedProductInfo;
-					activity.startActivity(new Intent(activity, BuyItProductInfoActivity.class));
+					Intent intent = new Intent(activity, BuyItProductInfoActivity.class);
+					intent.putExtra("previousActivity", "Cart");
+					activity.startActivity(intent);
 				}
 			}
 		}

@@ -84,7 +84,11 @@ public class CartActivity extends Activity implements OnClickListener{
 			case R.id.cartSellectAllB:
 				Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
 				for(CheckBox check: checkboxList){
+					////// DEbugging
 					//Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
+					for(int i=0; i< checkoutListIDs.size(); i++)
+					System.out.println(checkoutListIDs.get(i)+" ");
+					///////
 					if(!check.isChecked()){
 					check.setChecked(true);					
 					}
@@ -94,7 +98,8 @@ public class CartActivity extends Activity implements OnClickListener{
 			case R.id.cartBuySelectedB:
 				// pasar la lista de los items que estan en el cart para la lista del checkout
 				Intent intent = new Intent(this,OrderCheckoutActivity.class);
-				intent.putIntegerArrayListExtra("selectedItems", checkoutListIDs);
+				intent.putIntegerArrayListExtra("productsID", checkoutListIDs);
+				intent.putExtra("previousActivity", "Cart");
 				startActivity(intent);		
 			
 			break;
@@ -102,7 +107,10 @@ public class CartActivity extends Activity implements OnClickListener{
 			case R.id.cartRemoveSelectedB:
 				Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
 				for(CheckBox check: checkboxList){
-				//	Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
+				//	Toast.makeText(this, this.checkoutList.size()+"", Toast.LENGTH_SHORT).show();
+					for(int i=0; i< checkoutListIDs.size(); i++)
+						System.out.println(checkoutListIDs.get(i)+" ");
+					//////
 					if(check.isChecked()){
 					check.setChecked(false);					
 					}

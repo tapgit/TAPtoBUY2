@@ -26,7 +26,7 @@
         android:fontFamily="comic sans"
         android:inputType="textMultiLine"
         android:text="Product Title"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 
     <TextView
@@ -79,16 +79,6 @@
         android:text="Price+Shipping"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:id="@+id/BuyInfoBuyNowb"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="46dp"
-        android:layout_alignBaseline="@+id/BuyInfoAddToCartb"
-        android:layout_alignBottom="@+id/BuyInfoAddToCartb"
-        android:layout_alignLeft="@+id/BuyInfoPrice"
-        android:text="Buy Now" />
-
     <TextView
         android:id="@+id/buyInfotimeleft"
         android:layout_width="wrap_content"
@@ -103,6 +93,7 @@
         style="@style/productRatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:isIndicator="true"
         android:layout_alignRight="@+id/BuyInfoSellerUserName"
         android:layout_alignTop="@+id/BuyInfoSellerUserName" />
 
@@ -113,7 +104,7 @@
         android:layout_height="46dp"
         android:layout_alignRight="@+id/BuyInfoPrice"
         android:layout_below="@+id/BuyInfoPrice"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="15dp"
         android:text="Add to Cart" />
 
     <TextView
@@ -125,7 +116,7 @@
         android:layout_below="@+id/BuyInfoDimensions"
         android:text="Description:"
         android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/BuyInfoDescription"
@@ -138,5 +129,15 @@
         android:text="Nokia 920, New, unlock 32Gb for any network black 8MP camera Windows 8 phone"
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
+
+    <Button
+        android:id="@+id/BuyInfoBuyNowb"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_marginTop="15dp"
+        android:layout_width="100dp"
+        android:layout_height="46dp"
+        android:layout_alignLeft="@+id/BuyInfoPrice"
+        android:layout_below="@+id/BuyInfoPrice"
+        android:text="Buy Now" />
 
 </RelativeLayout>
