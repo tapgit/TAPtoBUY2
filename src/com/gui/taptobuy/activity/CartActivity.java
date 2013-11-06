@@ -37,12 +37,12 @@ import android.widget.Toast;
 
 public class CartActivity extends Activity implements OnClickListener{	
 
-	private ListView itemsList;
+	public static ListView itemsList;
 	private LayoutInflater layoutInflator;
 	private Button SelectAllB;
 	private Button buySelectedB;
 	private Button removeB;
-	
+
 	public static ArrayList<ProductForSale> cartResultItems;
 	public static ArrayList<Integer> checkoutListIDs;
 	public static ArrayList<CheckBox> checkboxList;
@@ -51,70 +51,88 @@ public class CartActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.cart);
-		
+
 		cartResultItems = new ArrayList<ProductForSale>();
 		checkoutListIDs = new ArrayList<Integer>();
 		checkboxList = new ArrayList<CheckBox>();
-		
-	
-				this.layoutInflator = LayoutInflater.from(this);
-				itemsList = (ListView)findViewById(R.id.listView1);
-		
-				SelectAllB = (Button) findViewById(R.id.cartSellectAllB);
-				SelectAllB.setOnClickListener(this);
-		
-				buySelectedB = (Button) findViewById(R.id.cartBuySelectedB);
-				buySelectedB.setOnClickListener(this);
-		
-				removeB = (Button) findViewById(R.id.cartRemoveSelectedB);
-				removeB.setOnClickListener(this);
+
+
+		this.layoutInflator = LayoutInflater.from(this);
+		itemsList = (ListView)findViewById(R.id.listView1);
+
+		SelectAllB = (Button) findViewById(R.id.cartSellectAllB);
+		SelectAllB.setOnClickListener(this);
+
+		buySelectedB = (Button) findViewById(R.id.cartBuySelectedB);
+		buySelectedB.setOnClickListener(this);
+
+		removeB = (Button) findViewById(R.id.cartRemoveSelectedB);
+		removeB.setOnClickListener(this);
 
 		new cartProductsTask().execute();//get products on cart
-		
-		
-		Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();	
+
+
+		//Toast.makeText(this, "size: " + this.checkboxList.size(), Toast.LENGTH_SHORT).show();	
 	}
 
 
 	@Override
 	public void onClick(View v) {	
-		
+
 		switch (v.getId())
 		{		
-			case R.id.cartSellectAllB:
-				Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
+		case R.id.cartSellectAllB:
+			if(cartResultItems.isEmpty()){
+				Toast.makeText(this, "Cart is empty...", Toast.LENGTH_SHORT).show();
+			}
+			else{
 				for(CheckBox check: checkboxList){
-					////// DEbugging
-					//Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
-					for(int i=0; i< checkoutListIDs.size(); i++)
-					System.out.println(checkoutListIDs.get(i)+" ");
-					///////
 					if(!check.isChecked()){
-					check.setChecked(true);					
+						check.setChecked(true);					
 					}
-				}			
-				break;
-			
-			case R.id.cartBuySelectedB:
-				// pasar la lista de los items que estan en el cart para la lista del checkout
+				}	
+			}
+			break;
+
+		case R.id.cartBuySelectedB:
+			// pasar la lista de los items que estan en el cart para la lista del checkout
+			if(cartResultItems.isEmpty()){
+				Toast.makeText(this, "Cart is empty...", Toast.LENGTH_SHORT).show();
+			}
+			else if(checkoutListIDs.isEmpty()){
+				Toast.makeText(this, "Please select one or more item to buy", Toast.LENGTH_SHORT).show();
+			}
+			else{
 				Intent intent = new Intent(this,OrderCheckoutActivity.class);
 				intent.putIntegerArrayListExtra("productsID", checkoutListIDs);
 				intent.putExtra("previousActivity", "Cart");
-				startActivity(intent);		
-			
+				startActivity(intent);	
+			}	
 			break;
-			
-			case R.id.cartRemoveSelectedB:
-				Toast.makeText(this, this.checkboxList.size()+"", Toast.LENGTH_SHORT).show();
-				for(CheckBox check: checkboxList){
-				//	Toast.makeText(this, this.checkoutList.size()+"", Toast.LENGTH_SHORT).show();
-					for(int i=0; i< checkoutListIDs.size(); i++)
-						System.out.println(checkoutListIDs.get(i)+" ");
-					//////
-					if(check.isChecked()){
-					check.setChecked(false);					
+
+		case R.id.cartRemoveSelectedB:
+			if(cartResultItems.isEmpty()){
+				Toast.makeText(this, "Cart is empty...", Toast.LENGTH_SHORT).show();
+			}
+			else if(checkoutListIDs.isEmpty()){
+				Toast.makeText(this, "Please select one or more item to remove from cart", Toast.LENGTH_SHORT).show();
+			}
+			else{
+				for(Integer i: checkoutListIDs){
+					for(ProductForSale p: cartResultItems){
+						if(p.getId()==i.intValue()){
+							cartResultItems.remove(p);
+							break;
+						}
 					}
-				}		
+				}
+				for(CheckBox check: checkboxList){
+					if(check.isChecked()){
+						check.setChecked(false);					
+					}
+				}
+				itemsList.invalidateViews();//refresh
+			}
 			break;
 		}
 	}
@@ -181,6 +199,6 @@ public class CartActivity extends Activity implements OnClickListener{
 				cartResultItems.get(downloadadImagesIndex++).setImg(result);
 			}
 		}
-		
+
 	}
 }

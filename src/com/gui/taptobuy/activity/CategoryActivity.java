@@ -7,6 +7,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -45,20 +46,20 @@ public class CategoryActivity extends Activity implements OnItemClickListener {
 		categoryList = (ListView)findViewById(R.id.ViewList);
 		this.layoutInflator = LayoutInflater.from(this);	
 		categoryList.setOnItemClickListener(this);
-		new getSubCategoriesTask().execute("All"); 
+		new getSubCategoriesTask().execute("0"); 
 	}
 		
 	
-	private ArrayList<Category> getSubCategories(String clickedCategory){
+	private ArrayList<Category> getSubCategories(String clickedCategoryId){//clickedCategoryId =>parentCat Id
 		HttpClient httpClient = new DefaultHttpClient();
-		String categoryDir = Main.hostName + "/categories/";
-		if(currentParentCategoryName == null && clickedCategory.equals("All")){
-			categoryDir+="All";
-		}
-		else{
-			categoryDir+=currentParentCategoryName + "/" + clickedCategory;
-		}
-		currentParentCategoryName = new String(clickedCategory);
+		String categoryDir = Main.hostName + "/subcategoriesof/" + clickedCategoryId;
+//		if(currentParentCategoryName == null && clickedCategory.equals("All")){
+//			categoryDir+="All";
+//		}
+//		else{
+//			categoryDir+=currentParentCategoryName + "/" + clickedCategory;
+//		}
+		//currentParentCategoryName = new String(clickedCategoryId);
 		HttpGet get = new HttpGet(categoryDir);
 		get.setHeader("content-type", "application/json");
 		try
@@ -66,13 +67,15 @@ public class CategoryActivity extends Activity implements OnItemClickListener {
 			HttpResponse resp = httpClient.execute(get);
 			if(resp.getStatusLine().getStatusCode() == 200){
 				String jsonString = EntityUtils.toString(resp.getEntity());
-				JSONObject json = new JSONObject(jsonString);
-				showingCategories = new ArrayList<Category>();		
-				String tmpCatName = "";
-				Iterator<String> iter = (Iterator<String>) json.keys();
-				while(iter.hasNext()){
-					tmpCatName = String.valueOf(iter.next());
-					showingCategories.add(new Category(tmpCatName,json.getBoolean(tmpCatName)));
+				
+				JSONArray subCategoriesArray = (new JSONObject(jsonString)).getJSONArray("subcategories");
+				
+				JSONObject jsonCat = null;
+				showingCategories = new ArrayList<Category>();
+				
+				for(int i=0; i<subCategoriesArray.length();i++){
+					jsonCat = subCategoriesArray.getJSONObject(i);
+					showingCategories.add(new Category(jsonCat.getString("name"), jsonCat.getInt("catId"), jsonCat.getBoolean("hasSubCategories")));
 				}
 			}
 			else{
@@ -107,11 +110,11 @@ public class CategoryActivity extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> categories, View v, int arg2, long arg3) 
 	{
 		MyViewCategory categoriesHolder = (MyViewCategory) v.getTag();
-		if(categoriesHolder.category.HasSubCategories())		
-		new getSubCategoriesTask().execute(categoriesHolder.category.getName());	
+		if(categoriesHolder.category.hasSubCategories())		
+		new getSubCategoriesTask().execute(categoriesHolder.category.getCatId() + "");	
 		else{
 			Intent search = new Intent(this, SearchActivity.class);
-			search.putExtra("toSearch", categoriesHolder.category.getName());
+			search.putExtra("toSearch", categoriesHolder.category.getCatId() + "");
 			startActivity(search);
 		}
 		

@@ -163,7 +163,7 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 			dialog.setContentView(R.layout.bidlist_dialog);
 			dialog.setTitle("Item's Bids");
 			bidListView = (ListView) dialog.findViewById(R.id.bidlistView);
-		    new getBidListTask().execute("1");
+		    new getBidListTask().execute(itemHolder.item.getId() + "");
 			Button okBTN = (Button) dialog.findViewById(R.id.bidOkButton);			
 			okBTN.setOnClickListener(new View.OnClickListener() {
 

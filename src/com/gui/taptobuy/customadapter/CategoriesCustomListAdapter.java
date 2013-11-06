@@ -53,7 +53,7 @@ public class CategoriesCustomListAdapter extends BaseAdapter {
             categoryHolder = new MyViewCategory();
             categoryHolder.categoryName = (TextView) categoryRow.findViewById(R.id.categoryTitle);
             
-	        if(!currentCategory.HasSubCategories())
+	        if(!currentCategory.hasSubCategories())
 	        {        		                 
 	            categoryHolder.arrow =(ImageView) categoryRow.findViewById(R.id.hasChildArrow); 
 	            categoryHolder.arrow.setVisibility(View.GONE);
