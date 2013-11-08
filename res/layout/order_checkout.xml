@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@drawable/portrait_back">
+    android:layout_height="match_parent"
+    android:background="@drawable/portrait_back"
+    android:orientation="vertical" >
    
+    <ScrollView
+        android:id="@+id/scrollCheckout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="65"
+        android:fillViewport="true" >
         
      <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -24,10 +31,9 @@
     <ListView
         android:id="@+id/checkout_ItemsList"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
-        android:layout_alignLeft="@+id/checkout_TotalPayment"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkout_TotalPayment"       
         android:layout_below="@+id/checkout_ItemsInOrderText" >
-
     </ListView>
 
     <TextView
@@ -55,9 +61,8 @@
         android:id="@+id/spliterAddress"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="fill_parent"
-        android:layout_height="4dp"
-        android:layout_marginTop="7dp"
-        android:layout_alignBottom="@+id/textShipTo"
+        android:layout_height="4dp"        
+        android:layout_below="@+id/textShipTo"      
         android:layout_alignParentLeft="true"
         android:background="@drawable/customb2"
         android:clickable="false" />
@@ -74,8 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textShipTo"
         android:layout_below="@+id/checkout_SpinnerAdd"       
-        android:layout_marginBottom="3dp"
-        android:inputType="textMultiLine"
+        android:layout_marginBottom="3dp"        
         android:text="Miradero de Humacao \n #77 Camino de Las Vistas \n 00791 Humacao PR\n 787-850-5557"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -95,16 +99,15 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/checkout_PaymentMethod" />
     
-    		</RelativeLayout>
-    	
+   		 </RelativeLayout>    
+    </ScrollView>    	
     	
       <Button
         android:id="@+id/checkout_PlaceOrderB"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"                   
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"       
+        android:layout_marginLeft="85dp"
         android:text="Place Order" />
       
-</RelativeLayout>
+</LinearLayout>

@@ -83,7 +83,7 @@
             android:layout_alignLeft="@+id/button1"
             android:layout_below="@+id/Button01"
             android:textSize="15sp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="70dp"
             android:text="Already a member? Sign in!" />
 
          <Button
@@ -102,7 +102,7 @@
              android:layout_alignLeft="@+id/textSign_in"
              android:layout_alignRight="@+id/textSign_in"
              android:layout_below="@+id/bSign_in"
-             android:layout_marginTop="89dp"
+             android:layout_marginTop="70dp"
              android:text="Not a TAPtoBUY member? Create an account!" />
 
          <Button
