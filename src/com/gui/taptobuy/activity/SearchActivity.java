@@ -227,6 +227,8 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		public Product item;		
 		public Button cartBuy, cartRemove, bidListB, AcceptBid,Quit,cartRemoveSelected,cartSelectAll;
 		public CheckBox check;
+		public EditText itemsQTY;
+		
 	}	
 	private ArrayList<Product> getSearchItems(String searchString){
 		HttpClient httpClient = new DefaultHttpClient();

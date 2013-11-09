@@ -58,6 +58,7 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 	private ArrayList<Integer> productsIDList;
 	private LayoutInflater layoutInflator;
 	private String totalPriceValue;
+	private int orderID;
 	
 	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);		
@@ -106,7 +107,15 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.checkout_PlaceOrderB){
-			Toast.makeText(this, "Your order has been placed!", Toast.LENGTH_LONG).show();
+			
+			//crear una nueva order
+			// orderID igual a X
+			this.orderID = 0;
+			if(true){
+				Intent intent = new Intent(this,OrderReceiptActivity.class);
+				intent.putExtra("orderID", this.orderID);
+				startActivity(intent);
+			}
 			//anadir producto a la lista de bougth items del usuario, Id de produto y de usuario
 			//enviar la orden al DB
 		}		
@@ -193,12 +202,6 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,74 +298,6 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 
 		}			
 
-	}
-		
-//	private ArrayList<Product> getSearchItems(String searchString){
-//		HttpClient httpClient = new DefaultHttpClient();
-//		String searchDir = Main.hostName +"/search/" + "aaaaaaaaaaaaaaaaaaaaa";
-//		HttpGet get = new HttpGet(searchDir);
-//		get.setHeader("content-type", "application/json");
-//		try
-//		{
-//			HttpResponse resp = httpClient.execute(get);
-//			if(resp.getStatusLine().getStatusCode() == 200){
-//				String jsonString = EntityUtils.toString(resp.getEntity());
-//				JSONArray searchResultArray = (new JSONObject(jsonString)).getJSONArray("results");
-//				items = new ArrayList<Product>();
-//
-//				JSONObject searchElement = null;
-//				JSONObject jsonItem = null;
-//				Product anItem = null;
-//
-//				for(int i=0; i<searchResultArray.length();i++){
-//					searchElement = searchResultArray.getJSONObject(i);
-//					jsonItem = searchElement.getJSONObject("item");
-//					if(searchElement.getBoolean("forBid")){
-//						anItem = new ProductForAuction(jsonItem.getInt("id"), jsonItem.getString("title"), jsonItem.getString("timeRemaining"), 
-//								jsonItem.getDouble("shippingPrice"), jsonItem.getString("imgLink"),  jsonItem.getString("sellerUsername"), 
-//								jsonItem.getDouble("sellerRate"),  jsonItem.getDouble("startinBidPrice"),  jsonItem.getDouble("currentBidPrice"),  jsonItem.getInt("totalBids"));
-//					}
-//					else{
-//						anItem = new ProductForSale(jsonItem.getInt("id"), jsonItem.getString("title"), jsonItem.getString("timeRemaining"), 
-//								jsonItem.getDouble("shippingPrice"), jsonItem.getString("imgLink"),  jsonItem.getString("sellerUsername"), 
-//								jsonItem.getDouble("sellerRate"), jsonItem.getInt("remainingQuantity"), jsonItem.getDouble("instantPrice"));
-//					}
-//					items.add(anItem);
-//				}
-//
-//			}
-//			else{
-//				Log.e("JSON","search json could not be downloaded.");
-//			}
-//		}
-//		catch(Exception ex)
-//		{
-//			Log.e("Search","Error!", ex);
-//		}
-//		return items;
-//	}
-//
-//	private class searchProductsTask extends AsyncTask<String,Void,ArrayList<Product>> {
-//		public  int downloadadImagesIndex = 0;
-//		protected ArrayList<Product> doInBackground(String... params) {
-//			return getSearchItems(params[0]);//get search result
-//		}
-//		protected void onPostExecute(ArrayList<Product> searchResultItems ) {
-//			//download images
-//			for(Product itm: searchResultItems){
-//				new DownloadImageTask().execute(itm.getImgLink());
-//			}
-//			itemsList.setAdapter(new OrderCustomListAdapter(OrderCheckoutActivity.this, OrderCheckoutActivity.this.layoutInflator, searchResultItems));
-//		}			
-//		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-//
-//			protected Bitmap doInBackground(String... urls) {
-//				return ImageManager.downloadImage(urls[0]);
-//			}
-//			protected void onPostExecute(Bitmap result) {
-//				itemsList.invalidateViews();
-//				items.get(downloadadImagesIndex++).setImg(result);
-//			}
-//		}
-//	}
+	}	
+
 }

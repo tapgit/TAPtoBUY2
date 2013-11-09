@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -97,18 +98,19 @@ public class OrderCustomListAdapter extends BaseAdapter implements OnClickListen
 		}
 		else //for sale
 		{	        
-			itemRow = layoutInflater.inflate(R.layout.buyitproduct_row, parent, false); 
+			itemRow = layoutInflater.inflate(R.layout.ordercheckout_productrow, parent, false); 
 			itemHolder = new MyViewItem();
-			itemHolder.itemPic =  (ImageView) itemRow.findViewById(R.id.BuyItProductPic);
-			itemHolder.productName = (TextView) itemRow.findViewById(R.id.BuyItProdName);
-			itemHolder.sellerUserName = (TextView) itemRow.findViewById(R.id.BuyItSellerID);
-			itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.BuyItPrice);        
-			itemHolder.timeRemaining = (TextView) itemRow.findViewById(R.id.BuyItRemaningTime);
-			itemHolder.buyItNow = (TextView) itemRow.findViewById(R.id.BuyItNowText);        
-			itemHolder.sellerRating = (RatingBar)itemRow.findViewById(R.id.BuyItSellerRating);            
-
+			itemHolder.itemPic =  (ImageView) itemRow.findViewById(R.id.ordCheckRow_ProductPic);
+			itemHolder.productName = (TextView) itemRow.findViewById(R.id.ordCheckRow_ProdName);
+			itemHolder.sellerUserName = (TextView) itemRow.findViewById(R.id.ordCheckRow_SellerID);
+			itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.ordCheckRow_Price);        
+			itemHolder.timeRemaining = (TextView) itemRow.findViewById(R.id.ordCheckRow_RemaningTime);			       
+			itemHolder.sellerRating = (RatingBar)itemRow.findViewById(R.id.ordCheckRow_SellerRating);            
+			itemHolder.itemsQTY = (EditText)itemRow.findViewById(R.id.ordCheckRow_QtyInput);
+			
 			itemHolder.sellerRating.setTag(itemHolder);
 			itemHolder.itemPic.setTag(itemHolder);
+			itemHolder.itemsQTY.setTag(itemHolder);
 			itemRow.setTag(itemHolder);  
 
 			double shippingPrice = item.getShippingPrice();
@@ -134,7 +136,8 @@ public class OrderCustomListAdapter extends BaseAdapter implements OnClickListen
 
 	@Override
 	public void onClick(View v) {
-		MyViewItem itemHolder = (MyViewItem) v.getTag();    
+		MyViewItem itemHolder = (MyViewItem) v.getTag(); 
+		int itemQuantity = Integer.parseInt(itemHolder.itemsQTY.getText().toString()); //gets the quantity to buy of the item at the row
 		new productInfoTask().execute(itemHolder.item.getId() + "");
 	}
 	
