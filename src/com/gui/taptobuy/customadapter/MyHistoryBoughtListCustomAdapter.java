@@ -188,7 +188,7 @@ public class MyHistoryBoughtListCustomAdapter extends BaseAdapter implements OnC
 				downloadedProductInfo.setImg(result);
 				if(downloadedProductInfo instanceof ProductForAuctionInfo){//for auction
 					BidProductInfoActivity.showingProductInfo = (ProductForAuctionInfo) downloadedProductInfo;
-					
+					// declarar el put extra del intent
 					startBidProductInfoActivity();
 				}
 				else{//for sale

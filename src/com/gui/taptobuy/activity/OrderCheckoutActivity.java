@@ -73,7 +73,7 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 		else if(intent.getStringExtra("previousActivity").equals("BuyItProductInfo")){
 			productsIDList = new ArrayList<Integer>();
 			productsIDList.add(intent.getIntExtra("productID", 0)); /// cudiado con el 0 - default value
-		}
+		}		
 		if(!productsIDList.isEmpty()) 
 			new buyNowProductsTask().execute(productsIDList);
 		
@@ -106,16 +106,17 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		if(v.getId() == R.id.checkout_PlaceOrderB){
+		if(v.getId() == R.id.checkout_PlaceOrderB){			
+			Toast.makeText(this, "Your order has been placed", Toast.LENGTH_SHORT).show();
 			
 			//crear una nueva order
 			// orderID igual a X
-			this.orderID = 0;
-			if(true){
-				Intent intent = new Intent(this,OrderReceiptActivity.class);
-				intent.putExtra("orderID", this.orderID);
-				startActivity(intent);
-			}
+//			this.orderID = 0;
+//			if(true){
+//				Intent intent = new Intent(this,OrderReceiptActivity.class);
+//				intent.putExtra("orderID", this.orderID);
+//				startActivity(intent);
+//			}
 			//anadir producto a la lista de bougth items del usuario, Id de produto y de usuario
 			//enviar la orden al DB
 		}		

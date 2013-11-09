@@ -137,7 +137,7 @@ public class OrderCustomListAdapter extends BaseAdapter implements OnClickListen
 	@Override
 	public void onClick(View v) {
 		MyViewItem itemHolder = (MyViewItem) v.getTag(); 
-		int itemQuantity = Integer.parseInt(itemHolder.itemsQTY.getText().toString()); //gets the quantity to buy of the item at the row
+		//int itemQuantity = Integer.parseInt(itemHolder.itemsQTY.getText().toString()); //gets the quantity to buy of the item at the row
 		new productInfoTask().execute(itemHolder.item.getId() + "");
 	}
 	
