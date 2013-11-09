@@ -9,10 +9,8 @@ public class MyHistoryProduct {
 	private double paidShippingPrice;
 	private String imgLink;
 	private Bitmap img;
-	private int quantityOrBidAmount;
 	public MyHistoryProduct(int id, String title, double paidPrice,
-			double paidShippingPrice, String imgLink, Bitmap img,
-			int quantityOrBidAmount) {
+			double paidShippingPrice, String imgLink, Bitmap img) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -20,7 +18,6 @@ public class MyHistoryProduct {
 		this.paidShippingPrice = paidShippingPrice;
 		this.imgLink = imgLink;
 		this.img = img;
-		this.quantityOrBidAmount = quantityOrBidAmount;
 	}
 	public int getId() {
 		return id;
@@ -58,10 +55,5 @@ public class MyHistoryProduct {
 	public void setImg(Bitmap img) {
 		this.img = img;
 	}
-	public int getQuantityOrBidAmount() {
-		return quantityOrBidAmount;
-	}
-	public void setQuantityOrBidAmount(int quantityOrBidAmount) {
-		this.quantityOrBidAmount = quantityOrBidAmount;
-	}
+	
 }
