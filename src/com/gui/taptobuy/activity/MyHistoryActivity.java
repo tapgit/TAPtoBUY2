@@ -122,7 +122,7 @@ public class MyHistoryActivity extends Activity{
 		private Dialog dialog;
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = ProgressDialog.show(MyHistoryActivity.this, "Please wait...", "Searching!!");
+			dialog = ProgressDialog.show(MyHistoryActivity.this, "Please wait...", "Loading!!");
 			dialog.show();
 		}
 		protected ArrayList<Product> doInBackground(Void... params) {
