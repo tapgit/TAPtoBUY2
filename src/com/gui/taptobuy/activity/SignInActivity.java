@@ -231,6 +231,7 @@ public class SignInActivity extends Activity implements View.OnClickListener {
 				else{
 					Intent intent = new Intent(SignInActivity.this, SearchActivity.class);
 					intent.putExtra("previousActivity", "SignInActivity");
+					intent.putExtra("searchString", searchTextET.getText().toString());
 					SignInActivity.this.startActivity(intent);			
 				}
 			}

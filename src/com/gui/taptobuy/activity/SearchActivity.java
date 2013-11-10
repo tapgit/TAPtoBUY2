@@ -67,6 +67,8 @@ public class SearchActivity extends Activity implements OnClickListener   {
 	private ImageView pic;
 	private Dialog dialog;
 	private static int selectedSort = 0;
+	private static String searchString;
+	private static int catId;
 	/////////////////////////////////////////////////
 
 	@Override
@@ -94,17 +96,16 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		signOut.setOnClickListener(this);
 		myTap.setOnClickListener(this);	
 
-		int catId = -1;
-		String searchString = searchET.getText().toString();
+		catId = -1;//do not search by categories
+		searchString = searchET.getText().toString();//search for the user entered text on this activity
+		
 		Intent intent = getIntent();
-		if(intent.getStringExtra("previousActivity").equals("CategoryActivity")){
-			catId = intent.getIntExtra("catId", -1);
+		if(intent.getStringExtra("previousActivity").equals("CategoryActivity")){//if we came from CatActivity search by catId
+			catId = intent.getIntExtra("catId", -1);//overwrite the -1
 		}
-		else if(intent.getStringExtra("previousActivity").equals("SignInActivity")){
-			searchString = intent.getStringExtra("searchString");
+		else if(intent.getStringExtra("previousActivity").equals("SignInActivity")){//if we came from login page search with the text entered there
+			searchString = intent.getStringExtra("searchString");//overwrite searchString with the text entered on login page
 		}
-	
-		new searchProductsTask().execute(catId + "", selectedSort + "", searchString);
 		
 		if(Main.signed){
 			signIn.setVisibility(View.GONE);		
@@ -126,7 +127,8 @@ public class SearchActivity extends Activity implements OnClickListener   {
 			public void onItemSelected(AdapterView<?> arg0,View arg1,int arg2, long arg3) 
 			{
 				selectedSort = arg0.getSelectedItemPosition();
-				new searchProductsTask().execute(-1 + "", selectedSort + "", searchET.getText().toString());
+				Toast.makeText(SearchActivity.this, "spinner", Toast.LENGTH_SHORT).show();
+				new searchProductsTask().execute(catId + "", selectedSort + "", searchString);
 						
 			}
 			@Override
