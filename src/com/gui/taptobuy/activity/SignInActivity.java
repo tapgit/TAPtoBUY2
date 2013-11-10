@@ -36,6 +36,7 @@ public class SignInActivity extends Activity implements View.OnClickListener {
 	private TextView registerText;
 	//public static boolean signed = false;
 	private Dialog dialog; 
+	private EditText searchTextET;
 
 
 	@Override
@@ -43,6 +44,7 @@ public class SignInActivity extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.signin_home);
 
+		searchTextET = (EditText) findViewById(R.id.searchAtLogin);
 		cartB = (Button) findViewById(R.id.bCart);
 		categoriesB = (Button) findViewById(R.id.bCategories);
 		signInB = (Button) findViewById(R.id.bSign_in);
@@ -139,7 +141,10 @@ public class SignInActivity extends Activity implements View.OnClickListener {
 			break;
 
 		case R.id.bSearch:    
-			startActivity(new Intent(this, SearchActivity.class));			
+			Intent intent = new Intent(this, SearchActivity.class);
+			intent.putExtra("previousActivity", "SignInActivity");
+			intent.putExtra("searchString", searchTextET.getText().toString());
+			startActivity(intent);			
 			break;
 
 		case R.id.bSign_Out:			
@@ -224,7 +229,9 @@ public class SignInActivity extends Activity implements View.OnClickListener {
 					SignInActivity.this.startActivity(new Intent(SignInActivity.this, AdministratorActivity.class));
 				}
 				else{
-					SignInActivity.this.startActivity(new Intent(SignInActivity.this, SearchActivity.class));
+					Intent intent = new Intent(SignInActivity.this, SearchActivity.class);
+					intent.putExtra("previousActivity", "SignInActivity");
+					SignInActivity.this.startActivity(intent);			
 				}
 			}
 			else{

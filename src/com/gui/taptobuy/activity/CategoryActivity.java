@@ -114,7 +114,8 @@ public class CategoryActivity extends Activity implements OnItemClickListener {
 		new getSubCategoriesTask().execute(categoriesHolder.category.getCatId() + "");	
 		else{
 			Intent search = new Intent(this, SearchActivity.class);
-			search.putExtra("toSearch", categoriesHolder.category.getCatId() + "");
+			search.putExtra("catId", categoriesHolder.category.getCatId());
+			search.putExtra("previousActivity", "CategoryActivity");
 			startActivity(search);
 		}
 		

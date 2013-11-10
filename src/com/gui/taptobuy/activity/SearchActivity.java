@@ -65,6 +65,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 
 	private ImageView pic;
 	private Dialog dialog;
+	private static int selectedSort = 0;
 	/////////////////////////////////////////////////
 
 	@Override
@@ -74,8 +75,6 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.search);
-		//////////////////////////////////////////////////
-		new searchProductsTask().execute("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");//searchET.getText().toString());
 
 		categories = (Button)findViewById(R.id.bCategories);
 		cart = (Button)findViewById(R.id.bCart);
@@ -94,6 +93,18 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		signOut.setOnClickListener(this);
 		myTap.setOnClickListener(this);	
 
+		int catId = -1;
+		String searchString = searchET.getText().toString();
+		Intent intent = getIntent();
+		if(intent.getStringExtra("previousActivity").equals("CategoryActivity")){
+			catId = intent.getIntExtra("catId", -1);
+		}
+		else if(intent.getStringExtra("previousActivity").equals("SignInActivity")){
+			searchString = intent.getStringExtra("searchString");
+		}
+	
+		new searchProductsTask().execute(catId + "", selectedSort + "", searchString);
+		
 		if(Main.signed){
 			signIn.setVisibility(View.GONE);		
 		}
@@ -113,17 +124,9 @@ public class SearchActivity extends Activity implements OnClickListener   {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0,View arg1,int arg2, long arg3) 
 			{
-				int index = arg0.getSelectedItemPosition();
-				switch (index)
-				{						
-				case 0: // by name
-					//supongo que decirle al db y obtenerlo sorteado luego settiar el view de nuevo con los
-					// items ya sorted...
-					break;
-				case 1: // by price
-					break;
-				case 2: // by brand
-				}						
+				selectedSort = arg0.getSelectedItemPosition();
+				new searchProductsTask().execute(-1 + "", selectedSort + "", searchET.getText().toString());
+						
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {}	        	
@@ -182,7 +185,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 
 		case R.id.bSearch:
 			//itemsList.setAdapter(new ItemCustomListAdapter(this,this.pic,this.layoutInflator, this.itemsOnSale));
-			new searchProductsTask().execute("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");//searchET.getText().toString());
+			new searchProductsTask().execute(-1 + "", selectedSort + "", searchET.getText().toString());
 			break;
 
 		case R.id.bSignIn:		
@@ -228,9 +231,15 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		public Button cartBuy, cartRemove, bidListB, AcceptBid,Quit,cartRemoveSelected,cartSelectAll;
 		public CheckBox check;
 	}	
-	private ArrayList<Product> getSearchItems(String searchString){
+	private ArrayList<Product> getSearchItems(String catId, String sortBy, String searchString){
 		HttpClient httpClient = new DefaultHttpClient();
-		String searchDir = Main.hostName +"/search/" + "aaaaaaaaaaaaaaaaaaaaa";
+		
+		String searchDir = "";
+		if(searchString.equals(""))
+			searchDir = Main.hostName +"/search/" + catId +"/" + sortBy;
+		else
+			searchDir = Main.hostName +"/search/" + catId +"/" + sortBy + "/" + searchString;
+		
 		HttpGet get = new HttpGet(searchDir);
 		get.setHeader("content-type", "application/json");
 		try
@@ -276,7 +285,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 	private class searchProductsTask extends AsyncTask<String,Void,ArrayList<Product>> {
 		public  int downloadadImagesIndex = 0;
 		protected ArrayList<Product> doInBackground(String... params) {
-			return getSearchItems(params[0]);//get search result
+			return getSearchItems(params[0],params[1],params[2]);//get search result
 		}
 		protected void onPostExecute(ArrayList<Product> searchResultItems ) {
 			//download images
