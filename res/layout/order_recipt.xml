@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/checkout_ShippingAdress"
+        android:id="@+id/receipt_ShippingAdress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textShipTo"
@@ -16,31 +16,32 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/checkout_ItemsInOrderText"
+        android:id="@+id/receipt_ItemsInOrderText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textShipTo"
-        android:layout_below="@+id/checkout_ShippingAdress"
+        android:layout_below="@+id/receipt_ShippingAdress"
         android:text="Items in this order:"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/receipt_buyerUN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
         android:text="Buyer Username"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/receipt_orderID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/receipt_buyerUN"
+        android:layout_below="@+id/receipt_buyerUN"
         android:text="Order ID"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -48,58 +49,66 @@
         android:id="@+id/textShipTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/receipt_orderID"
+        android:layout_below="@+id/receipt_orderID"
         android:layout_marginTop="20dp"
         android:text="Ship to:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/receipt_sellerUN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/receipt_orderID"
+        android:layout_below="@+id/receipt_orderID"
         android:text="Sold by: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/checkout_TotalPayment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView3"
-        android:layout_alignLeft="@+id/checkout_ItemsInOrderText"
-        android:layout_marginBottom="22dp"
-        android:inputType="text"
-        android:text="Total: $0.00"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView3"
-        android:layout_alignLeft="@+id/checkout_TotalPayment"
-        android:text="Payment Method: "
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignParentBottom="true"
-        android:text="Date"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/receipt_itemList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/checkout_TotalPayment"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/checkout_ItemsInOrderText" >
-
+        android:layout_height="200dp"
+        android:layout_alignLeft="@+id/receipt_ItemsInOrderText"
+        android:layout_below="@+id/receipt_ItemsInOrderText" >
     </ListView>
+
+    <Button
+        android:id="@+id/receipt_okB"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="3dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="OK" />
+
+    <TextView
+        android:id="@+id/receipt_totalPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/receipt_itemList"
+        android:layout_below="@+id/receipt_itemList"
+        android:text="Total Payment: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/receipt_paymentMethod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/receipt_totalPayment"
+        android:layout_below="@+id/receipt_totalPayment"
+        android:layout_marginTop="5dp"
+        android:text="Payment method:  xxxx-xxxx-xxxx-0000"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/receipt_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/receipt_paymentMethod"
+        android:text="Date: 10/10/10"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

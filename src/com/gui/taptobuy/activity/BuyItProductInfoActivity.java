@@ -45,7 +45,8 @@ public class BuyItProductInfoActivity extends Activity implements OnClickListene
 		sellerRating = (RatingBar)findViewById(R.id.BuyInfoSellerRate);
 		
 		// dependiendo de que activity la llamo, se activan o desactivan los botones de buy y addtoCArt
-		if(previousActivity.equals("OrderCheckout")){
+		
+		if(previousActivity.equals("OrderCheckout")||previousActivity.equals("MyHistory")){
 			buyNow = (Button) findViewById(R.id.BuyInfoBuyNowb);
 			buyNow.setVisibility(View.GONE);
 			addtoCart = (Button) findViewById(R.id.BuyInfoAddToCartb);

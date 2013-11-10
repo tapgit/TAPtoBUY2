@@ -97,9 +97,10 @@
         android:id="@+id/BidInfoPlaceBidInput"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/BidInfoShippingPrice"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/BidInfoProdBrand"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="8dp"
         android:hint="bid here!"
         android:inputType="numberDecimal" />
 
@@ -111,7 +112,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/BidInfoDescription"
         android:layout_marginRight="36dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="8dp"
         android:text="Place Bid!" />
 
     <TextView
@@ -123,24 +124,25 @@
         android:text="Shipping:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <RatingBar
+        android:id="@+id/BidInfoSellerRate"
+        style="@style/productRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="true"
+        android:layout_alignRight="@+id/BidInfoDescription"
+        android:layout_alignTop="@+id/BidInfoUserName"
+        android:numStars="5" />
+
     <TextView
         android:id="@+id/BidInfoDollarSy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/BidInfoPlaceBidInput"
         android:layout_alignBottom="@+id/BidInfoPlaceBidInput"
-        android:layout_alignRight="@+id/BidInfoProdBrand"
+        android:layout_toRightOf="@+id/BidInfoProdBrand"
         android:text="$"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <RatingBar
-        android:id="@+id/BidInfoSellerRate"
-        style="@style/productRatingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/BidInfoDescription"
-        android:layout_alignTop="@+id/BidInfoUserName"
-        android:numStars="5" />
 
 </RelativeLayout>
 

@@ -16,12 +16,15 @@ import com.gui.taptobuy.Entities.ProductForSale;
 
 import com.gui.taptobuy.customadapter.BiddingsCustomListAdapter;
 import com.gui.taptobuy.customadapter.MyHistoryBoughtListCustomAdapter;
+import com.gui.taptobuy.customadapter.MyHistorySoldListCustomAdapter;
 import com.gui.taptobuy.customadapter.SearchResultsCustomListAdapter;
 import com.gui.taptobuy.datatask.ImageManager;
 import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,15 +55,8 @@ public class MyHistoryActivity extends Activity{
 		historyBoughtItems = new ArrayList<Product>();
 		historySoldItems = new ArrayList<Product>();
 
-		//itemsList.invalidateViews();		
-		//itemsList.setAdapter(new MyHistoryBoughtListCustomAdapter(this,this.layoutInflator, historyBoughtItems));
 		this.soldItemsList = (ListView) findViewById(R.id.myHistory_SoldItems);
-		//itemsList.invalidateViews();		
-		//itemsList.setAdapter(new MyHistoryBoughtListCustomAdapter(this,this.layoutInflator, historySoldItems));
-//		Toast.makeText(MyHistoryActivity.this, historyBoughtItems.size() + " "+ historySoldItems.size() + "", Toast.LENGTH_LONG).show();
-		new myHistoryTask().execute();
-
-	}
+		new myHistoryTask().execute();	}
 
 	public static class MyViewHistory {
 		public TextView productName, sellerUserName, priceAndShiping,bidsAmount,wonOr,buyerUserN;
@@ -123,6 +119,12 @@ public class MyHistoryActivity extends Activity{
 	private class myHistoryTask extends AsyncTask<Void,Void,ArrayList<Product>> {
 		public  int downloadadImagesIndexBought = 0;
 		public  int downloadadImagesIndexSold = 0;
+		private Dialog dialog;
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(MyHistoryActivity.this, "Please wait...", "Loading!!");
+			dialog.show();
+		}
 		protected ArrayList<Product> doInBackground(Void... params) {
 			getMyHistoryItems();//get search result
 			return null;//
@@ -136,8 +138,10 @@ public class MyHistoryActivity extends Activity{
 				new DownloadImageSoldItemTask().execute(itm.getImgLink());
 			}
 			boughtItemsList.setAdapter(new MyHistoryBoughtListCustomAdapter(MyHistoryActivity.this,layoutInflator, historyBoughtItems));	
-			soldItemsList.setAdapter(new MyHistoryBoughtListCustomAdapter(MyHistoryActivity.this,layoutInflator, historySoldItems));
+			soldItemsList.setAdapter(new MyHistorySoldListCustomAdapter(MyHistoryActivity.this,layoutInflator, historySoldItems));
+			dialog.dismiss();
 		}
+		
 		private class DownloadImageBoughtItemTask extends AsyncTask<String, Void, Bitmap> {
 
 			protected Bitmap doInBackground(String... urls) {

@@ -12,20 +12,19 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:id="@+id/bidOkButton"
-                android:layout_width="90dp"
+                android:id="@+id/ratingsCloseB"
+                android:layout_width="120dp"
+                android:layout_below="@+id/ratingsList"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/bidlistView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="8dp"
-                android:text="OK"
-                android:textSize="22sp" />
+                android:text="Close" />
 
             <ListView
-                android:id="@+id/bidlistView"
+                android:id="@+id/ratingsList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/button1"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true" >
             </ListView>

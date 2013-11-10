@@ -10,6 +10,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.gui.taptobuy.Entities.Bid;
 import com.gui.taptobuy.Entities.Product;
 import com.gui.taptobuy.Entities.ProductForAuction;
 import com.gui.taptobuy.Entities.ProductForAuctionInfo;
@@ -24,9 +25,11 @@ import com.gui.taptobuy.datatask.ImageManager;
 import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +38,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,8 +53,7 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 
 	public SearchResultsCustomListAdapter (SearchActivity a, ImageView i, LayoutInflater l, ArrayList<Product> items)
 	{
-		this.activity = a;
-		
+		this.activity = a;		
 		this.layoutInflater = l;
 		this.items = items;
 	}
@@ -129,13 +133,12 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 			}        
 		}
 		itemRow.setOnClickListener(this);  
-
+		itemHolder.sellerRating.setOnClickListener(this);
 		itemHolder.item = item;
 		itemHolder.productName.setText(item.getTitle());   		
 		itemHolder.sellerUserName.setText(item.getSellerUsername());		
 		itemHolder.sellerRating.setRating((float)item.getSellerRate());
 		itemHolder.timeRemaining.setText(item.getTimeRemaining());	
-
 		itemHolder.itemPic.setImageBitmap(item.getImg());
 
 		return itemRow;
@@ -144,8 +147,26 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 	@Override
 	public void onClick(View v) 
 	{
+		if(v.getId() == R.id.BuyItSellerRating || v.getId() == R.id.BidSellerRating ){
+			
+			final Dialog dialog = new Dialog(activity);
+			dialog.setContentView(R.layout.ratinglist);
+			dialog.setTitle("Seller's ratings");
+			
+			final ListView ratingsList = (ListView) dialog.findViewById(R.id.ratingsList);		     
+			Button closeDialog = (Button) dialog.findViewById(R.id.ratingsCloseB);
+			//new getBidListTask().execute(itemHolder.item.getId() + "");
+			closeDialog.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) 
+				{	
+					dialog.dismiss();
+				}
+			}); 			
+		}
+		else{
 		MyViewItem itemHolder = (MyViewItem) v.getTag();    
 		new productInfoTask().execute(itemHolder.item.getId() + "");
+		}
 	}
 
 	private Product getProductInfo(String productId){
@@ -187,7 +208,13 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 
 	private class productInfoTask extends AsyncTask<String,Void,Product> {
 		Product downloadedProductInfo;
-		Intent intent;
+		ProgressDialog dialog;
+		Intent intent;		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(activity, "Please wait...", "Loading Item");
+			dialog.show();
+		}
 		protected Product doInBackground(String... params) {
 			return getProductInfo(params[0]);//get product info
 		}
@@ -195,9 +222,10 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 			downloadedProductInfo = productInfo;
 			//download image
 			new DownloadImageTask().execute(productInfo.getImgLink());
+		
 		}			
-		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-			
+		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {			
+		
 			protected Bitmap doInBackground(String... params) {
 				return ImageManager.downloadImage(params[0]);
 			}
@@ -207,17 +235,60 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 					BidProductInfoActivity.showingProductInfo = (ProductForAuctionInfo) downloadedProductInfo;
 					intent = new Intent(activity, BidProductInfoActivity.class);
 					intent.putExtra("previousActivity", "Search");
+					dialog.dismiss();					
 					activity.startActivity(intent);			
 				}
 				else{//for sale
 					BuyItProductInfoActivity.showingProductInfo = (ProductForSaleInfo) downloadedProductInfo;					
 					intent = new Intent(activity, BuyItProductInfoActivity.class);
-					intent.putExtra("previousActivity", "Search");
+					intent.putExtra("previousActivity", "Search");				
+					dialog.dismiss();	
 					activity.startActivity(intent);
 				}
 			}
 		}
 	}
-
+	
+//	private ArrayList<Bid> getBidList(String productId){
+//		HttpClient httpClient = new DefaultHttpClient();
+//		String bidListDir = Main.hostName +"/bidlist/" + productId;
+//		HttpGet get = new HttpGet(bidListDir);
+//		get.setHeader("content-type", "application/json");
+//		try
+//		{
+//			HttpResponse resp = httpClient.execute(get);
+//			if(resp.getStatusLine().getStatusCode() == 200){
+//				String jsonString = EntityUtils.toString(resp.getEntity());
+//				JSONArray bidListArray = (new JSONObject(jsonString)).getJSONArray("bidlist");
+//				bidList = new ArrayList<Bid>();
+//
+//				JSONObject bidListElement = null;
+//
+//				for(int i=0; i<bidListArray.length();i++){
+//					bidListElement = bidListArray.getJSONObject(i);
+//					bidList.add(new Bid(-1, bidListElement.getDouble("amount"), -1, bidListElement.getString("username")));
+//				}
+//
+//			}
+//			else{
+//				Log.e("JSON","bidlist json could not be downloaded.");
+//			}
+//		}
+//		catch(Exception ex)
+//		{
+//			Log.e("BidList","Error!", ex);
+//		}
+//		return bidList;
+//	}
+//
+//	private class getBidListTask extends AsyncTask<String,Void,ArrayList<Bid>> {
+//		protected ArrayList<Bid> doInBackground(String... productId) {
+//			return getBidList(productId[0]);//get bidlist de bids puestos a este product
+//		}
+//		protected void onPostExecute(ArrayList<Bid> bidList ) {
+//			//llenar con array de bid
+//			bidListView.setAdapter(new MySellingBidListCustomAdapter(activity,layoutInflater, bidList));
+//		}			
+//	}
 
 }

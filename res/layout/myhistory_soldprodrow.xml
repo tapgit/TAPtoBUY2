@@ -24,30 +24,20 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/myHist_soldOrW"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/myHist_soldPrice"
-        android:layout_below="@+id/myHist_soldProdName"
-        android:text="Sold or won"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
         android:id="@+id/myHist_soldPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/myHist_soldProdName"
-        android:layout_below="@+id/myHist_soldOrW"
+        android:layout_below="@+id/myHist_soldProdName"
         android:text="Price + ship"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+       />
 
     <TextView
         android:id="@+id/myHist_soldBuyersName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/myHist_soldPrice"
         android:layout_below="@+id/myHist_soldPrice"
-        android:layout_toRightOf="@+id/myHist_soldProductPic"
-        android:text="Buyers name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Buyers name" />
 
 </RelativeLayout>

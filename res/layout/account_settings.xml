@@ -147,8 +147,8 @@
         android:text="Add" />    
   
         <Button
-            android:id="@+id/spliterB"
-            android:layout_below="@+id/accSet_RemoveB"
+            android:id="@+id/paypalSpliterB"
+            android:layout_below="@+id/accSet_paypalText"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="fill_parent"
             android:layout_height="4dp"            
@@ -162,7 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/spliterB"
+        android:layout_below="@+id/SpliterB"
         android:text="Save" />
 
     <TextView
@@ -209,9 +209,7 @@
         android:layout_alignLeft="@+id/accSet_ShippingAddressBox"
         android:layout_below="@+id/accSet_UserInfoLinearLay"
         android:text="Shipping Address:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />  
-
-   
+        android:textAppearance="?android:attr/textAppearanceMedium" />     
 
     <Button
         android:id="@+id/accSet_AddSAButton"
@@ -221,9 +219,44 @@
         android:layout_below="@+id/accSet_ShippingAddressBox"
         android:layout_toRightOf="@+id/textView2"
         android:text="Add" />
+
+    <TextView
+        android:id="@+id/accSet_paypalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/accSet_AddB"
+        android:text="Email from Paypal account:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/accSet_paypalLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/paypalSpliterB"
+        android:layout_alignLeft="@+id/textView1"
+        android:src="@drawable/pp_logo" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/accSet_paypalLogo"
+        android:layout_toRightOf="@+id/accSet_paypalLogo"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
+    
+     <Button
+            android:id="@+id/SpliterB"
+            android:layout_below="@+id/accSet_paypalLogo"
+            android:layout_marginTop="5dp"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="4dp"            
+            android:background="@drawable/customb2"
+            android:clickable="false" />
     
     </RelativeLayout> 
-
-   </ScrollView>  
-
+   </ScrollView> 
 </LinearLayout>

@@ -3,6 +3,8 @@ package com.gui.taptobuy.customadapter;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -241,6 +243,12 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 
 	private class productInfoTask extends AsyncTask<String,Void,Product> {
 		Product downloadedProductInfo;
+		Dialog dialog;
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(activity, "Please wait...", "Loading Item");
+			dialog.show();
+		}
 		protected Product doInBackground(String... params) {
 			return getProductInfo(params[0]);//get product info
 		}
@@ -261,6 +269,7 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 					BuyItProductInfoActivity.showingProductInfo = (ProductForSaleInfo) downloadedProductInfo;
 					Intent intent = new Intent(activity, BuyItProductInfoActivity.class);
 					intent.putExtra("previousActivity", "Cart");
+					dialog.dismiss();
 					activity.startActivity(intent);
 				}
 			}

@@ -99,15 +99,16 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/checkout_PaymentMethod" />
     
-   		 </RelativeLayout>    
-    </ScrollView>    	
-    	
-      <Button
+     <Button
         android:id="@+id/checkout_PlaceOrderB"
         android:layout_width="150dp"
-        android:layout_marginBottom="5dp"
-        android:layout_height="wrap_content"       
-        android:layout_marginLeft="85dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkout_CardsSpinner"  
+        android:layout_marginTop="45dp"      
+        android:layout_marginLeft="115dp"
         android:text="Place Order" />
+    
+   		 </RelativeLayout>    
+    </ScrollView>   
       
 </LinearLayout>

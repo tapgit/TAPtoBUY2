@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/boughtSellerID"
         android:layout_below="@+id/boughtSellerID"
-        android:isIndicator="true"
+        android:isIndicator="false"
         android:numStars="5"
         android:rating="4.5" />
 
@@ -50,6 +50,15 @@
         android:layout_alignLeft="@+id/boughtProdName"
         android:layout_below="@+id/boughtProdName"
         android:text="Paid price"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/boughtSellerID"
+        android:layout_toRightOf="@+id/boughtProdName"
+        android:text="QTY or BidsAmount"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

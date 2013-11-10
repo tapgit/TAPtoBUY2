@@ -6,9 +6,9 @@
     <string name="searchLabel">What are you looking for ?</string>
     <string name="registerLabel">User Registration</string>
     <string name="categoriesLabel">Categories</string>
-    <string name="bidInfoLabel">Bid for it!</string>
+    <string name="bidInfoLabel">Product Details</string>
     <string name="myTapLabel">My Tap</string>
-    <string name="buyInfoLabel">Try the Buy Now button... ; )</string>
+    <string name="buyInfoLabel">Product Details</string>
     <string name="sellanItemLabel">Sell an Item!</string>
     <string name="myHistoryLabel">My History</string>
     <string name="mySellingLabel">My Sellings</string>

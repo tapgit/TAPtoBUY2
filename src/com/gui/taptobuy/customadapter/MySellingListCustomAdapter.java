@@ -21,7 +21,6 @@ import com.gui.taptobuy.Entities.ProductForSale;
 import com.gui.taptobuy.Entities.User;
 
 import com.gui.taptobuy.activity.AccountSettingsActivity;
-import com.gui.taptobuy.activity.BidsActivity;
 import com.gui.taptobuy.activity.CartActivity;
 import com.gui.taptobuy.activity.MySellingActivity;
 import com.gui.taptobuy.activity.SearchActivity;

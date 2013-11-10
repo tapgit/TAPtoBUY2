@@ -8,13 +8,11 @@ public class Order {
 	private Address shippingAddress;
 	private CreditCard creditCard;
 	private String paypalEmail;
-	private MyHistoryProduct[] productList;
 	private double paidPrice;
 	private double shippingPrice;
 	public Order(int id, int date, String sellerUsername, String buyerUsername,
 			Address shippingAddress, CreditCard creditCard, String paypalEmail,
-			MyHistoryProduct[] productList, double paidPrice,
-			double shippingPrice) {
+			double paidPrice, double shippingPrice) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -23,7 +21,6 @@ public class Order {
 		this.shippingAddress = shippingAddress;
 		this.creditCard = creditCard;
 		this.paypalEmail = paypalEmail;
-		this.productList = productList;
 		this.paidPrice = paidPrice;
 		this.shippingPrice = shippingPrice;
 	}
@@ -69,12 +66,6 @@ public class Order {
 	public void setPaypalEmail(String paypalEmail) {
 		this.paypalEmail = paypalEmail;
 	}
-	public MyHistoryProduct[] getProductList() {
-		return productList;
-	}
-	public void setProductList(MyHistoryProduct[] productList) {
-		this.productList = productList;
-	}
 	public double getPaidPrice() {
 		return paidPrice;
 	}
@@ -87,5 +78,4 @@ public class Order {
 	public void setShippingPrice(double shippingPrice) {
 		this.shippingPrice = shippingPrice;
 	}
-	
 }
