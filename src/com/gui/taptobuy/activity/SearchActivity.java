@@ -138,7 +138,6 @@ public class SearchActivity extends Activity implements OnClickListener   {
 	public void onClick(View v) { 
 
 		dialog = new Dialog(SearchActivity.this);
-
 		dialog.setContentView(R.layout.login_dialog);
 		dialog.setTitle("Sign in");
 

@@ -22,6 +22,7 @@ import com.gui.taptobuy.phase1.R;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,7 +61,6 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 
 	private int selectedShippingAddress = -1;
 	private int selectedCreditCard = -1;
-
 
 
 	protected void onCreate(Bundle savedInstanceState) {		
@@ -382,6 +382,12 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 	}
 
 	private class getMyAccountSettingsTask extends AsyncTask<Void,Void,User> {
+		ProgressDialog dialog;
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(AccountSettingsActivity.this, "Please wait...", "Loading User data");
+			dialog.show();
+		}	
 		protected User doInBackground(Void... params) {
 			return getMyAccountSettings();
 		}
@@ -393,6 +399,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 			email.setText(receivedUserdata.getEmail());
 			userName.setText(receivedUserdata.getUsername());
 			refreshSpinnersData();
+			dialog.dismiss();
 		}			
 
 	}

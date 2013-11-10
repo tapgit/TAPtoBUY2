@@ -1,16 +1,13 @@
 package com.gui.taptobuy.customadapter;
 
 import java.util.ArrayList;
-
 import com.gui.taptobuy.Entities.Bid;
 import com.gui.taptobuy.activity.MyBiddingActivity.MyBidHolder;
 import com.gui.taptobuy.activity.MySellingActivity;
 import com.gui.taptobuy.phase1.R;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -48,20 +45,17 @@ public class MySellingBidListCustomAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View bidRow, ViewGroup parent) {		
-		
+	public View getView(int position, View bidRow, ViewGroup parent) 
+	{		
 		Bid listBid = bids.get(position);		
 		bidRow = layoutInflater.inflate(R.layout.bids_row, parent, false); 
 		MyBidHolder bidsHolder = new MyBidHolder();
         bidsHolder.bidPrice = (TextView) bidRow.findViewById(R.id.bidRow_BidPrice);
-        bidsHolder.placerUsername  = (TextView) bidRow.findViewById(R.id.bidRow_BidderUsername);
-        
+        bidsHolder.placerUsername  = (TextView) bidRow.findViewById(R.id.bidRow_BidderUsername);        
         bidsHolder.bidPrice.setText("$ " + Double.toString(listBid.getAmount()));
-        bidsHolder.placerUsername.setText("" + listBid.getBidderUserName());
-        
+        bidsHolder.placerUsername.setText("" + listBid.getBidderUserName());        
         bidRow.setTag(bidsHolder);      
-        bidsHolder.bidToshow = listBid;        
-
+        bidsHolder.bidToshow = listBid;    
         return bidRow;
     }
 }
