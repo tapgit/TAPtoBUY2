@@ -66,7 +66,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 
 	private ImageView pic;
 	private Dialog dialog;
-	private static int selectedSort = 0;
+	private static int selectedSort;
 	private static String searchString;
 	private static int catId;
 	/////////////////////////////////////////////////
@@ -96,15 +96,23 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		signOut.setOnClickListener(this);
 		myTap.setOnClickListener(this);	
 
-		catId = -1;//do not search by categories
-		searchString = searchET.getText().toString();//search for the user entered text on this activity
 		
 		Intent intent = getIntent();
 		if(intent.getStringExtra("previousActivity").equals("CategoryActivity")){//if we came from CatActivity search by catId
-			catId = intent.getIntExtra("catId", -1);//overwrite the -1
+			catId = intent.getIntExtra("catId", -1);	
+			searchString = "";
 		}
-		else if(intent.getStringExtra("previousActivity").equals("SignInActivity")){//if we came from login page search with the text entered there
-			searchString = intent.getStringExtra("searchString");//overwrite searchString with the text entered on login page
+		else{
+			catId = -1;//do not search by categories
+			if(intent.getStringExtra("previousActivity").equals("SignInActivity")){//if we came from login page search with the text entered there
+				searchString = intent.getStringExtra("searchString");
+			}
+			else if(intent.getStringExtra("prev").equals("fromSpinner")){
+				searchString = intent.getStringExtra("searchString");
+			}
+			else{
+				searchString = searchET.getText().toString();//search for the user entered text on this activity
+			}
 		}
 		
 		if(Main.signed){
@@ -127,7 +135,8 @@ public class SearchActivity extends Activity implements OnClickListener   {
 			public void onItemSelected(AdapterView<?> arg0,View arg1,int arg2, long arg3) 
 			{
 				selectedSort = arg0.getSelectedItemPosition();
-				Toast.makeText(SearchActivity.this, "spinner", Toast.LENGTH_SHORT).show();
+				getIntent().putExtra("prev", "fromSpinner");
+				getIntent().putExtra("searchString", searchString);
 				new searchProductsTask().execute(catId + "", selectedSort + "", searchString);
 						
 			}
@@ -186,8 +195,9 @@ public class SearchActivity extends Activity implements OnClickListener   {
 			break;
 
 		case R.id.bSearch:
-			//itemsList.setAdapter(new ItemCustomListAdapter(this,this.pic,this.layoutInflator, this.itemsOnSale));
-			new searchProductsTask().execute(-1 + "", selectedSort + "", searchET.getText().toString());
+			catId = -1;
+			searchString = searchET.getText().toString();//search for the user entered text on this activity
+			new searchProductsTask().execute(catId + "", selectedSort + "", searchString);
 			break;
 
 		case R.id.bSignIn:		
@@ -288,11 +298,11 @@ public class SearchActivity extends Activity implements OnClickListener   {
 
 	private class searchProductsTask extends AsyncTask<String,Void,ArrayList<Product>> {
 		public  int downloadadImagesIndex = 0;
-		
+		private ProgressDialog pdialog = null;
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = ProgressDialog.show(SearchActivity.this, "Please wait...", "Searching!!");
-			dialog.show();
+			pdialog = ProgressDialog.show(SearchActivity.this, "Please wait...", "Searching!!");
+			pdialog.show();
 		}		
 		protected ArrayList<Product> doInBackground(String... params) {
 			return getSearchItems(params[0],params[1],params[2]);//get search result
@@ -303,7 +313,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 				new DownloadImageTask().execute(itm.getImgLink());				
 			}
 			itemsList.setAdapter(new SearchResultsCustomListAdapter(SearchActivity.this,SearchActivity.this.pic,SearchActivity.this.layoutInflator, searchResultItems));
-			dialog.dismiss();
+			pdialog.dismiss();
 		}
 				
 		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
