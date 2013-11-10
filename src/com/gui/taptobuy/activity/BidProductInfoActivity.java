@@ -22,7 +22,8 @@ public class BidProductInfoActivity extends Activity implements OnClickListener{
 	public static ProductForAuctionInfo showingProductInfo;	
 	private ImageView prodPic;
 	private RatingBar sellerRating;
-	private TextView prodTitle, prodId, prodTime, prodBrand, prodDimen, prodDescrip, prodSellerUserN, prodPrice, prodShipPrice;
+	private TextView prodTitle, prodId,dollarSy,
+	prodTime, prodBrand, prodDimen, prodDescrip, prodSellerUserN, prodPrice, prodShipPrice;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);	
@@ -43,19 +44,23 @@ public class BidProductInfoActivity extends Activity implements OnClickListener{
 		prodShipPrice = (TextView) findViewById(R.id.BidInfoShippingPrice);
 		sellerRating = (RatingBar)findViewById(R.id.BidInfoSellerRate);
 		
-		if(previousActivity.equals("OrderCheckout")){
+		
+		if(previousActivity.equals("OrderCheckout")||previousActivity.equals("MyHistory")){			
+			dollarSy = (TextView)findViewById(R.id.BidInfoDollarSy);
+			dollarSy.setVisibility(View.GONE);
 			placeBid = (Button) findViewById(R.id.BidInfoPlaceBidb);
 			placeBid.setVisibility(View.GONE);
 			bidInput = (EditText) findViewById(R.id.BidInfoPlaceBidInput);
-			bidInput.setVisibility(View.GONE);
-		}
+			bidInput.setVisibility(View.GONE);			
+		}		
 		else{
-		placeBid = (Button) findViewById(R.id.BidInfoPlaceBidb);
-		bidInput = (EditText) findViewById(R.id.BidInfoPlaceBidInput);
-		placeBid.setOnClickListener(this);
-		bidInput.setOnClickListener(this);
+			placeBid = (Button) findViewById(R.id.BidInfoPlaceBidb);
+			bidInput = (EditText) findViewById(R.id.BidInfoPlaceBidInput);
+			placeBid.setOnClickListener(this);
+			bidInput.setOnClickListener(this);
 		}
-
+		// if(previousActivity.equals("Search"))
+		
 		sellerRating.setRating((float)showingProductInfo.getSellerRate());
 		prodPic.setImageBitmap(showingProductInfo.getImg());
 		prodTitle.setText(showingProductInfo.getTitle());
@@ -78,9 +83,10 @@ public class BidProductInfoActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.BidInfoPlaceBidb){
+			String bidPrice = bidInput.getText().toString();
 			//chakiar si la cantidad entrada en bid input es valida
-			if(!bidInput.getText().equals("")){	
-				Toast.makeText(this, "Bid "+bidInput.getText().toString()+" has been placed", Toast.LENGTH_SHORT).show();
+			if(!bidPrice.equals("")){	
+				Toast.makeText(this, "Your bid "+bidInput.getText().toString()+" has been placed", Toast.LENGTH_SHORT).show();
 				//anadir producto a Mybidding y aumentar el num de bids y current bid del producto
 			}
 			else{

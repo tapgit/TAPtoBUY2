@@ -67,10 +67,12 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 		this.layoutInflator = LayoutInflater.from(this);
 		
 		Intent intent = getIntent();
-		if(intent.getStringExtra("previousActivity").equals("Cart")){
+		String previousAtivity = intent.getStringExtra("previousActivity");
+		
+		if(previousAtivity.equals("Cart")){
 			productsIDList = intent.getIntegerArrayListExtra("productsID");//recoger arraylist de id's de los productos q vamos a comprar
 		}
-		else if(intent.getStringExtra("previousActivity").equals("BuyItProductInfo")){
+		else if(previousAtivity.equals("BuyItProductInfo")){
 			productsIDList = new ArrayList<Integer>();
 			productsIDList.add(intent.getIntExtra("productID", 0)); /// cudiado con el 0 - default value
 		}		

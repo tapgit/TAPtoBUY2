@@ -24,6 +24,8 @@ import com.gui.taptobuy.datatask.ImageManager;
 import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -187,7 +189,13 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 
 	private class productInfoTask extends AsyncTask<String,Void,Product> {
 		Product downloadedProductInfo;
-		Intent intent;
+		Dialog dialog;
+		Intent intent;		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(activity, "Please wait...", "Loading Item");
+			dialog.show();
+		}
 		protected Product doInBackground(String... params) {
 			return getProductInfo(params[0]);//get product info
 		}
@@ -195,9 +203,10 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 			downloadedProductInfo = productInfo;
 			//download image
 			new DownloadImageTask().execute(productInfo.getImgLink());
+		
 		}			
-		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-			
+		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {			
+		
 			protected Bitmap doInBackground(String... params) {
 				return ImageManager.downloadImage(params[0]);
 			}
@@ -207,12 +216,14 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 					BidProductInfoActivity.showingProductInfo = (ProductForAuctionInfo) downloadedProductInfo;
 					intent = new Intent(activity, BidProductInfoActivity.class);
 					intent.putExtra("previousActivity", "Search");
+					dialog.dismiss();					
 					activity.startActivity(intent);			
 				}
 				else{//for sale
 					BuyItProductInfoActivity.showingProductInfo = (ProductForSaleInfo) downloadedProductInfo;					
 					intent = new Intent(activity, BuyItProductInfoActivity.class);
-					intent.putExtra("previousActivity", "Search");
+					intent.putExtra("previousActivity", "Search");				
+					dialog.dismiss();	
 					activity.startActivity(intent);
 				}
 			}

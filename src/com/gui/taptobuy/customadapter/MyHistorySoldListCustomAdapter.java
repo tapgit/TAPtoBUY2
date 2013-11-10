@@ -18,12 +18,13 @@ import com.gui.taptobuy.activity.BidProductInfoActivity;
 import com.gui.taptobuy.activity.BuyItProductInfoActivity;
 import com.gui.taptobuy.activity.MyHistoryActivity;
 import com.gui.taptobuy.activity.MyHistoryActivity.MyViewHistory;
-import com.gui.taptobuy.activity.SearchActivity.MyViewItem;
 
 import com.gui.taptobuy.datatask.ImageManager;
 import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -34,11 +35,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnClickListener {
-
 	private MyHistoryActivity activity;
 	private LayoutInflater layoutInflater;
 	private ArrayList<Product> items;	
@@ -73,14 +73,13 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 		MyViewHistory itemHolder;
 		Product item = items.get(position);
 		        	
-			itemRow = layoutInflater.inflate(R.layout.myhistory_boughtprodrow, parent, false); 
+			itemRow = layoutInflater.inflate(R.layout.myhistory_soldprodrow, parent, false); 
 			itemHolder = new MyViewHistory();
 			itemHolder.itemPic =  (ImageView) itemRow.findViewById(R.id.myHist_soldProductPic);
 			itemHolder.productName = (TextView) itemRow.findViewById(R.id.myHist_soldProdName);
-			itemHolder.sellerUserName = (TextView) itemRow.findViewById(R.id.myHist_soldBuyersName);
-			itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.myHist_soldPrice);	
-			itemHolder.wonOr = (TextView)itemRow.findViewById(R.id.myHist_soldOrW);
-			
+			itemHolder.buyerUserN = (TextView) itemRow.findViewById(R.id.myHist_soldBuyersName);
+			itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.myHist_soldPrice);		
+						
 			itemHolder.itemPic.setTag(itemHolder);
 			itemRow.setTag(itemHolder);
 
@@ -88,32 +87,28 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 			
 			if(item instanceof ProductForAuction)
 			{
-				itemHolder.wonOr.setText("Won!");
-				if(shippingPrice == 0){
+				itemHolder.buyerUserN.setText("Won by: "+item.getSellerUsername());
+				if(shippingPrice == 0){					
 					itemHolder.priceAndShiping.setText("$" + ((ProductForAuction) item).getCurrentBidPrice()+" (Free Shipping)");
 				}
 				else{
 					itemHolder.priceAndShiping.setText("$" + ((ProductForAuction) item).getCurrentBidPrice()+" (Shipping: $" + shippingPrice + ")"); 
-				}	
-				
+				}					
 			}
-			else{
-
-				itemHolder.wonOr.setText("Purchased");
+			else
+			{	
+				itemHolder.buyerUserN.setText("Purchased by: "+item.getSellerUsername());	
 				if(shippingPrice == 0){
 					itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Free Shipping)");
 				}
 				else{
 					itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Shipping: $" + shippingPrice + ")"); 
 				} 
-		}
-		
+			}		
 		itemRow.setOnClickListener(this);  
-
+		
 		itemHolder.item = item;
-		itemHolder.productName.setText(item.getTitle());   		
-		itemHolder.sellerUserName.setText(item.getSellerUsername());		
-		itemHolder.sellerRating.setRating((float)item.getSellerRate());		
+		itemHolder.productName.setText(item.getTitle());  		
 		itemHolder.itemPic.setImageBitmap(item.getImg());
 
 		return itemRow;
@@ -121,18 +116,14 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 
 	@Override
 	public void onClick(View v) {
-		MyViewItem itemHolder = (MyViewItem) v.getTag();    
+		
+		MyViewHistory  itemHolder = (MyViewHistory) v.getTag(); 	
 		new productInfoTask().execute(itemHolder.item.getId() + "");		
 	}
-	
-	public void startBidProductInfoActivity(){
-		this.activity.startActivity(new Intent(this.activity, BidProductInfoActivity.class));
-	}
-
 
 	private Product getProductInfo(String productId){
 		HttpClient httpClient = new DefaultHttpClient();
-		String productInfoDir = Main.hostName +"/product/" + productId;
+		String productInfoDir = Main.hostName +"/productInfo/" + productId;
 		HttpGet get = new HttpGet(productInfoDir);
 		get.setHeader("content-type", "application/json");
 		Product theItem = null;
@@ -162,13 +153,20 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 		}
 		catch(Exception ex)
 		{
-			Log.e("Search","Error!", ex);
+			Log.e("Product Info","Error!", ex);
 		}
 		return theItem;
 	}
 
 	private class productInfoTask extends AsyncTask<String,Void,Product> {
 		Product downloadedProductInfo;
+		Dialog dialog;
+		Intent intent;		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(activity, "Please wait...", "Loading Item");
+			dialog.show();
+		}
 		protected Product doInBackground(String... params) {
 			return getProductInfo(params[0]);//get product info
 		}
@@ -176,9 +174,10 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 			downloadedProductInfo = productInfo;
 			//download image
 			new DownloadImageTask().execute(productInfo.getImgLink());
+		
 		}			
-		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-			
+		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {			
+		
 			protected Bitmap doInBackground(String... params) {
 				return ImageManager.downloadImage(params[0]);
 			}
@@ -186,12 +185,17 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 				downloadedProductInfo.setImg(result);
 				if(downloadedProductInfo instanceof ProductForAuctionInfo){//for auction
 					BidProductInfoActivity.showingProductInfo = (ProductForAuctionInfo) downloadedProductInfo;
-					
-					startBidProductInfoActivity();
+					intent = new Intent(activity, BidProductInfoActivity.class);
+					intent.putExtra("previousActivity", "MyHistory");
+					dialog.dismiss();					
+					activity.startActivity(intent);			
 				}
 				else{//for sale
-					BuyItProductInfoActivity.showingProductInfo = (ProductForSaleInfo) downloadedProductInfo;
-					activity.startActivity(new Intent(activity, BuyItProductInfoActivity.class));
+					BuyItProductInfoActivity.showingProductInfo = (ProductForSaleInfo) downloadedProductInfo;					
+					intent = new Intent(activity, BuyItProductInfoActivity.class);
+					intent.putExtra("previousActivity", "MyHistory");				
+					dialog.dismiss();	
+					activity.startActivity(intent);
 				}
 			}
 		}

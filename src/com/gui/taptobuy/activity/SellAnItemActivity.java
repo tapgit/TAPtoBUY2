@@ -94,12 +94,12 @@ public class SellAnItemActivity extends Activity implements OnClickListener
 		case R.id.sell_ForBiddingCheck:
 			if(forBidCheck.isChecked()){
 
-				priceTV.setText("Starting Price: ");
+				priceTV.setText("Starting price: ");
 				prodQty.setText("1");
 				prodQty.setEnabled(false);
 			}
 			else{
-				priceTV.setText("Instant Price: ");
+				priceTV.setText("Buy Now price: ");
 				prodQty.setText("");
 				prodQty.setEnabled(true);
 			}

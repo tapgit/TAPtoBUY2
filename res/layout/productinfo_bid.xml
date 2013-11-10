@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/BidInfoPlaceBidInput"
         android:layout_alignBottom="@+id/BidInfoPlaceBidInput"
-        android:layout_alignLeft="@+id/BidInfoPlaceBidInput"
+        android:layout_toRightOf="@+id/BidInfoProdBrand"
         android:text="$"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

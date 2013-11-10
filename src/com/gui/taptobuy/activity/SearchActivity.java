@@ -26,6 +26,7 @@ import com.gui.taptobuy.phase1.R;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -277,16 +278,24 @@ public class SearchActivity extends Activity implements OnClickListener   {
 
 	private class searchProductsTask extends AsyncTask<String,Void,ArrayList<Product>> {
 		public  int downloadadImagesIndex = 0;
+		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(SearchActivity.this, "Please wait...", "Searching!!");
+			dialog.show();
+		}		
 		protected ArrayList<Product> doInBackground(String... params) {
 			return getSearchItems(params[0]);//get search result
 		}
 		protected void onPostExecute(ArrayList<Product> searchResultItems ) {
 			//download images
 			for(Product itm: searchResultItems){
-				new DownloadImageTask().execute(itm.getImgLink());
+				new DownloadImageTask().execute(itm.getImgLink());				
 			}
 			itemsList.setAdapter(new SearchResultsCustomListAdapter(SearchActivity.this,SearchActivity.this.pic,SearchActivity.this.layoutInflator, searchResultItems));
-		}			
+			dialog.dismiss();
+		}
+				
 		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
 			protected Bitmap doInBackground(String... urls) {
@@ -338,7 +347,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		return correct;
 	}
 	private class SignInTaskFromSignInBtn extends AsyncTask<String,Integer,Boolean> {
-
+		
 		protected Boolean doInBackground(String... params) {
 			return signIn(params[0], params[1]);
 		}
@@ -349,8 +358,9 @@ public class SearchActivity extends Activity implements OnClickListener   {
 			{
 				Toast.makeText(SearchActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 				signInDisabler();
-				dialog.dismiss();   
-				SearchActivity.this.startActivity(new Intent(SearchActivity.this, SearchActivity.class));
+				dialog.dismiss(); 
+								
+				//SearchActivity.this.startActivity(new Intent(SearchActivity.this, SearchActivity.class));
 			}
 			else{
 				Toast.makeText(SearchActivity.this, "Incorrect Password or User", Toast.LENGTH_SHORT).show();

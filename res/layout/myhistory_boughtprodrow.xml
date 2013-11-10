@@ -8,8 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dip"
-        android:layout_marginTop="4dip"
-        
+        android:layout_marginTop="4dip"        
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/android" />
@@ -17,8 +16,7 @@
     <TextView
         android:id="@+id/myHist_BoughtProdName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       
+        android:layout_height="wrap_content"       
         android:layout_alignLeft="@+id/myHist_BoughtSellerID"
         android:layout_alignTop="@+id/myHist_BoughtProductPic"
         android:text="Product Name"
@@ -70,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/myHist_BoughtSellerID"
         android:layout_below="@+id/myHist_BoughtSellerID"
-        android:text="Purchased or Won"
+        android:text="QTY or BidsAmount"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

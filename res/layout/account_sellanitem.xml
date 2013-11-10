@@ -74,7 +74,7 @@
               android:layout_alignLeft="@+id/sell_Description"
               android:layout_below="@+id/sell_uploadPicB"
               android:layout_marginTop="15dp"
-              android:text="Buy Now Price: $"
+              android:text="Buy Now price: $"
               android:textAppearance="?android:attr/textAppearanceMedium" />
 
           <EditText
@@ -216,8 +216,8 @@
               android:layout_height="wrap_content"
               android:layout_alignBaseline="@+id/textView2"
               android:layout_alignBottom="@+id/textView2"
-              android:layout_alignRight="@+id/sell_inputPrice"
               android:layout_toRightOf="@+id/textView2"
+              android:layout_alignRight="@+id/sell_inputPrice"
               android:ems="10"
               android:inputType="numberDecimal" />
 
@@ -228,7 +228,6 @@
               android:layout_alignLeft="@+id/sell_buyNowPricetext"
               android:layout_below="@+id/sell_inputPrice"
               android:layout_marginTop="12dp"
-              android:layout_toLeftOf="@+id/sell_inputPrice"
               android:text="Shipping price: $"
               android:textAppearance="?android:attr/textAppearanceMedium" />
 

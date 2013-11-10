@@ -3,8 +3,7 @@ package com.gui.taptobuy.customadapter;
 import java.util.ArrayList;
 
 import com.gui.taptobuy.Entities.Bid;
-import com.gui.taptobuy.activity.BidsActivity;
-import com.gui.taptobuy.activity.BidsActivity.MyBidHolder;
+import com.gui.taptobuy.activity.MyBiddingActivity.MyBidHolder;
 import com.gui.taptobuy.activity.MySellingActivity;
 import com.gui.taptobuy.phase1.R;
 

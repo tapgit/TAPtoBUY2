@@ -10,6 +10,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.gui.taptobuy.Entities.Bid;
 import com.gui.taptobuy.Entities.MyBiddingsProduct;
 import com.gui.taptobuy.Entities.Product;
 
@@ -19,6 +20,8 @@ import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ public class MyBiddingActivity extends Activity{
 	private ListView biddingList ;
 	private LayoutInflater layoutInflator;
 	public static ArrayList<MyBiddingsProduct> myBiddingsItems;
+	private Dialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {		
@@ -93,6 +97,12 @@ public class MyBiddingActivity extends Activity{
 
 	private class getMyBiddingsItemsTask extends AsyncTask<String,Void,ArrayList<MyBiddingsProduct>> {
 		public  int downloadadImagesIndex = 0;
+		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog = ProgressDialog.show(MyBiddingActivity.this, "Please wait...", "Loading :)");
+			dialog.show();
+		}	
 		protected ArrayList<MyBiddingsProduct> doInBackground(String... params) {
 			return getMyBiddingsItems();
 		}
@@ -102,6 +112,7 @@ public class MyBiddingActivity extends Activity{
 				new DownloadImageTask().execute(itm.getImgLink());
 			}
 			biddingList.setAdapter(new BiddingsCustomListAdapter(MyBiddingActivity.this,MyBiddingActivity.this.layoutInflator, myBiddingsItems));
+			dialog.dismiss();
 		}			
 		private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -113,5 +124,13 @@ public class MyBiddingActivity extends Activity{
 				myBiddingsItems.get(downloadadImagesIndex++).setImg(result);
 			}
 		}
+	}
+	
+	public static class MyBidHolder {
+		public Bid bidToshow;
+		public TextView bidPrice;
+		public TextView placerUsername;
+		public int productId;
+		public int placerUserId;
 	}
 }
