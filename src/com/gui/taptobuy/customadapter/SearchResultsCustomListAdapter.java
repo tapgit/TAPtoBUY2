@@ -155,7 +155,7 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 			
 			final ListView ratingsList = (ListView) dialog.findViewById(R.id.ratingsList);		     
 			Button closeDialog = (Button) dialog.findViewById(R.id.ratingsCloseB);
-			//new getBidListTask().execute(itemHolder.item.getId() + "");
+			//new getRatingListTask().execute(itemHolder.item.getId() + "");
 			closeDialog.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) 
 				{	
@@ -248,47 +248,4 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 			}
 		}
 	}
-	
-//	private ArrayList<Bid> getBidList(String productId){
-//		HttpClient httpClient = new DefaultHttpClient();
-//		String bidListDir = Main.hostName +"/bidlist/" + productId;
-//		HttpGet get = new HttpGet(bidListDir);
-//		get.setHeader("content-type", "application/json");
-//		try
-//		{
-//			HttpResponse resp = httpClient.execute(get);
-//			if(resp.getStatusLine().getStatusCode() == 200){
-//				String jsonString = EntityUtils.toString(resp.getEntity());
-//				JSONArray bidListArray = (new JSONObject(jsonString)).getJSONArray("bidlist");
-//				bidList = new ArrayList<Bid>();
-//
-//				JSONObject bidListElement = null;
-//
-//				for(int i=0; i<bidListArray.length();i++){
-//					bidListElement = bidListArray.getJSONObject(i);
-//					bidList.add(new Bid(-1, bidListElement.getDouble("amount"), -1, bidListElement.getString("username")));
-//				}
-//
-//			}
-//			else{
-//				Log.e("JSON","bidlist json could not be downloaded.");
-//			}
-//		}
-//		catch(Exception ex)
-//		{
-//			Log.e("BidList","Error!", ex);
-//		}
-//		return bidList;
-//	}
-//
-//	private class getBidListTask extends AsyncTask<String,Void,ArrayList<Bid>> {
-//		protected ArrayList<Bid> doInBackground(String... productId) {
-//			return getBidList(productId[0]);//get bidlist de bids puestos a este product
-//		}
-//		protected void onPostExecute(ArrayList<Bid> bidList ) {
-//			//llenar con array de bid
-//			bidListView.setAdapter(new MySellingBidListCustomAdapter(activity,layoutInflater, bidList));
-//		}			
-//	}
-
 }
