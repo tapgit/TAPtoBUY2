@@ -60,4 +60,13 @@
         android:text="2d 13h"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <TextView
+        android:id="@+id/mSell_Quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mySell_BuyNProductPic"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="49dp"
+        android:text="Qty:" />
+
 </RelativeLayout>

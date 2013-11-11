@@ -177,9 +177,8 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 	@Override
 	public void onClick(View v) 
 	{
-			MyViewItem itemHolder = (MyViewItem) v.getTag();    
+		MyViewItem itemHolder = (MyViewItem) v.getTag();    
 		new productInfoTask().execute(itemHolder.item.getId() + "");
-
 	}
 
 	private Product getProductInfo(String productId){
