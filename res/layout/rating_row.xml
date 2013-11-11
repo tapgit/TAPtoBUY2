@@ -21,11 +21,11 @@
          style="@style/productRatingBar"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_alignBottom="@+id/buyerUN"
+         android:layout_alignBottom="@+id/ratingBuyerUN"
          android:layout_alignParentRight="true"
-         android:layout_marginRight="57dp"
+         android:layout_marginRight="59dp"
          android:isIndicator="true"
          android:numStars="5"
-         android:rating="0" />    
+         android:rating="0" />
 
 </RelativeLayout>
