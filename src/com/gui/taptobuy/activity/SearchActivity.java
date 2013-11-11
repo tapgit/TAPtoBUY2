@@ -247,7 +247,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 	}	
 	private ArrayList<Product> getSearchItems(String catId, String sortBy, String searchString){
 		HttpClient httpClient = new DefaultHttpClient();
-		
+		searchString = searchString.replaceAll("\\s+","%20");//replace white spaces by %20
 		String searchDir = "";
 		if(searchString.equals(""))
 			searchDir = Main.hostName +"/search/" + catId +"/" + sortBy;
