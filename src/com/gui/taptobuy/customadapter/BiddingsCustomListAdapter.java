@@ -118,7 +118,7 @@ public class BiddingsCustomListAdapter extends BaseAdapter implements OnClickLis
 	@Override
 	public void onClick(View v) {
 		MyViewAuctionItem itemHolder = (MyViewAuctionItem) v.getTag();    
-		//new productInfoTask().execute(itemHolder.item.getId() + "");		
+		new productInfoTask().execute(itemHolder.item.getId() + "");		
 	}
 
 	private Product getProductInfo(String productId){
