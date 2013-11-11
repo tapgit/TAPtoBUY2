@@ -80,19 +80,6 @@
         android:text="Time Left:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android:id="@+id/BidInfoDescription"
-        android:layout_width="140dp"
-        android:layout_height="90dp"
-        android:layout_alignLeft="@+id/BidInfoDimensions"
-        android:layout_alignRight="@+id/BidInfoTimeLeft"
-        android:layout_below="@+id/BidInfoDimensions"
-        android:layout_marginTop="14dp"
-        android:inputType="textMultiLine"
-        android:text="Description:"
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <EditText
         android:id="@+id/BidInfoPlaceBidInput"
         android:layout_width="100dp"
@@ -132,6 +119,7 @@
         android:isIndicator="true"
         android:layout_alignRight="@+id/BidInfoDescription"
         android:layout_alignTop="@+id/BidInfoUserName"
+        
         android:numStars="5" />
 
     <TextView
@@ -143,6 +131,30 @@
         android:layout_toRightOf="@+id/BidInfoProdBrand"
         android:text="$"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/BidInfoDescription"
+        android:layout_below="@+id/BidInfoDimensions"
+        android:textStyle="bold"
+        android:text="Description:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/BidInfoDescription"
+        android:layout_width="140dp"
+        android:layout_height="90dp"
+        android:layout_alignLeft="@+id/BidInfoDimensions"
+        android:layout_alignRight="@+id/BidInfoTimeLeft"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="3dp"        
+        android:inputType="textMultiLine"
+        android:text="Description:"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
 
 </RelativeLayout>
 
