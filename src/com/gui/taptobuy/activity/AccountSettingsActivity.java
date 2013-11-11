@@ -23,6 +23,7 @@ import com.gui.taptobuy.phase1.R;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,8 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 	private Button addCard;
 	private Button removeCard;
 	private Button save;	
+	private int userId;
+	private boolean userToViewIsAdmin;
 
 	private Button addShippingAdd;
 	private Button removeShippingAdd;
@@ -66,10 +69,24 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		//IMPORTANTEEEEEEEEEEEEEE
+		//mover lo de chekiar si es admin para el search para que cuando le de myTap salga el Admin activty
 		//if(!user.isAdmin)
 		setContentView(R.layout.account_settings);
 		//else
 		//setContentView(R.layout.account_admin);
+		
+
+		Intent intent = getIntent();
+		if(intent.hasExtra("userId"))
+		{
+			userId = intent.getIntExtra("userId", 16);
+			userToViewIsAdmin = intent.getBooleanExtra("isAdmin", false);
+		}	
+		else{
+			userId = Main.userId;
+		}
+		
 		addCard = (Button)findViewById(R.id.accSet_AddB);
 		removeCard = (Button)findViewById(R.id.accSet_RemoveB);
 		save = (Button)findViewById(R.id.accSet_SaveB);
@@ -327,7 +344,7 @@ public class AccountSettingsActivity extends Activity implements OnClickListener
 
 	private User getMyAccountSettings(){
 		HttpClient httpClient = new DefaultHttpClient();
-		String userAccountDir = Main.hostName +"/user/" + Main.userId;
+		String userAccountDir = Main.hostName +"/user/" + userId;  /////////////////////////////////////////////////////////////////////////////////////////////////
 		HttpGet get = new HttpGet(userAccountDir);
 		get.setHeader("content-type", "application/json");
 		try
