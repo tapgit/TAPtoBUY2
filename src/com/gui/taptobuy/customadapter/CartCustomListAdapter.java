@@ -123,7 +123,13 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 		itemHolder.cartBuy.setTag(itemHolder);
 		itemHolder.check.setTag(itemHolder);
 		itemHolder.cartRemove.setTag(itemHolder);
-		//////////////////	
+		/////////////////
+
+		if(position == 0 ){ //volvimos a empezar
+			if(!CartActivity.checkboxList.isEmpty()) CartActivity.checkboxList.clear();
+		}
+		CartActivity.checkboxList.add(itemHolder.check);
+		
 		itemHolder.check.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 		{    
 			@Override
@@ -141,11 +147,6 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 				}    
 			}
 		});
-
-		if(position == 0 ){ //volvimos a empezar
-			if(!CartActivity.checkboxList.isEmpty()) CartActivity.checkboxList.clear();
-		}
-		CartActivity.checkboxList.add(itemHolder.check);
 
 		itemRow.setTag(itemHolder);
 		itemRow.setOnClickListener(this);
@@ -179,14 +180,28 @@ public class CartCustomListAdapter extends BaseAdapter implements OnClickListene
 
 		if(v.getId() ==  R.id.cartBuyItRemoveB){
 			int idToRemove = itemHolder.item.getId();
-			for(ProductForSale p: items){
-				if(p.getId()==idToRemove){
-					items.remove(p);
-					break;
+//			for(ProductForSale p: items){
+//				if(p.getId()==idToRemove){
+//					items.remove(p);
+//					break;
+//				}
+//			}
+//			itemHolder.check.setChecked(false);// para que lo saque del array
+//			CartActivity.itemsList.invalidateViews(); //refresh
+			
+				for(ProductForSale p: CartActivity.cartResultItems){
+					if(p.getId()== idToRemove){
+						CartActivity.cartResultItems.remove(p);
+						break;
+					}
 				}
-			}
-			itemHolder.check.setChecked(false);// para que lo saque del array
-			CartActivity.itemsList.invalidateViews(); //refresh
+			
+//			for(CheckBox check: checkboxList){
+//				if(check.isChecked()){
+//					check.setChecked(false);					
+//				}
+//			}
+			CartActivity.itemsList.setAdapter(new CartCustomListAdapter(activity,layoutInflater, CartActivity.cartResultItems));
 		}
 		else if(v.getId() == R.id.cartBuyNowB){
 			Intent intent = new Intent(activity,OrderCheckoutActivity.class);

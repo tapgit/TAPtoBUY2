@@ -99,7 +99,7 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 				itemHolder.bidsAmount = (TextView) itemRow.findViewById(R.id.mySell_bids);
 				itemHolder.bidListB = (Button) itemRow.findViewById(R.id.mySell_BidList);
 				itemHolder.AcceptBid = (Button) itemRow.findViewById(R.id.mySell_AcceptBidB);
-				itemHolder.Quit = (Button) itemRow.findViewById(R.id.mySell_QuitB);					
+				itemHolder.Quit = (Button) itemRow.findViewById(R.id.mySell_QuitB);		
 				
 				itemHolder.itemPic.setTag(itemHolder);
 				itemRow.setTag(itemHolder);
@@ -129,11 +129,13 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 				itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.mySell_BuyNPrice);					
 				itemHolder.timeRemaining = (TextView) itemRow.findViewById(R.id.mySell_BuyNRemaningTime);
 				itemHolder.Quit = (Button) itemRow.findViewById(R.id.mySell_QuitfromSellingB);					
+				itemHolder.qty = (TextView) itemRow.findViewById(R.id.mSell_Quantity);
 				
 				itemHolder.itemPic.setTag(itemHolder);
 				itemRow.setTag(itemHolder);
 				itemHolder.Quit.setTag(itemHolder);
 				itemHolder.Quit.setOnClickListener(this);
+				itemHolder.qty.setText("Qty: " + ((ProductForSale)item).getRemainingQuantity());
 				double shippingPrice = item.getShippingPrice();
 				if(shippingPrice == 0){
 					itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Free Shipping)");

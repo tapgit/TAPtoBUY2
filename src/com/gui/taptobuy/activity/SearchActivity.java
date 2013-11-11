@@ -248,6 +248,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 		public Button cartBuy, cartRemove, bidListB, AcceptBid,Quit,cartRemoveSelected,cartSelectAll;
 		public CheckBox check;
 		public EditText itemsQTY;
+		public TextView qty;
 		
 	}	
 	private ArrayList<Product> getSearchItems(String catId, String sortBy, String searchString){
