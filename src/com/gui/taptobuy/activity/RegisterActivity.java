@@ -91,10 +91,6 @@ public class RegisterActivity extends Activity {
 		creditCardHoldersNameET = (EditText) findViewById(R.id.etCreditCardHolderName);
 		creditCardExpDateET = (EditText) findViewById(R.id.etCreditCardExpirationDate);
 
-
-
-
-
 		Button submitInf = (Button) findViewById(R.id.bSubmitUserInf);
 		submitInf.setOnClickListener(new View.OnClickListener() {
 
@@ -192,7 +188,7 @@ public class RegisterActivity extends Activity {
 			json.put("email", emailET.getText().toString());
 			JSONObject shipObj = new JSONObject();
 			shipObj.put("country", shipCountryET.getText().toString());
-			//FALTA		shipObj.put("contact_name", "Contact!");
+			
 			shipObj.put("street", shipStreetET.getText().toString());
 			shipObj.put("city", shipCityET.getText().toString());
 			shipObj.put("state", shipStateET.getText().toString());
@@ -201,7 +197,7 @@ public class RegisterActivity extends Activity {
 			json.put("shipping_address",shipObj);
 			JSONObject billObj = new JSONObject();
 			billObj.put("country", billCountryET.getText().toString());
-			//FALTA 	billObj.put("contact_name", "Contact!");
+			
 			billObj.put("street", billStreetET.getText().toString());
 			billObj.put("city", billCityET.getText().toString());
 			billObj.put("state", billStateET.getText().toString());
@@ -220,10 +216,7 @@ public class RegisterActivity extends Activity {
 			HttpResponse resp = httpClient.execute(post);
 			if(resp.getStatusLine().getStatusCode() == 201){
 				result = 0;
-			}
-			else{
-				//
-			}
+			}		
 		}
 		catch(Exception ex)
 		{

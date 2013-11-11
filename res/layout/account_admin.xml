@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/checkRegUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,7 +12,7 @@
         android:layout_marginLeft="25dp"
         android:text="Regular user" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/checkAdmiUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         <requestFocus />
     </EditText>
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/checkRegUser2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         android:layout_below="@+id/checkRegUser2"
         android:text="Create New Account" />
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/checkAdminUser2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

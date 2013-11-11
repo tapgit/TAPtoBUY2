@@ -253,8 +253,16 @@ public class SignInActivity extends Activity implements View.OnClickListener {
 			{
 				Toast.makeText(SignInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 				signInDisabler();
-				dialog.dismiss();   
-				startActivity(new Intent(SignInActivity.this,CartActivity.class));
+				dialog.dismiss(); 
+				
+				if(Main.admin){
+					SignInActivity.this.startActivity(new Intent(SignInActivity.this, AdministratorActivity.class));
+				}
+				else{
+					Intent intent = new Intent(SignInActivity.this, CartActivity.class);
+					//intent.putExtra("previousActivity", "SignInActivity");
+					SignInActivity.this.startActivity(intent);			
+				}
 			}
 			else{
 				Toast.makeText(SignInActivity.this, "Incorrect Password or User", Toast.LENGTH_SHORT).show();

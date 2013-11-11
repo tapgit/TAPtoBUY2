@@ -72,7 +72,7 @@
     <Button
         android:id="@+id/cartBuyNowB"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:layout_alignBottom="@+id/cartSellerUsername"
         android:layout_alignParentRight="true"
         android:text="Buy it Now"

@@ -385,6 +385,9 @@ public class SearchActivity extends Activity implements OnClickListener   {
 				Toast.makeText(SearchActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 				signInDisabler();
 				dialog.dismiss(); 
+				if(Main.admin){
+					startActivity(new Intent(SearchActivity.this, AdministratorActivity.class));
+					}
 								
 				//SearchActivity.this.startActivity(new Intent(SearchActivity.this, SearchActivity.class));
 			}
@@ -406,7 +409,12 @@ public class SearchActivity extends Activity implements OnClickListener   {
 			{
 				Toast.makeText(SearchActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 				signInDisabler();
-				dialog.dismiss();   
+				dialog.dismiss();  
+				
+				if(Main.admin){
+				startActivity(new Intent(SearchActivity.this, AdministratorActivity.class));
+				}
+				else
 				startActivity(new Intent(SearchActivity.this,CartActivity.class));
 			}
 			else{

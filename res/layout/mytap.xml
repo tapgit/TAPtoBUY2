@@ -29,7 +29,7 @@
         android:layout_below="@+id/myTap_sellAnItem"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="My selling Items" />
+        android:text="My Selling Items" />
 
     <Button
         android:id="@+id/myTap_MyHistory"
