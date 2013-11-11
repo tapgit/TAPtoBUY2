@@ -56,7 +56,7 @@
         android:layout_alignLeft="@+id/myTap_MySellings"
         android:layout_below="@+id/myTap_MySellings"
         android:layout_marginTop="16dp"
-        android:text="Bidding Items" />
+        android:text="My Bidding Items" />
 
     <ImageView
         android:id="@+id/imageView1"
