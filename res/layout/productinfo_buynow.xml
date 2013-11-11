@@ -8,7 +8,7 @@
    <ImageView
         android:id="@+id/BuyInfoProdPic"
         android:layout_width="300dp"
-        android:layout_height="140dp"
+        android:layout_height="172dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
@@ -22,7 +22,7 @@
         android:layout_alignRight="@+id/BuyInfoProdPic"
         android:layout_below="@+id/BuyInfoProdPic"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="comic sans"
         android:inputType="textMultiLine"
         android:text="Product Title"
@@ -62,7 +62,7 @@
         android:id="@+id/BuyInfoSellerUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/BuyInfoDescription"
         android:layout_alignRight="@+id/BuyInfoDescription"
         android:layout_below="@+id/BuyInfoDescription"
@@ -104,7 +104,7 @@
         android:layout_height="46dp"
         android:layout_alignRight="@+id/BuyInfoPrice"
         android:layout_below="@+id/BuyInfoPrice"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="Add to Cart" />
 
     <TextView
@@ -121,7 +121,7 @@
     <TextView
         android:id="@+id/BuyInfoDescription"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
+        android:layout_height="90dp"
         android:layout_marginTop="3dp"
         android:layout_alignLeft="@+id/BuyInfoDimensions"
         android:layout_alignRight="@+id/BuyInfoProdBrand"
@@ -134,7 +134,7 @@
     <Button
         android:id="@+id/BuyInfoBuyNowb"
         style="?android:attr/buttonStyleSmall"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_width="100dp"
         android:layout_height="46dp"
         android:layout_alignLeft="@+id/BuyInfoPrice"

@@ -177,11 +177,9 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 	@Override
 	public void onClick(View v) 
 	{
-		Toast.makeText(activity,"tocado: "+ v.getId() , Toast.LENGTH_LONG).show();
+			MyViewItem itemHolder = (MyViewItem) v.getTag();    
+		new productInfoTask().execute(itemHolder.item.getId() + "");
 
-//		MyViewItem itemHolder = (MyViewItem) v.getTag();    
-//		new productInfoTask().execute(itemHolder.item.getId() + "");
-	//	}
 	}
 
 	private Product getProductInfo(String productId){
