@@ -18,5 +18,12 @@ public class Rating {
 		return buyerRate;
 	}
 	
+	public void setBuyerUN(String username){
+		this.buyerUN = username;
+	}
+	public void setBuyerRate(int rate){
+		this.buyerRate = rate;
+	}
+	
 
 }

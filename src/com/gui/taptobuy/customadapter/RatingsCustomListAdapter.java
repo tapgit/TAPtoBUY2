@@ -29,6 +29,7 @@ public class RatingsCustomListAdapter extends BaseAdapter{
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
+		System.out.println(ratings.size()+"   del adapter");
 		return ratings.size();
 	}
 
