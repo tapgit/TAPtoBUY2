@@ -168,7 +168,6 @@ public class MySellingListCustomAdapter extends BaseAdapter implements OnClickLi
 
 				public void onClick(View v) 
 				{	
-					if(v.getId() == R.id.bidOkButton)
 					dialog.dismiss();
 				}
 			});    

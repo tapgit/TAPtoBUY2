@@ -14,14 +14,18 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.gui.taptobuy.Entities.Bid;
 import com.gui.taptobuy.Entities.Category;
 import com.gui.taptobuy.Entities.Product;
 import com.gui.taptobuy.Entities.ProductForAuction;
 import com.gui.taptobuy.Entities.ProductForSale;
+import com.gui.taptobuy.Entities.Rating;
 import com.gui.taptobuy.customadapter.CategoriesCustomListAdapter;
+import com.gui.taptobuy.customadapter.RatingsCustomListAdapter;
 import com.gui.taptobuy.customadapter.SearchResultsCustomListAdapter;
 import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.datatask.ImageManager;
+
 import com.gui.taptobuy.phase1.R;
 
 import android.app.Activity;
@@ -70,6 +74,7 @@ public class SearchActivity extends Activity implements OnClickListener   {
 	private static String searchString;
 	private static int catId;
 	/////////////////////////////////////////////////
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -409,6 +414,5 @@ public class SearchActivity extends Activity implements OnClickListener   {
 			}
 		}
 	}
-
 }
 
