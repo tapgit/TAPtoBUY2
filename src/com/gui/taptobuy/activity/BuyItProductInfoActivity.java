@@ -68,7 +68,7 @@ public class BuyItProductInfoActivity extends Activity implements OnClickListene
 		sellerRating.setRating((float)showingProductInfo.getSellerRate());
 		prodPic.setImageBitmap(showingProductInfo.getImg());
 		prodTitle.setText(showingProductInfo.getTitle());
-		prodId.setText("Product Id: " +showingProductInfo.getId());
+		prodId.setText("Remaining Quantiy: " +showingProductInfo.getRemainingQuantity());
 		prodTime.setText(showingProductInfo.getTimeRemaining());
 		prodBrand.setText("Brand: " + showingProductInfo.getBrand());
 		prodDimen.setText("Dimensions: " + showingProductInfo.getDimensions());
