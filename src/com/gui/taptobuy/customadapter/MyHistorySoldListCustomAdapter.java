@@ -91,7 +91,7 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 			
 			if(item instanceof MyHistoryProductForAuction)
 			{
-			////////////////////////////////////////////////////////////itemHolder.buyerUserN.setText("Won by: "+item.getSellerUsername());
+			itemHolder.buyerUserN.setText("Won by: "+item.getSellerUsername());
 				if(shippingPrice == 0){					
 					itemHolder.priceAndShiping.setText("$" + ((MyHistoryProductForAuction) item).getPaidPrice()+" (Free Shipping)");
 				}
@@ -101,7 +101,7 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 			}
 			else
 			{	
-			/////////////////////////////////////////////////////////////////itemHolder.buyerUserN.setText("Purchased by: "+item.getSellerUsername());	
+			itemHolder.buyerUserN.setText("Purchased by: "+item.getSellerUsername());	
 				if(shippingPrice == 0){
 					itemHolder.priceAndShiping.setText("$" + ((MyHistoryProductForSale) item).getPaidPrice() +" (Free Shipping)");
 				}

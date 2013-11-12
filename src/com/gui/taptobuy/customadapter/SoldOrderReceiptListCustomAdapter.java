@@ -107,7 +107,7 @@ public class SoldOrderReceiptListCustomAdapter extends BaseAdapter implements On
 			}		
 		itemRow.setOnClickListener(this);  
 		
-		itemHolder.item = item;
+		////////////////////////////////////////////////////////check: itemHolder.item = item;
 		itemHolder.productName.setText(item.getTitle());  		
 		itemHolder.itemPic.setImageBitmap(item.getImg());
 

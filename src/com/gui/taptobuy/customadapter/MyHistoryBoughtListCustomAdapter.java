@@ -115,8 +115,8 @@ public class MyHistoryBoughtListCustomAdapter extends BaseAdapter implements OnC
 
 		itemHolder.item = item;
 		itemHolder.productName.setText(item.getTitle());   
-//////////////////////		itemHolder.sellerUserName.setText("Sold by: "+item.get());		
-///////////////////////		itemHolder.sellerRating.setRating((float)item.getSellerRate());		
+		itemHolder.sellerUserName.setText("Sold by: "+item.getSellerUsername());		
+		//itemHolder.sellerRating.setRating((float)item.getSellerRate());		
 		itemHolder.itemPic.setImageBitmap(item.getImg());
 
 		return itemRow;

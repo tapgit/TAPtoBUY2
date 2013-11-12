@@ -7,8 +7,9 @@ public class MyHistoryProductForSale extends MyHistoryProduct{
 
 	public MyHistoryProductForSale(int id, int order_id, String title,
 			double paidPrice, double paidShippingPrice, String imgLink,
-			Bitmap img, int quantity) {
-		super(id, order_id, title, paidPrice, paidShippingPrice, imgLink, img);
+			Bitmap img, String sellerUsername, double sellerRate, int quantity) {
+		super(id, order_id, title, paidPrice, paidShippingPrice, imgLink, img,
+				sellerUsername, sellerRate);
 		this.quantity = quantity;
 	}
 
@@ -19,6 +20,5 @@ public class MyHistoryProductForSale extends MyHistoryProduct{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
 
 }
