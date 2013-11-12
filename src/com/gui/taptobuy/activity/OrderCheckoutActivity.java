@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -46,7 +47,7 @@ import com.gui.taptobuy.datatask.Main;
 import com.gui.taptobuy.phase1.R;
 
 public class OrderCheckoutActivity extends Activity implements OnClickListener{
-	
+
 	private Button placeOrder;
 	private Spinner cardsSpinner;
 	private Spinner shipAddrSpinner;
@@ -59,16 +60,16 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 	private LayoutInflater layoutInflator;
 	private String totalPriceValue;
 	private int orderID;
-	
+
 	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.order_checkout);		
-		
+
 		this.layoutInflator = LayoutInflater.from(this);
-		
+
 		Intent intent = getIntent();
 		String previousAtivity = intent.getStringExtra("previousActivity");
-		
+
 		if(previousAtivity.equals("Cart")){
 			productsIDList = intent.getIntegerArrayListExtra("productsID");//recoger arraylist de id's de los productos q vamos a comprar
 		}
@@ -78,14 +79,14 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 		}		
 		if(!productsIDList.isEmpty()) 
 			new buyNowProductsTask().execute(productsIDList);
-		
-		
+
+
 		itemsList = (ListView)findViewById(R.id.checkout_ItemsList);
 		shippingAdd = (TextView)findViewById(R.id.checkout_ShippingAdress);
 		totalPrice = (TextView) findViewById(R.id.checkout_TotalPayment);
 		placeOrder = (Button) findViewById(R.id.checkout_PlaceOrderB);
 		placeOrder.setOnClickListener(this);
-		
+
 		cardsSpinner = (Spinner) findViewById (R.id.checkout_CardsSpinner);
 		shipAddrSpinner = (Spinner) findViewById(R.id.checkout_SpinnerAdd);			
 
@@ -102,29 +103,31 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {}	        	
 		});
-		
+
 		new getMyAccountSettingsTask().execute();
 	}
 
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.checkout_PlaceOrderB){			
-			Toast.makeText(this, "Your order has been placed", Toast.LENGTH_SHORT).show();
-			
-			//crear una nueva order
-			// orderID igual a X
-//			this.orderID = 0;
-			if(true){
-				Intent intent = new Intent(this,PurchasedOrderReceiptActivity.class);
-				intent.putExtra("orderID", this.orderID);
-				startActivity(intent);
-			}
-			//anadir producto a la lista de bougth items del usuario, Id de produto y de usuario
-			//enviar la orden al DB
-		}		
+			final Dialog dialog; 
+			dialog = new Dialog(OrderCheckoutActivity.this); 
+			dialog.setContentView(R.layout.order_placed_dialog);
+			dialog.setTitle("Order placed Successfully"); 
+			Button ok = (Button) dialog.findViewById(R.id.orderpalceOK); 
+			ok.setOnClickListener(new View.OnClickListener() { 
+				public void onClick(View v) { 
+					//Intent search = new Intent(OrderCheckoutActivity.this,SearchActivity.class); 
+					//search.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+					//startActivity(search); 
+					dialog.dismiss(); 
+				}
+			});
+			dialog.show(); 
+		}	
 	}
-	
-	
+
+
 	private ArrayList<Product> buyNowProducts(ArrayList<Integer> productsIDList){
 		HttpClient httpClient = new DefaultHttpClient();
 
@@ -142,12 +145,12 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 			StringEntity entity = new StringEntity(jsonObj.toString());
 			post.setEntity(entity);
 			HttpResponse resp = httpClient.execute(post);
-			
+
 			if(resp.getStatusLine().getStatusCode() == 200){
 				String jsonString = EntityUtils.toString(resp.getEntity());
 				JSONArray productsToBuyArray = (new JSONObject(jsonString)).getJSONArray("productsToBuy");
 				items = new ArrayList<Product>();
-				
+
 				JSONObject buyNowElement = null;
 				JSONObject jsonItem = null;
 				Product anItem = null;
@@ -168,7 +171,7 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 					items.add(anItem);
 				}
 				totalPriceValue = new JSONObject(jsonString).getString("total");
-				
+
 			}
 			else{
 				Log.e("JSON","products to buy json could not be downloaded.");
@@ -205,13 +208,13 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 			}
 		}
 	}
-	
-	
+
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	
+
 	private User getMyAccountSettings(){
 		HttpClient httpClient = new DefaultHttpClient();
 		String userAccountDir = Main.hostName +"/user/" + Main.userId;
@@ -274,7 +277,7 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 		}
 		protected void onPostExecute(User receivedUserdata) {
 
-		
+
 			Address firstAddress = receivedUserdata.getShipping_addresses()[0];
 			shippingAdd.setText(firstAddress.getContact_name() + "\n" + firstAddress.getStreet() +  "\n" + firstAddress.getCity() + 
 					" " + firstAddress.getState() + " " + firstAddress.getZip_code() + "\n" + firstAddress.getCountry() + "\n" + 
@@ -292,7 +295,7 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 				CreditCard tmpCrdCard = receivedUserdata.getCredit_cards()[i];
 				creditCardsIdentifiers[i] = "xxxx-xxxx-xxxx-" + tmpCrdCard.getNumber().substring(12);
 			}
-			
+
 			ArrayAdapter<String> shippingAddressesAdapter = new ArrayAdapter<String>(OrderCheckoutActivity.this,android.R.layout.simple_list_item_single_choice, shippingAddressesIdentifiers);
 			shipAddrSpinner.setAdapter(shippingAddressesAdapter);
 
