@@ -149,7 +149,7 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 						dialog.setContentView(R.layout.ratinglist);
 						dialog.setTitle("Seller's ratings");						
 						ratingsListView = (ListView) dialog.findViewById(R.id.ratingsList);
-						new getRatingsListTask().execute(item.getId() +"");
+						//new getRatingsListTask().execute(item.getId() +"");
 						Button closeDialog = (Button) dialog.findViewById(R.id.ratingsCloseB);
 						
 						closeDialog.setOnClickListener(new View.OnClickListener() {
@@ -295,13 +295,10 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 	}
 	
 	private class getRatingsListTask extends AsyncTask<String,Void,ArrayList<Rating>> {
-	
 		protected ArrayList<Rating> doInBackground(String... sellerId) {
 			return getRatingsList(sellerId[0]);//get ratinglist de ratings puestos a este seller
 		}
 		protected void onPostExecute(ArrayList<Rating> ratingsList ) {
-			
-			//llenar con array de bid
 			ratingsListView.setAdapter(new RatingsCustomListAdapter(activity, layoutInflater, ratingsList));
 		}			
 	}
