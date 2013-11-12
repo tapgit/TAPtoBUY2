@@ -149,7 +149,7 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 						dialog.setContentView(R.layout.ratinglist);
 						dialog.setTitle("Seller's ratings");						
 						ratingsListView = (ListView) dialog.findViewById(R.id.ratingsList);
-						//new getRatingsListTask().execute(item.getId() +"");
+						new getRatingsListTask().execute(item.getId() +"");
 						Button closeDialog = (Button) dialog.findViewById(R.id.ratingsCloseB);
 						
 						closeDialog.setOnClickListener(new View.OnClickListener() {
@@ -263,9 +263,9 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 	
 	//// ratings list stuff
 	
-	private ArrayList<Rating> getRatingsList(String sellerId){
+	private ArrayList<Rating> getRatingsList(String productId){
 		HttpClient httpClient = new DefaultHttpClient();
-		String ratingsListDir = Main.hostName +"/ratingslist/" + sellerId;////
+		String ratingsListDir = Main.hostName +"/ratinglist/" + productId;////
 		HttpGet get = new HttpGet(ratingsListDir);
 		get.setHeader("content-type", "application/json");
 		try
@@ -279,7 +279,7 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 				JSONObject ratingsListElement = null;				
 				for(int i=0; i<ratingsListArray.length();i++){
 					ratingsListElement = ratingsListArray.getJSONObject(i);
-					ratingsList.add(new Rating(ratingsListElement.getString("username"),ratingsListElement.getInt("rate")));
+					ratingsList.add(new Rating(ratingsListElement.getString("buyerUN"),ratingsListElement.getInt("buyerRate")));
 				}
 
 			}
@@ -295,8 +295,8 @@ public class SearchResultsCustomListAdapter extends BaseAdapter implements OnCli
 	}
 	
 	private class getRatingsListTask extends AsyncTask<String,Void,ArrayList<Rating>> {
-		protected ArrayList<Rating> doInBackground(String... sellerId) {
-			return getRatingsList(sellerId[0]);//get ratinglist de ratings puestos a este seller
+		protected ArrayList<Rating> doInBackground(String... productId) {
+			return getRatingsList(productId[0]);//get ratinglist de ratings puestos a este seller
 		}
 		protected void onPostExecute(ArrayList<Rating> ratingsList ) {
 			ratingsListView.setAdapter(new RatingsCustomListAdapter(activity, layoutInflater, ratingsList));
