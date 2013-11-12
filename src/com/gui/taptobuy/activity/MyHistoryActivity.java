@@ -10,6 +10,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.gui.taptobuy.Entities.MyHistoryProduct;
+import com.gui.taptobuy.Entities.MyHistoryProductForAuction;
+import com.gui.taptobuy.Entities.MyHistoryProductForSale;
 import com.gui.taptobuy.Entities.Product;
 import com.gui.taptobuy.Entities.ProductForAuction;
 import com.gui.taptobuy.Entities.ProductForSale;
@@ -39,8 +42,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyHistoryActivity extends Activity{
-	public  ArrayList<Product> historyBoughtItems;
-	public  ArrayList<Product> historySoldItems;
+	public  ArrayList<MyHistoryProduct> historyBoughtItems;
+	public  ArrayList<MyHistoryProduct> historySoldItems;
 	private ListView boughtItemsList;
 	private ListView soldItemsList;
 	private LayoutInflater layoutInflator;
@@ -52,8 +55,8 @@ public class MyHistoryActivity extends Activity{
 		this.layoutInflator = LayoutInflater.from(this);
 		this.boughtItemsList = (ListView) findViewById(R.id.myHistory_boughtItems);
 
-		historyBoughtItems = new ArrayList<Product>();
-		historySoldItems = new ArrayList<Product>();
+		historyBoughtItems = new ArrayList<MyHistoryProduct>();
+		historySoldItems = new ArrayList<MyHistoryProduct>();
 
 		this.soldItemsList = (ListView) findViewById(R.id.myHistory_SoldItems);
 		new myHistoryTask().execute();	}
@@ -62,7 +65,7 @@ public class MyHistoryActivity extends Activity{
 		public TextView productName, sellerUserName, priceAndShiping,bidsAmount,wonOr,buyerUserN;
 		public RatingBar sellerRating;		
 		public ImageView itemPic;
-		public Product item;		
+		public MyHistoryProduct item;		
 
 	}
 	private void getMyHistoryItems(){
@@ -77,25 +80,22 @@ public class MyHistoryActivity extends Activity{
 				String jsonString = EntityUtils.toString(resp.getEntity());
 				JSONArray searchResultArray = (new JSONObject(jsonString)).getJSONArray("myHistory");
 
-				historyBoughtItems = new ArrayList<Product>();
-				historySoldItems = new ArrayList<Product>();
+				historyBoughtItems = new ArrayList<MyHistoryProduct>();
+				historySoldItems = new ArrayList<MyHistoryProduct>();
 
 				JSONObject searchElement = null;
-				JSONObject jsonItem = null;
-				Product anItem = null;
+				JSONObject j = null;
+				MyHistoryProduct anItem = null;
 
 				for(int i=0; i<searchResultArray.length();i++){
 					searchElement = searchResultArray.getJSONObject(i);
-					jsonItem = searchElement.getJSONObject("item");
+					j = searchElement.getJSONObject("item");
 					if(searchElement.getBoolean("forBid")){
-						anItem = new ProductForAuction(jsonItem.getInt("id"), jsonItem.getString("title"), jsonItem.getString("timeRemaining"), 
-								jsonItem.getDouble("shippingPrice"), jsonItem.getString("imgLink"),  jsonItem.getString("sellerUsername"), 
-								jsonItem.getDouble("sellerRate"),  jsonItem.getDouble("startinBidPrice"),  jsonItem.getDouble("currentBidPrice"),  jsonItem.getInt("totalBids"));
+						anItem = new MyHistoryProductForAuction(j.getInt("id"), j.getInt("order_id"), j.getString("title"), j.getDouble("paidPrice"), j.getDouble("paidShippingPrice"), j.getString("imgLink"), null, -1);
+	
 					}
 					else{
-						anItem = new ProductForSale(jsonItem.getInt("id"), jsonItem.getString("title"), jsonItem.getString("timeRemaining"), 
-								jsonItem.getDouble("shippingPrice"), jsonItem.getString("imgLink"),  jsonItem.getString("sellerUsername"), 
-								jsonItem.getDouble("sellerRate"), jsonItem.getInt("remainingQuantity"), jsonItem.getDouble("instantPrice"));
+						anItem = new MyHistoryProductForSale(j.getInt("id"), j.getInt("order_id"), j.getString("title"), j.getDouble("paidPrice"), j.getDouble("paidShippingPrice"), j.getString("imgLink"), null, -1);
 					}
 					if(searchElement.getBoolean("sold")){
 						historySoldItems.add(anItem);
@@ -107,16 +107,16 @@ public class MyHistoryActivity extends Activity{
 
 			}
 			else{
-				Log.e("JSON","search json could not be downloaded.");
+				Log.e("JSON","Myhistory json could not be downloaded.");
 			}
 		}
 		catch(Exception ex)
 		{
-			Log.e("Search","Error!", ex);
+			Log.e("Myhistory","Error!", ex);
 		}
 	}
 
-	private class myHistoryTask extends AsyncTask<Void,Void,ArrayList<Product>> {
+	private class myHistoryTask extends AsyncTask<Void,Void,ArrayList<MyHistoryProduct>> {
 		public  int downloadadImagesIndexBought = 0;
 		public  int downloadadImagesIndexSold = 0;
 		private Dialog dialog;
@@ -125,16 +125,16 @@ public class MyHistoryActivity extends Activity{
 			dialog = ProgressDialog.show(MyHistoryActivity.this, "Please wait...", "Loading!!");
 			dialog.show();
 		}
-		protected ArrayList<Product> doInBackground(Void... params) {
-			getMyHistoryItems();//get search result
+		protected ArrayList<MyHistoryProduct> doInBackground(Void... params) {
+			getMyHistoryItems();//get myhistory result
 			return null;//
 		}
-		protected void onPostExecute ( ArrayList<Product> unused) {
+		protected void onPostExecute ( ArrayList<MyHistoryProduct> unused) {
 			//download images
-			for(Product itm: historyBoughtItems){
+			for(MyHistoryProduct itm: historyBoughtItems){
 				new DownloadImageBoughtItemTask().execute(itm.getImgLink());
 			}
-			for(Product itm: historySoldItems){
+			for(MyHistoryProduct itm: historySoldItems){
 				new DownloadImageSoldItemTask().execute(itm.getImgLink());
 			}
 			boughtItemsList.setAdapter(new MyHistoryBoughtListCustomAdapter(MyHistoryActivity.this,layoutInflator, historyBoughtItems));	

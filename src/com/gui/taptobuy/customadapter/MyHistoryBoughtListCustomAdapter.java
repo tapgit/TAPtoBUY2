@@ -9,6 +9,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import com.gui.taptobuy.Entities.MyHistoryProduct;
+import com.gui.taptobuy.Entities.MyHistoryProductForAuction;
+import com.gui.taptobuy.Entities.MyHistoryProductForSale;
 import com.gui.taptobuy.Entities.Product;
 import com.gui.taptobuy.Entities.ProductForAuction;
 import com.gui.taptobuy.Entities.ProductForAuctionInfo;
@@ -43,9 +46,9 @@ import android.widget.Toast;
 public class MyHistoryBoughtListCustomAdapter extends BaseAdapter implements OnClickListener {
 	private MyHistoryActivity activity;
 	private LayoutInflater layoutInflater;
-	private ArrayList<Product> items;	
+	private ArrayList<MyHistoryProduct> items;	
 
-	public MyHistoryBoughtListCustomAdapter (MyHistoryActivity a, LayoutInflater l, ArrayList<Product> items)
+	public MyHistoryBoughtListCustomAdapter (MyHistoryActivity a, LayoutInflater l, ArrayList<MyHistoryProduct> items)
 	{
 		this.activity = a;		
 		this.layoutInflater = l;
@@ -73,7 +76,7 @@ public class MyHistoryBoughtListCustomAdapter extends BaseAdapter implements OnC
 	@Override
 	public View getView(int position, View itemRow, ViewGroup parent) {
 		MyViewHistory itemHolder;
-		Product item = items.get(position);
+		MyHistoryProduct item = items.get(position);
 		        	
 			itemRow = layoutInflater.inflate(R.layout.myhistory_boughtprodrow, parent, false); 
 			itemHolder = new MyViewHistory();
@@ -87,24 +90,24 @@ public class MyHistoryBoughtListCustomAdapter extends BaseAdapter implements OnC
 			itemHolder.itemPic.setTag(itemHolder);
 			itemRow.setTag(itemHolder);
 
-			double shippingPrice = item.getShippingPrice();
+			double shippingPrice = item.getPaidShippingPrice();
 			
-			if(item instanceof ProductForAuction){
+			if(item instanceof MyHistoryProductForAuction){
 				itemHolder.wonOr.setText("Won!");
 				if(shippingPrice == 0){
-					itemHolder.priceAndShiping.setText("$" + ((ProductForAuction) item).getCurrentBidPrice()+" (Free Shipping)");
+					itemHolder.priceAndShiping.setText("$" + ((MyHistoryProductForAuction) item).getPaidPrice()+" (Free Shipping)");
 				}
 				else{
-					itemHolder.priceAndShiping.setText("$" + ((ProductForAuction) item).getCurrentBidPrice()+" (Shipping: $" + shippingPrice + ")"); 
+					itemHolder.priceAndShiping.setText("$" + ((MyHistoryProductForAuction) item).getPaidPrice()+" (Shipping: $" + shippingPrice + ")"); 
 				}			
 			}
 			else{
 				itemHolder.wonOr.setText("Purchased");
 				if(shippingPrice == 0){
-					itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Free Shipping)");
+					itemHolder.priceAndShiping.setText("$" + ((MyHistoryProductForSale) item).getPaidPrice() +" (Free Shipping)");
 				}
 				else{
-					itemHolder.priceAndShiping.setText("$" + ((ProductForSale) item).getInstantPrice() +" (Shipping: $" + shippingPrice + ")"); 
+					itemHolder.priceAndShiping.setText("$" + ((MyHistoryProductForSale) item).getPaidPrice() +" (Shipping: $" + shippingPrice + ")"); 
 				} 
 		}
 		
@@ -112,8 +115,8 @@ public class MyHistoryBoughtListCustomAdapter extends BaseAdapter implements OnC
 
 		itemHolder.item = item;
 		itemHolder.productName.setText(item.getTitle());   
-		itemHolder.sellerUserName.setText("Sold by: "+item.getSellerUsername());		
-		itemHolder.sellerRating.setRating((float)item.getSellerRate());		
+//////////////////////		itemHolder.sellerUserName.setText("Sold by: "+item.get());		
+///////////////////////		itemHolder.sellerRating.setRating((float)item.getSellerRate());		
 		itemHolder.itemPic.setImageBitmap(item.getImg());
 
 		return itemRow;
@@ -123,7 +126,8 @@ public class MyHistoryBoughtListCustomAdapter extends BaseAdapter implements OnC
 	public void onClick(View v) {
 		
 		MyViewHistory  itemHolder = (MyViewHistory) v.getTag(); 	
-		new productInfoTask().execute(itemHolder.item.getId() + "");		
+		new productInfoTask().execute(itemHolder.item.getId() + "");
+		
 	}
 
 	private Product getProductInfo(String productId){
