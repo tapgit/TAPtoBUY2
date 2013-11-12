@@ -31,20 +31,19 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnClickListener {
+public class SoldOrderReceiptListCustomAdapter extends BaseAdapter implements OnClickListener{
 	
 	private MyHistoryActivity activity;
 	private LayoutInflater layoutInflater;
 	private ArrayList<Product> items;	
-
-	public MyHistorySoldListCustomAdapter (MyHistoryActivity a, LayoutInflater l, ArrayList<Product> items)
+	
+	public SoldOrderReceiptListCustomAdapter (MyHistoryActivity a, LayoutInflater l, ArrayList<Product> items)
 	{
 		this.activity = a;		
 		this.layoutInflater = l;
@@ -74,12 +73,12 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 		MyViewHistory itemHolder;
 		Product item = items.get(position);
 		        	
-			itemRow = layoutInflater.inflate(R.layout.myhistory_soldprodrow, parent, false); 
+			itemRow = layoutInflater.inflate(R.layout.order_receipt_sold_row, parent, false); 
 			itemHolder = new MyViewHistory();
-			itemHolder.itemPic =  (ImageView) itemRow.findViewById(R.id.myHist_soldProductPic);
-			itemHolder.productName = (TextView) itemRow.findViewById(R.id.myHist_soldProdName);
-			itemHolder.buyerUserN = (TextView) itemRow.findViewById(R.id.myHist_soldBuyersName);
-			itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.myHist_soldPrice);		
+			itemHolder.itemPic =  (ImageView) itemRow.findViewById(R.id.receipt_soldProductPic);
+			itemHolder.productName = (TextView) itemRow.findViewById(R.id.receipt_soldProdName);
+			itemHolder.buyerUserN = (TextView) itemRow.findViewById(R.id.receipt_soldBuyersName);
+			itemHolder.priceAndShiping = (TextView) itemRow.findViewById(R.id.receipt_soldPrice);		
 						
 			itemHolder.itemPic.setTag(itemHolder);
 			itemRow.setTag(itemHolder);
@@ -201,4 +200,5 @@ public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnCli
 			}
 		}
 	}
+
 }

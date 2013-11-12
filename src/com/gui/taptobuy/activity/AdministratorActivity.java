@@ -74,40 +74,50 @@ public class AdministratorActivity extends Activity implements OnClickListener {
 		Intent intent;
 		switch (v.getId())
 		{		
+			case R.id.checkAdmiUser:
+				RegUser1.setClickable(false);
+				break;
+			
+			case R.id.checkRegUser:
+				Admin1.setClickable(false);
+				break;
+				
+			case R.id.checkAdminUser2:
+				RegUser2.setClickable(false);
+				break;
+			
+			case R.id.checkRegUser2:
+				Admin2.setClickable(false);
+				break;
+			
 			case R.id.adminViewB:
 				//id del usuario que el admin va a modificar o ver
 				String userToView = toViewUserId.getText().toString();
-				//// failing cases
-				if(!RegUser1.isChecked()&&!Admin1.isChecked()){
-					Toast.makeText(this, "You must specify if the user to view is Admin or Regular", Toast.LENGTH_LONG).show();
-				}
-				if(RegUser1.isChecked() && Admin1.isChecked()){
-					Toast.makeText(this, "User can not be regular user and administrator!", Toast.LENGTH_LONG).show();
-				}			
-				if(userToView == null){
+					
+				if(!RegUser2.isChecked()&&!Admin2.isChecked()){
+					Toast.makeText(this, "You must specify if the user to create is Admin or Regular", Toast.LENGTH_LONG).show();
+				}	
+				else if(userToView == null){
 					Toast.makeText(this, "You must provide an ID to view or modify a user", Toast.LENGTH_LONG).show();
 				}
 				//////
-				else{
-					int userToViewID = Integer.parseInt(toViewUserId.getText().toString());
-					
+				else{					
+					int userToViewID = Integer.parseInt(toViewUserId.getText().toString());					
 					if (Admin1.isChecked()){
-						isAdmin1 = true;
-					}			
+						isAdmin1 = true;							
+					}
 					intent = new Intent(this,AccountSettingsActivity.class);
 					intent.putExtra("userId",userToViewID);
 					intent.putExtra("isAdmin", isAdmin1);
-					startActivity(intent);	
+					startActivity(intent);
 				}
 				break;
 				
 			case R.id.adminCreateAccB:
+				
 				if(!RegUser2.isChecked()&&!Admin2.isChecked()){
 					Toast.makeText(this, "You must specify if the user to create is Admin or Regular", Toast.LENGTH_LONG).show();
-				}
-				if(RegUser2.isChecked() && Admin2.isChecked()){
-					Toast.makeText(this, "User can not be regular user and administrator!", Toast.LENGTH_LONG).show();
-				}
+				}				
 				else{	
 					if (Admin2.isChecked()){
 						isAdmin2 = true;

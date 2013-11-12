@@ -16,14 +16,12 @@ import android.widget.Toast;
 
 public class BuyItProductInfoActivity extends Activity implements OnClickListener
 {	
-
 	public static ProductForSaleInfo showingProductInfo;
 	private Button buyNow;
 	private Button addtoCart;
 	private ImageView prodPic;
 	private RatingBar sellerRating;
 	private TextView prodTitle, prodId, prodTime, prodBrand, prodDimen, prodDescrip, prodSellerUserN, prodPriceAndShip;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	

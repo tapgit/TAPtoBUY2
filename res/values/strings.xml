@@ -16,6 +16,7 @@
     <string name="orderCheckoutLabel">Checkout</string>
     <string name="bidsLabel">Items bids list</string>
      <string name="administratorLabel">Administrator Settings</string>
+     <string name="receiptLabel"> Order receipt </string>
     <string name="reportsLabel">Administrator report</string>
     <string name="accountSettingsLabel">Account Settings</string>
     <string name="menu_settings">Settings</string>

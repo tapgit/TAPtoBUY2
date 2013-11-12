@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +36,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class OrderCustomListAdapter extends BaseAdapter implements OnClickListener {
 	
@@ -122,7 +124,14 @@ public class OrderCustomListAdapter extends BaseAdapter implements OnClickListen
 			}        
 		}
 		itemRow.setOnClickListener(this);  
-
+		itemHolder.itemsQTY.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 		itemHolder.item = item;
 		itemHolder.productName.setText(item.getTitle());   		
 		itemHolder.sellerUserName.setText(item.getSellerUsername());		
@@ -211,6 +220,4 @@ public class OrderCustomListAdapter extends BaseAdapter implements OnClickListen
 			}
 		}
 	}
-
-
 }
