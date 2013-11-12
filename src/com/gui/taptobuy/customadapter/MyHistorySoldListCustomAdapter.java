@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyHistorySoldListCustomAdapter extends BaseAdapter implements OnClickListener {
+	
 	private MyHistoryActivity activity;
 	private LayoutInflater layoutInflater;
 	private ArrayList<MyHistoryProduct> items;	

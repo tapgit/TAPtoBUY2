@@ -114,11 +114,11 @@ public class OrderCheckoutActivity extends Activity implements OnClickListener{
 			//crear una nueva order
 			// orderID igual a X
 //			this.orderID = 0;
-//			if(true){
-//				Intent intent = new Intent(this,OrderReceiptActivity.class);
-//				intent.putExtra("orderID", this.orderID);
-//				startActivity(intent);
-//			}
+			if(true){
+				Intent intent = new Intent(this,PurchasedOrderReceiptActivity.class);
+				intent.putExtra("orderID", this.orderID);
+				startActivity(intent);
+			}
 			//anadir producto a la lista de bougth items del usuario, Id de produto y de usuario
 			//enviar la orden al DB
 		}		

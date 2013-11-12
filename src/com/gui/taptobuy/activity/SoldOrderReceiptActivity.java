@@ -1,7 +1,5 @@
 package com.gui.taptobuy.activity;
 
-import com.gui.taptobuy.phase1.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,21 +8,23 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class OrderReceiptActivity extends Activity implements OnClickListener {
+import com.gui.taptobuy.phase1.R;
+
+public class SoldOrderReceiptActivity extends Activity implements OnClickListener {
 	
-	TextView buyerUserName;
-	TextView orderID;
-	TextView sellerID;
-	TextView shippAdd;
-	ListView boughtItems;
-	TextView totalPayment;
-	TextView paymentCard;
-	TextView purchasedDate;
-	Button okButton;
+	private TextView buyerUserName;
+	private TextView orderID;
+	private TextView sellerID;
+	private TextView shippAdd;
+	private ListView boughtItems;
+	private TextView totalPayment;
+	private TextView paymentCard;
+	private TextView purchasedDate;
+	private Button okButton;
 	
 	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);		
-		setContentView(R.layout.order_recipt);	
+		setContentView(R.layout.order_receipt);	
 		
 		boughtItems = (ListView)findViewById(R.id.receipt_itemList);
 		okButton = (Button)findViewById(R.id.receipt_okB);
@@ -39,8 +39,12 @@ public class OrderReceiptActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.receipt_okB){
+		if (v.getId() == R.id.receipt_okB){			
 			
+			// Si viene del checkout //////////////////
+//			Intent intent = new Intent (this, SearchActivity.class);
+//			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			startActivity(intent);	
 		}		
 	}
 }
